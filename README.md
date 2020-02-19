@@ -16,6 +16,15 @@ a [Sails v1](https://sailsjs.com) application
 
 This app was originally generated on Thu Feb 13 2020 16:01:55 GMT+0800 (Hong Kong Standard Time) using Sails v1.2.3.
 
+### Group Members: 
+
+Chan Chun Lam (19201400) 
+Chiu Cheuk Fung (19200560) 
+Kan Ka Hei (19217668)
+Lam Tak Lung (19214561)
+Lee Yui Tung (17228336)
+Wong Tsz Hei Ernest (18202160)
+
 <!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
 
 
