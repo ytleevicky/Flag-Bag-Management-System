@@ -33,7 +33,8 @@ module.exports.routes = {
   '/groupitem': 'WebController.groupitem',
   '/adduser': 'WebController.adduser',
   '/stationmanagement': 'WebController.stationmanagement',
-
+  '/individual': 'WebController.individual',
+  '/group': 'WebController.group',
   
 
   'GET /user/login': 'UserController.login',
