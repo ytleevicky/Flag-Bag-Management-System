@@ -40,7 +40,7 @@ module.exports = {
 
       else if (req.session.role == 'stationmgr')
       {
-        return res.redirect('/personalitem');
+        return res.redirect('/stationmanagement');
       }
     });
   },
