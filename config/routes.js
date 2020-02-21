@@ -35,7 +35,8 @@ module.exports.routes = {
   '/stationmanagement': 'WebController.stationmanagement',
   '/individual': 'WebController.individual',
   '/group': 'WebController.group',
-  
+  '/addIndividual': 'WebController.addIndividual',
+  '/addGroup': 'WebController.addGroup',
 
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',

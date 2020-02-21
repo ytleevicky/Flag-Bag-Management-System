@@ -133,5 +133,19 @@ module.exports = {
 
   },
 
+  addIndividual: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/addIndividual', { webs: models });
+
+  },
+
+  addGroup: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/addGroup', { webs: models });
+
+  },
+
 };
 

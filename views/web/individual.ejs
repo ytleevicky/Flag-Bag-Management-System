@@ -1,136 +1,141 @@
 <body>
 
-    <br>
-  
-    <h2>活動管理 > First Event > 個人義工</h2>
-  
-    <br>
-  
-    <div class="bordered">
-  
-      <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
-  
-      <div class="row" style="padding: 20px;">
-  
-        <div class="col-sm-6">
-          <p>匯入Excel檔案：</p>
-          <button type="button" class="btn btn-outline-secondary">請選擇檔案</button>
-        </div>
-  
-        <div class="col-sm-6">
-          <p>以Excel檔案匯出：</p>
-          <button type="button" class="btn btn-outline-secondary">匯出</button>
-        </div>
-  
+  <br>
+
+  <h2>活動管理 > First Event > 個人義工</h2>
+
+  <br>
+
+  <div class="bordered">
+
+    <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+
+    <div class="row" style="padding: 20px;">
+
+      <div class="col-sm-6">
+        <p>匯入Excel檔案：</p>
+        <button type="button" class="btn btn-outline-secondary">請選擇檔案</button>
       </div>
-  
-  
+
+      <div class="col-sm-6">
+        <p>以Excel檔案匯出：</p>
+        <button type="button" class="btn btn-outline-secondary">匯出</button>
+      </div>
+
     </div>
-  
+
+
+  </div>
+
+  <br>
+
+  <br>
+  <a href="/addIndividual" class="btn btn-primary">建立</a>
+  <button type="button" class="btn btn-danger">删除</button>
+  <br>
+
+  <table class="table table-bordered">
     <br>
-  
-    <br>
-    <button type="button" class="btn btn-primary">建立</button>
-    <button type="button" class="btn btn-danger">删除</button>
-    <br>
-  
-    <table class="table table-bordered">
-      <br>
-  
-      <thead>
-        <tr>
-          <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <th scope="col">姓名</th>
-          <th scope="col">旗站位置</th>
-          <th scope="col">旗袋編號</th>
-          <th scope="col">旗袋狀態</th>
-          <th scope="col">旗袋最後更新時間</th>
-          <th scope="col">最後列印標籤時間</th>
-          <th scope="col">編輯</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>Peter Parker</td>
-          <td>TKO-A1</td>
-          <td>FBNO-1234</td>
-          <td>未收</td>
-          <td>20-6-2020 9:18 </td>
-          <td>8-5-2020 15:30</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>Tony Stark</td>
-          <td>TKO-A2</td>
-          <td>FBNO-234</td>
-          <td>未收</td>
-          <td>20-6-2020 9:30 </td>
-          <td>8-5-2020 15:30</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>利正赫</td>
-          <td>TKO-A3</td>
-          <td>FBNO-222</td>
-          <td>未收</td>
-          <td>20-6-2020 9:05 </td>
-          <td>8-5-2020 15:30</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>尹世理</td>
-          <td>KT-A1</td>
-          <td>FBNO-18</td>
-          <td>未收</td>
-          <td>20-6-2020 9:45 </td>
-          <td>8-5-2020 15:30</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-      </tbody>
-    </table>
-  
-  </body>
-  
-  <style>
-    .bordered {
-      width: 800;
-      height: 800;
-      border: 1px solid black;
-      border-radius: 5px;
-      border-color: powderblue;
-    }
-  </style>
+
+    <thead>
+      <tr>
+        <th scope="col">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <th scope="col">姓名</th>
+        <th scope="col">所屬團體</th>
+        <th scope="col">旗站位置</th>
+        <th scope="col">旗袋編號</th>
+        <th scope="col">旗袋狀態</th>
+        <th scope="col">旗袋最後更新時間</th>
+        <th scope="col">最後列印標籤時間</th>
+        <th scope="col">編輯</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th scope="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <td>Peter Parker</td>
+        <td>九龍城浸信會禧年(恩平)小學</td>
+        <td>TKO-A1</td>
+        <td>FBNO-1234</td>
+        <td>未收</td>
+        <td>20-6-2020 9:18 </td>
+        <td>8-5-2020 15:30</td>
+        <td><button type="button" class="btn btn-link">編輯</button></td>
+      </tr>
+
+      <tr>
+        <th scope="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <td>Tony Stark</td>
+        <td>九龍堂宣道小學</td>
+        <td>TKO-A2</td>
+        <td>FBNO-234</td>
+        <td>未收</td>
+        <td>20-6-2020 9:30 </td>
+        <td>8-5-2020 15:30</td>
+        <td><button type="button" class="btn btn-link">編輯</button></td>
+      </tr>
+
+      <tr>
+        <th scope="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <td>利正赫</td>
+        <td>---</td>
+        <td>TKO-A3</td>
+        <td>FBNO-222</td>
+        <td>未收</td>
+        <td>20-6-2020 9:05 </td>
+        <td>8-5-2020 15:30</td>
+        <td><button type="button" class="btn btn-link">編輯</button></td>
+      </tr>
+
+      <tr>
+        <th scope="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <td>尹世理</td>
+        <td>---</td>
+        <td>KT-A1</td>
+        <td>FBNO-18</td>
+        <td>未收</td>
+        <td>20-6-2020 9:45 </td>
+        <td>8-5-2020 15:30</td>
+        <td><button type="button" class="btn btn-link">編輯</button></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</body>
+
+<style>
+  .bordered {
+    width: 800;
+    height: 800;
+    border: 1px solid black;
+    border-radius: 5px;
+    border-color: powderblue;
+  }
+</style>
