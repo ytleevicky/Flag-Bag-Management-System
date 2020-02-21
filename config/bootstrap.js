@@ -28,11 +28,11 @@ module.exports.bootstrap = async function() {
   // ```
 
   sails.bcrypt = require('bcryptjs');
-  const saltRounds = 10;
+  // const saltRounds = 10;
 
   if ((await User.count()) == 0) {
 
-    const hash = await sails.bcrypt.hash('123456', saltRounds);
+    // const hash = await sails.bcrypt.hash('123456', saltRounds);
 
     await User.createEach([
       { username: 'admin1', password: '123456', role: 'admin' },

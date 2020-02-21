@@ -38,7 +38,7 @@ module.exports = {
         return res.redirect('/management');
       }
 
-      else if (req.session.username == 'stationmgr')
+      else if (req.session.role == 'stationmgr')
       {
         return res.redirect('/personalitem');
       }
