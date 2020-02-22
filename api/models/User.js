@@ -20,13 +20,23 @@ module.exports = {
     },
 
     password: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     role: {
       type: 'string',
-      isIn:['admin', 'stationmgr', 'visitor'],
-      defaultsTo: 'visitor',
+      isIn:['admin', 'stationmgr'],
+      defaultsTo: 'stationmgr',
+    },
+
+    mail: {
+      type: 'string',
+      required: true
+    },
+
+    flagstn: {
+      type: 'string',
     },
 
 

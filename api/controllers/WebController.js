@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /**
  * WebController
  *
@@ -107,8 +108,17 @@ module.exports = {
 
   adduser: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/adduser', { webs: models });
+    if (req.method == 'GET') { return res.view('web/adduser'); }
+
+    if (!req.body.User) { return res.badRequest('Form-data not received.'); }
+
+    await User.create(req.body.User);
+
+    if (req.wantsJSON) {
+      return res.json({ message: '已新增活動使用者！', url: '/contact' });    // for ajax request
+    } else {
+      return res.redirect('/contact');           // for normal request
+    }
 
   },
 

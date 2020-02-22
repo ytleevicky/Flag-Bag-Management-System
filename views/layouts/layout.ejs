@@ -55,7 +55,7 @@
       </button>
       <div class="nav navbar-left">
         <ul class="navbar-nav">
-          <%if (req.session.username == "admin1") {%>
+          <%if (req.session.role == "admin") {%>
           <li class="nav-item">
             <a class="nav-link" href="/management">活動管理</a>
           </li>
@@ -70,7 +70,7 @@
             </li> -->
           <% }%>
 
-          <%if (req.session.username == "station1") {%>
+          <%if (req.session.role == "stationmgr") {%>
           <!-- <li class="nav-item active">
               <a class="nav-link" href="/personalitem"
                 >個人參加<span class="sr-only">(current)</span></a
@@ -94,11 +94,11 @@
         <ul class="navbar-nav">
           <%if (req.session.username) {%>
           <li class="nav-item">
-            <a class="nav-link" href="/user/login">Hi, <%= req.session.username %> (Logout) </a>
+            <a class="nav-link" href="/">Hi, <%= req.session.username %> (Logout) </a>
           </li>
           <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="/user/login">Login</a>
+            <a class="nav-link" href="/">Login</a>
           </li>
           <% } %>
         </ul>
