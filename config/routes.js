@@ -42,6 +42,8 @@ module.exports.routes = {
   '/addIndividual': 'WebController.addIndividual',
   '/addGroup': 'WebController.addGroup',
 
+  '/qrCode': 'WebController.qrCode',
+
   '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',

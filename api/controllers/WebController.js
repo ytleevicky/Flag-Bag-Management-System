@@ -171,5 +171,12 @@ module.exports = {
 
   },
 
+  qrCode: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/qrCode', { webs: models });
+
+  },
+
 };
 
