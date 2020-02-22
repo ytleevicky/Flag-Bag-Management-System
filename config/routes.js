@@ -18,7 +18,6 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  'GET /': 'WebController.index',
   '/distribution': 'WebController.distribution',
   '/location': 'WebController.location',
   '/collection': 'WebController.collection',
@@ -38,8 +37,8 @@ module.exports.routes = {
   '/addIndividual': 'WebController.addIndividual',
   '/addGroup': 'WebController.addGroup',
 
-  'GET /user/login': 'UserController.login',
-  'POST /user/login': 'UserController.login',
+  'GET /': 'UserController.login',
+  'POST /': 'UserController.login',
   'POST /user/logout': 'UserController.logout'
 
   /***************************************************************************
