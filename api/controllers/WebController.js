@@ -157,5 +157,19 @@ module.exports = {
 
   },
 
+  eventreport: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/eventreport', { webs: models });
+
+  },
+
+  groupandindividual: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/groupandindividual', { webs: models });
+
+  },
+
 };
 

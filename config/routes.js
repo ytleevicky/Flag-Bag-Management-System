@@ -30,6 +30,8 @@ module.exports.routes = {
   '/viewitem': 'WebController.viewitem',
   '/personalitem': 'WebController.personalitem',
   '/groupitem': 'WebController.groupitem',
+  '/eventreport': 'WebController.eventreport',
+  '/groupandindividual': 'WebController.groupandindividual',
 
   '/adduser': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
