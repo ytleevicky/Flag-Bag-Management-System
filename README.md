@@ -18,12 +18,12 @@ This app was originally generated on Thu Feb 13 2020 16:01:55 GMT+0800 (Hong Kon
 
 ### Group Members: 
 
-Chan Chun Lam (19201400) 
-Chiu Cheuk Fung (19200560) 
-Kan Ka Hei (19217668)
-Lam Tak Lung (19214561)
-Lee Yui Tung (17228336)
-Wong Tsz Hei Ernest (18202160)
++ Chan Chun Lam (19201400)
++ Chiu Cheuk Fung (19200560)
++ Kan Ka Hei (19217668)
++ Lam Tak Lung (19214561) 
++ Lee Yui Tung (17228336)
++ Wong Tsz Hei Ernest (18202160)
 
 ## Readme
 
