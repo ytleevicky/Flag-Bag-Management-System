@@ -16,7 +16,7 @@ a [Sails v1](https://sailsjs.com) application
 
 This app was originally generated on Thu Feb 13 2020 16:01:55 GMT+0800 (Hong Kong Standard Time) using Sails v1.2.3.
 
-### Group Members: 
+### Group Members
 
 + Chan Chun Lam (19201400)
 + Chiu Cheuk Fung (19200560)
