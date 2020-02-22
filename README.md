@@ -25,6 +25,10 @@ Lam Tak Lung (19214561)
 Lee Yui Tung (17228336)
 Wong Tsz Hei Ernest (18202160)
 
+## Readme
+
+Please contact in group if any modification has done under this project.
+
 <!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
 
 
