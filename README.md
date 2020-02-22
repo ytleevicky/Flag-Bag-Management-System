@@ -1,4 +1,4 @@
-# 4117-project
+# COMP4117 CUBC1 Project @ 2019-2020 Semester 2
 
 a [Sails v1](https://sailsjs.com) application
 
