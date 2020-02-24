@@ -34,10 +34,11 @@
     <thead>
       <tr>
         <th scope="col">
-          <div class="form-check">
+          選擇活動
+          <!-- <div class="form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
+          </div> -->
         </th>
         <th scope="col">用戶名稱</th>
         <th scope="col">電郵</th>
@@ -46,6 +47,7 @@
       </tr>
     </thead>
     <tbody>
+      <% user.forEach( function(model) { %>
       <tr>
         <th scope="row">
           <div class="form-check">
@@ -53,12 +55,13 @@
             <label class="form-check-label" for="exampleCheck1"></label>
           </div>
         </th>
-        <td>Alex(站長A)</td>
-        <td>eventuserA@gmail.com</td>
-        <td>站長</td>
+        <td><%= model.username %></td>
+        <td><%= model.mail %></td>
+        <td><%= model.role %></td>
         <td><a href='' class="btn btn-primary">編輯</a></td>
+        <% }); %>
       </tr>
-      <tr>
+      <!-- <tr>
         <th scope="row">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -81,9 +84,11 @@
         <td>eventuserC@gmail.com</td>
         <td>站長</td>
         <td><a href='' class="btn btn-primary">編輯</a></td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
+
+  
 
 </body>
 

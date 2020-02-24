@@ -45,8 +45,8 @@ module.exports = {
 
   contact: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/contact', { webs: models });
+    var models = await User.find();
+    return res.view('web/contact', { user: models });
 
   },
 
@@ -175,6 +175,13 @@ module.exports = {
 
     var models = await Web.find();
     return res.view('web/qrCode', { webs: models });
+
+  },
+
+  edituser: async function (req, res) {
+
+    var models = await User.find();
+    return res.view('web/edituser', { user: models });
 
   },
 
