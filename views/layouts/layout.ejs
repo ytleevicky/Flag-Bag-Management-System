@@ -94,7 +94,7 @@
         <ul class="navbar-nav">
           <%if (req.session.username) {%>
           <li class="nav-item">
-            <a class="nav-link" href="/">Hi, <%= req.session.username %> (Logout) </a>
+            <a class="nav-link" href="/user/logout">Hi, <%= req.session.username %> (Logout) </a>
           </li>
           <% } else { %>
           <li class="nav-item">
