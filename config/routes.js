@@ -43,6 +43,7 @@ module.exports.routes = {
   '/addGroup': 'WebController.addGroup',
 
   '/qrCode': 'WebController.qrCode',
+  '/generateLabel': 'WebController.generateLabel',
 
   '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
