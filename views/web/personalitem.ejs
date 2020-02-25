@@ -3,7 +3,55 @@
     <h2>個人參加</h2>
     <br>
 
-        <a class="nav-link active" href="/distribution">派發旗袋</a>
-        <a class="nav-link active" href="/collection">收回旗袋</a>
-  
+    <a class="nav-link active" href="/distribution">派發旗袋</a>
+    <a class="nav-link active" href="/collection">收回旗袋</a>
+
+    <br>
+    
+    <h2>Read the QR code Label:</h2>
+
+    <p>example1: https://api.qrserver.com/v1/create-qr-code/?data=coffee&amp;size=100x100</p>
+    <p>The message should be coffee</p>
+    <br>
+    <p>example2: https://api.qrserver.com/v1/create-qr-code/?data=avengers&amp;size=100x100 </p>
+    <p>The message should be avengers</p>
+
+    <br>
+
+    <h3>Input the QR code URL & press ENTER: </h3>
+    <form onsubmit="read();return false;">
+        <input type="text" id="qr" name="">
+    </form>
+
+    <div>
+        <p>Message: </p>
+        <p class="qr2"></p>
+    </div>
+
+    <br>
+    <br>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script>
+        function read() {
+            var message = document.getElementById('qr');
+
+            var qr1 = message.value;     // A QR code 
+
+            var abc = "http://api.qrserver.com/v1/read-qr-code/?fileurl=" + qr1;
+
+            // console.log(abc);
+
+            $.get(abc, function (data) {
+
+                console.log(data);
+
+                var qrRead = data[0].symbol[0].data;
+                $(".qr2").append(qrRead);
+
+            });
+        }
+    </script>
+
 </body>
