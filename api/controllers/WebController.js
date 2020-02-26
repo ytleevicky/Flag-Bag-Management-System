@@ -187,8 +187,15 @@ module.exports = {
 
   generateLabel: async function (req, res) {
 
-    var models = await User.find();
+    var models = await Web.find();
     return res.view('web/generateLabel', { user: models });
+
+  },
+
+  addevent: async function (req, res) {
+
+    var models = await User.find();
+    return res.view('web/addevent', { user: models });
 
   },
 

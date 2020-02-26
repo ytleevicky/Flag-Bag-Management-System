@@ -9,7 +9,7 @@
 
     <h2>Generate a QR code for a flag bag: </h2>
 
-    <p>Input the data that you want to store inside the QR code and press ENTER:</p>
+    <p>Input the data that you want to store inside the QR code and press <b>ENTER</b>:</p>
 
     <p>e.g. store FBNO-1234 (旗袋編號) </p>
 
@@ -28,7 +28,7 @@
             var message = document.getElementById('gen');
 
             if (!message.value) {
-                return;
+                return alert("請輸入旗袋編號")
             }
 
             var data = message.value;

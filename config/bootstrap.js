@@ -42,5 +42,13 @@ module.exports.bootstrap = async function() {
     ]);
   }
 
+  // if (await Web.count() == 0) {
+
+  //   await Web.createEach([
+  //     {}
+  //   ]);
+
+  // }
+
   return;
 };
