@@ -18,9 +18,7 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  '/distribution': 'WebController.distribution',
   '/location': 'WebController.location',
-  '/collection': 'WebController.collection',
   '/setting': 'WebController.setting',
   '/contact': 'WebController.contact',
   '/management': 'WebController.management',

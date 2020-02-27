@@ -29,13 +29,6 @@ module.exports = {
 
   },
 
-  collection: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/collection', { webs: models });
-
-  },
-
   setting: async function (req, res) {
 
     var models = await Web.find();
@@ -60,13 +53,6 @@ module.exports = {
     });
 
     return res.view('web/adminDisplay', { user: models });
-
-  },
-
-  distribution: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/distribution', { webs: models });
 
   },
 
