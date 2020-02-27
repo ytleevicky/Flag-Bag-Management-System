@@ -113,6 +113,8 @@ module.exports = {
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
     await User.create(req.body.User);
+    
+    // req.user.role = 'admin';
 
     if (req.wantsJSON) {
       return res.json({ message: '已新增活動使用者！', url: '/contact' });    // for ajax request
