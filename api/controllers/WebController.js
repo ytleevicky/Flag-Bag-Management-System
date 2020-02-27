@@ -133,10 +133,10 @@ module.exports = {
 
     if (req.wantsJSON) {
 
-      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: '/contact' });
+      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: user.role =='admin' ? '/adminDisplay' : "/contact"});
         
     }
-    return res.redirect('/contact');           // for normal request
+    return res.redirect("/contact");           // for normal request
 
 
     // return res.redirect('/contact');           // for normal request

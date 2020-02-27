@@ -92,7 +92,7 @@ async function createForm(oFormElement) {
             // validatePwd()
             var data = await response.json();   // for res.ok() or res.json()
             alert(data.message);
-            windows.location = data.url;
+            window.location = data.url;
             //location.reload(true);
         } else if (response.status == 401) {
             var data = await response.text();   // for res.send()
