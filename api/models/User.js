@@ -27,7 +27,7 @@ module.exports = {
     role: {
       type: 'string',
       isIn:['admin', 'stationmgr'],
-      defaultsTo: 'stationmgr',
+      required: true
     },
 
     mail: {
