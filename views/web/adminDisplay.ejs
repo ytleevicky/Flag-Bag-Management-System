@@ -1,0 +1,46 @@
+<body>
+    <!-- <br>
+    <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動使用者</h2>
+    <br> -->
+  
+    <br>
+    <a href="/addadmin" class="btn btn-primary">新增活動管理員</a>
+    <button type="button" class="btn btn-danger">删除</button>
+  
+    <br>
+    <table class="table table-bordered">
+      <br>
+      <thead>
+        <tr>
+          <th scope="col">
+            選擇用戶
+          </th>
+          <th scope="col">用戶名稱</th>
+          <th scope="col">電郵</th>
+          <th scope="col">用戶身份</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        <% user.forEach( function(model) { %>
+        <tr>
+          <th scope="row">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+          </th>
+          <td><%= model.username %></td>
+          <td><%= model.mail %></td>
+          <td><%= model.role %></td>
+          <td><a href='' class="btn btn-primary">編輯</a></td>
+          <% }); %>
+        
+        </tr>
+     
+      </tbody>
+    </table>
+  
+  </body>
+  

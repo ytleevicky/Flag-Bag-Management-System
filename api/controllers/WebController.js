@@ -45,8 +45,21 @@ module.exports = {
 
   contact: async function (req, res) {
 
-    var models = await User.find();
+    var models = await User.find({
+      role: "stationmgr"
+    });
+
     return res.view('web/contact', { user: models });
+
+  },
+
+  adminDisplay: async function (req, res) {
+
+    var models = await User.find({
+      role: "admin"
+    });
+
+    return res.view('web/adminDisplay', { user: models });
 
   },
 
@@ -113,13 +126,28 @@ module.exports = {
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
     await User.create(req.body.User);
-    
-    // req.user.role = 'admin';
 
     if (req.wantsJSON) {
       return res.json({ message: '已新增活動使用者！', url: '/contact' });    // for ajax request
     } else {
       return res.redirect('/contact');           // for normal request
+    }
+    
+
+  },
+
+  addadmin: async function (req, res) {
+
+    if (req.method == 'GET') { return res.view('web/addadmin'); }
+
+    if (!req.body.User) { return res.badRequest('Form-data not received.'); }
+
+    await User.create(req.body.User);
+
+    if (req.wantsJSON) {
+      return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });    // for ajax request
+    } else {
+      return res.redirect('/adminDisplay');           // for normal request
     }
 
   },

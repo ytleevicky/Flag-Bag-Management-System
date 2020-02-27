@@ -36,6 +36,9 @@ module.exports.routes = {
   '/adduser': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
 
+  '/addadmin': 'WebController.addadmin',
+  '/adminDisplay': 'WebController.adminDisplay',
+
   '/stationmanagement': 'WebController.stationmanagement',
   '/individual': 'WebController.individual',
   '/group': 'WebController.group',
@@ -46,6 +49,7 @@ module.exports.routes = {
   '/generateLabel': 'WebController.generateLabel',
 
   '/addevent': 'WebController.addevent',
+  
 
   '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
