@@ -39,6 +39,11 @@ module.exports = {
       type: 'string',
     },
 
+    createdby:{
+      type: 'string',
+      // required: true
+    },
+
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
