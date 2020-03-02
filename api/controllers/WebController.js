@@ -234,7 +234,7 @@ module.exports = {
 
   },
 
-  //upload excel file
+  //upload user data 
   import_xlsx: async function (req, res) {
 
     // if (req.method == 'GET')
