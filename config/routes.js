@@ -46,8 +46,7 @@ module.exports.routes = {
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
 
-  '/addevent': 'WebController.addevent',
-  
+  '/addevent': 'WebController.addevent', 
 
   '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
@@ -55,6 +54,7 @@ module.exports.routes = {
   'GET /user/logout': 'UserController.logout',
 
   '/import_xlsx': 'WebController.import_xlsx',
+  '/export_xlsx': 'WebController.export_xlsx',
 
   /***************************************************************************
    *                                                                          *

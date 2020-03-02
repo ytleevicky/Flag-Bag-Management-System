@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable eqeqeq */
 /**
  * WebController
@@ -254,6 +255,28 @@ module.exports = {
       }
       return res.ok('Excel file imported.');
     });
+  },
+
+  export_xlsx: async function (req, res) {
+
+    var models = await User.find();
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        username: model.username,
+        role: model.role,
+        mail: model.mail,
+        flagstn: model.flagstn,
+        createdby: model.createdby
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'Person');
+
+    res.set('Content-disposition', 'attachment; filename=person.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
 };
