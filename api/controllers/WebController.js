@@ -273,9 +273,9 @@ module.exports = {
         createdby: model.createdby
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Person');
+    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
 
-    res.set('Content-disposition', 'attachment; filename=person.xlsx');
+    res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
