@@ -235,7 +235,7 @@ module.exports = {
   },
 
   //upload user data 
-  import_xlsx: async function (req, res) {
+  import_user: async function (req, res) {
 
     // if (req.method == 'GET')
     // {return res.view('web/import_xlsx');}
@@ -257,7 +257,9 @@ module.exports = {
     });
   },
 
-  export_xlsx: async function (req, res) {
+  //
+
+  export_user: async function (req, res) {
 
     var models = await User.find();
 
