@@ -53,8 +53,11 @@ module.exports.routes = {
   'POST /user/login': 'UserController.login',
   'GET /user/logout': 'UserController.logout',
 
-  '/import_xlsx': 'WebController.import_xlsx',
-  '/export_xlsx': 'WebController.export_xlsx',
+  '/import_user': 'WebController.import_user',
+  '/export_user': 'WebController.export_user',
+
+  '/export_event': 'WebController.export_event',
+  '/export_event': 'WebController.export_event',
 
   /***************************************************************************
    *                                                                          *

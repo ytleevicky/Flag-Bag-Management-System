@@ -12,7 +12,7 @@
   
       <div class="row" style="padding: 20px;">
   
-        <form action="/import_xlsx" method="post" enctype="multipart/form-data">
+        <form action="/import_event" method="post" enctype="multipart/form-data">
           <div class="col-sm-6">
             <p>匯入Excel檔案：</p>
             <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" multiple />
@@ -22,7 +22,7 @@
   
         <div class="col-sm-6">
           <p>以Excel檔案匯出：</p>
-          <button type="button" class="btn btn-outline-secondary">匯出</button>
+          <a href="/export_event" class="btn btn-info">匯出</a>
         </div>
   
       </div>

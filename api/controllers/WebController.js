@@ -257,9 +257,54 @@ module.exports = {
     });
   },
 
-  //
-
+  //export user data
   export_user: async function (req, res) {
+
+    var models = await User.find();
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        username: model.username,
+        role: model.role,
+        mail: model.mail,
+        flagstn: model.flagstn,
+        createdby: model.createdby
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
+
+    res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
+  //upload event data 
+  import_event: async function (req, res) {
+
+    // if (req.method == 'GET')
+    // {return res.view('web/import_xlsx');}
+
+    req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
+      if (err) { return res.serverError(err); }
+      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
+
+      var XLSX = require('xlsx');
+      var workbook = XLSX.readFile(uploadedFiles[0].fd);
+      var ws = workbook.Sheets[workbook.SheetNames[0]];
+      var data = XLSX.utils.sheet_to_json(ws);
+      console.log(data);
+      var models = await Web.createEach(data).fetch();
+      if (models.length == 0) {
+        return res.badRequest('No data imported.');
+      }
+      return res.ok('Excel file imported.');
+    });
+  },
+
+  //export event data(not complete)
+  export_event: async function (req, res) {
 
     var models = await User.find();
 
