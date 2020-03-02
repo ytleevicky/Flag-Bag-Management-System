@@ -2,10 +2,37 @@
     <!-- <br>
     <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動使用者</h2>
     <br> -->
-  
+
+    <h2>管理活動管理員</h2>
+
     <br>
     <a href="/adduser" class="btn btn-primary">新增活動管理員</a>
     <button type="button" class="btn btn-danger">删除</button>
+
+    <br>
+    <div class="bordered">
+
+      <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+  
+      <div class="row" style="padding: 20px;">
+  
+        <form action="/import_xlsx" method="post" enctype="multipart/form-data">
+          <div class="col-sm-6">
+            <p>匯入Excel檔案：</p>
+            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
+            <input type="submit" />
+          </div>
+        </form>
+  
+        <div class="col-sm-6">
+          <p>以Excel檔案匯出：</p>
+          <button type="button" class="btn btn-outline-secondary">匯出</button>
+        </div>
+  
+      </div>
+  
+  
+    </div>
   
     <br>
     <table class="table table-bordered">

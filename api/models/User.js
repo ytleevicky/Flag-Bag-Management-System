@@ -32,7 +32,8 @@ module.exports = {
 
     mail: {
       type: 'string',
-      required: true
+      required: true,
+      // unique: true
     },
 
     flagstn: {
