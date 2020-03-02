@@ -8,22 +8,26 @@
  */
 
 module.exports = {
-  login: async function(req, res) {
+  login: async function (req, res) {
     // eslint-disable-next-line eqeqeq
-    if (req.method == 'GET') {return res.view('user/login');}
+    if (req.method == 'GET') { return res.view('user/login'); }
 
-    if (!req.body.username || !req.body.password) {return res.badRequest();}
+    if (!req.body.username || !req.body.password) { return res.badRequest(); }
 
     var user = await User.findOne({ username: req.body.username });
 
-    if (!user) {return res.status(401).send('User not found');}
+    if (!user) { return res.status(401).send('User not found'); }
 
     // eslint-disable-next-line eqeqeq
-    if (user.password != req.body.password)
-    {return res.status(401).send('Wrong Password');}
+    // if (user.password != req.body.password)
+    // {return res.status(401).send('Wrong Password');}
+
+    const match = await sails.bcrypt.compare(req.body.password, user.password);
+
+    if (!match) { return res.status(401).send('Wrong Password'); }
 
     req.session.regenerate((err) => {
-      if (err) {return res.serverError(err);}
+      if (err) { return res.serverError(err); }
 
       req.session.username = req.body.username;
       req.session.password = user.password;
@@ -33,13 +37,11 @@ module.exports = {
       sails.log('[Session1]', req.session.role);
 
       // eslint-disable-next-line eqeqeq
-      if (req.session.role == 'admin')
-      {
+      if (req.session.role == 'admin') {
         return res.redirect('/management');
       }
 
-      else if (req.session.role == 'stationmgr')
-      {
+      else if (req.session.role == 'stationmgr') {
         return res.redirect('/stationmanagement');
       }
     });
@@ -48,7 +50,7 @@ module.exports = {
   logout: async function (req, res) {
     req.session.destroy(function (err) {
 
-      if (err) {return res.serverError(err);}
+      if (err) { return res.serverError(err); }
 
       return res.redirect('/');
 

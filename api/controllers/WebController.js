@@ -107,19 +107,25 @@ module.exports = {
 
   adduser: async function (req, res) {
 
+
     if (req.method == 'GET') { return res.view('web/adduser'); }
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
+    // var password = ;
+    // var userID = parseInt(req.body.id);
+
+    sails.bcrypt = require('bcryptjs');
+    const saltRounds = 10;
+
+    req.body.User.password = await sails.bcrypt.hash(req.body.User.password, saltRounds);
     var user = await User.create(req.body.User).fetch();
 
     console.log(JSON.stringify(user));
 
-
-
     if (req.wantsJSON) {
 
-      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: user.role =='admin' ? '/adminDisplay' : '/contact'});
+      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: user.role == 'admin' ? '/adminDisplay' : '/contact' });
 
     }
     return res.redirect('/contact');           // for normal request
@@ -227,15 +233,15 @@ module.exports = {
 
   },
 
-  //upload excal file
-  import_xlsx: async function(req, res) {
+  //upload excel file
+  import_xlsx: async function (req, res) {
 
-    if (req.method == 'GET')
-    {return res.view('web/import_xlsx');}
+    // if (req.method == 'GET')
+    // {return res.view('web/import_xlsx');}
 
-    req.file('file').upload({maxBytes: 10000000}, async function whenDone(err, uploadedFiles) {
+    req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
       if (err) { return res.serverError(err); }
-      if (uploadedFiles.length === 0){ return res.badRequest('No file was uploaded'); }
+      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
 
       var XLSX = require('xlsx');
       var workbook = XLSX.readFile(uploadedFiles[0].fd);
