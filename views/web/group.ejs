@@ -12,10 +12,13 @@
   
       <div class="row" style="padding: 20px;">
   
-        <div class="col-sm-6">
-          <p>匯入Excel檔案：</p>
-          <button type="button" class="btn btn-outline-secondary">請選擇檔案</button>
-        </div>
+        <form action="/import_xlsx" method="post" enctype="multipart/form-data">
+          <div class="col-sm-6">
+            <p>匯入Excel檔案：</p>
+            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" multiple />
+            <input type="submit" />
+          </div>
+        </form>
   
         <div class="col-sm-6">
           <p>以Excel檔案匯出：</p>

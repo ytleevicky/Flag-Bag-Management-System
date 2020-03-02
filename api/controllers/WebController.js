@@ -39,7 +39,7 @@ module.exports = {
   contact: async function (req, res) {
 
     var models = await User.find({
-      role: "stationmgr"
+      role: 'stationmgr'
     });
 
     return res.view('web/contact', { user: models });
@@ -49,7 +49,7 @@ module.exports = {
   adminDisplay: async function (req, res) {
 
     var models = await User.find({
-      role: "admin"
+      role: 'admin'
     });
 
     return res.view('web/adminDisplay', { user: models });
@@ -115,14 +115,14 @@ module.exports = {
 
     console.log(JSON.stringify(user));
 
-    
+
 
     if (req.wantsJSON) {
 
-      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: user.role =='admin' ? '/adminDisplay' : "/contact"});
-        
+      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增活動使用者！', url: user.role =='admin' ? '/adminDisplay' : '/contact'});
+
     }
-    return res.redirect("/contact");           // for normal request
+    return res.redirect('/contact');           // for normal request
 
 
     // return res.redirect('/contact');           // for normal request
@@ -227,16 +227,16 @@ module.exports = {
 
   },
 
-  //upload excal file 
+  //upload excal file
   import_xlsx: async function(req, res) {
 
     if (req.method == 'GET')
-      return res.view('web/import_xlsx');
-  
+    {return res.view('web/import_xlsx');}
+
     req.file('file').upload({maxBytes: 10000000}, async function whenDone(err, uploadedFiles) {
       if (err) { return res.serverError(err); }
       if (uploadedFiles.length === 0){ return res.badRequest('No file was uploaded'); }
-  
+
       var XLSX = require('xlsx');
       var workbook = XLSX.readFile(uploadedFiles[0].fd);
       var ws = workbook.Sheets[workbook.SheetNames[0]];
@@ -244,11 +244,11 @@ module.exports = {
       console.log(data);
       var models = await Web.createEach(data).fetch();
       if (models.length == 0) {
-        return res.badRequest("No data imported.");
+        return res.badRequest('No data imported.');
       }
-      return res.ok("Excel file imported.");
+      return res.ok('Excel file imported.');
     });
   },
-  
+
 };
 
