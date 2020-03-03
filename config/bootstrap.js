@@ -42,13 +42,16 @@ module.exports.bootstrap = async function() {
     ]);
   }
 
-  // if (await Web.count() == 0) {
+  if (await Web.count() == 0) {
 
-  //   await Web.createEach([
-  //     {}
-  //   ]);
+    await Web.createEach([
+      {vName: 'Peter Parker', vGroupName: '九龍城浸信會禧年(恩平)小學', sLocation: 'TKO-A1', bagNumber: 'FBNO-234',
+      bagStats: '未收', bagUpdate: '20-6-2020 9:18', codePrinted: '8-5-2020 15:30', location: '將軍澳', numOfV: '60', numOfBag: '45',
+      numOfBagBackUp: '5', eventName: 'First Event', dateOfEvent: '20-6-2020', eventLocation: '全港', numOfStation: '8', numOfEBag: '55',
+      numOfSuser: '8', numOfV: '60'},
+    ]);
 
-  // }
+  }
 
   return;
 };

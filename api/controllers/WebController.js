@@ -329,26 +329,28 @@ module.exports = {
     });
   },
 
-  //export event data(not complete)
+  //export event data into excel file(.xlsx format)
   export_event: async function (req, res) {
 
-    var models = await User.find();
+    var models = await Web.find();
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        username: model.username,
-        role: model.role,
-        mail: model.mail,
-        flagstn: model.flagstn,
-        createdby: model.createdby
+        vName: model.vName, //賣旗者姓名
+        vGroupName: model.vGroupName, //賣旗團體名
+        sLocation: model.sLocation, //旗站位置
+        bagNumber: model.bagNumber, //旗袋編號
+        bagStats: model.bagStats, //旗袋狀態
+        bagUpdate: model.bagUpdate, //旗袋最後更新時間
+        codePrinted: model.codePrinted, //最後列印標籤時間
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
+    XLSX.utils.book_append_sheet(wb, ws, 'Event_List');
 
-    res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
+    res.set('Content-disposition', 'attachment; filename=Event_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 

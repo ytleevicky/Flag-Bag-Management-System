@@ -2,7 +2,9 @@
 
   <br>
 
-  <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 個人義工</h2>
+  <h2>
+    <a href="/management">活動管理</a> >
+    <a href="/viewitem">First Event</a> > 個人義工</h2>
 
   <br>
 
@@ -38,6 +40,52 @@
   <br>
 
   <table class="table table-bordered">
+    <br>
+    <thead>
+      <tr>
+        <th scope="col">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <th scope="col">姓名</th>
+        <th scope="col">所屬團體</th>
+        <th scope="col">旗站位置</th>
+        <th scope="col">旗袋編號</th>
+        <th scope="col">旗袋狀態</th>
+        <th scope="col">旗袋最後更新時間</th>
+        <th scope="col">最後列印標籤時間</th>
+        <th scope="col">編輯</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% webs.forEach( function(model) { %>
+        <tr>
+          <th scope="row">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+          </th>
+          <td><%= model.vName %></td>
+          <td><%= model.vGroupName %></td>
+          <td><%= model.sLocation %></td>
+          <td><%= model.bagNumber %></td>
+          <td><%= model.bagStats %></td>
+          <td><%= model.bagUpdate %></td>
+          <td><%= model.codePrinted %></td>
+          <td><a href='' class="btn btn-primary">編輯</a>
+          </td>
+          <% }); %>
+
+        </tr>
+
+    </tbody>
+  </table>
+  <!--table class="table table-bordered">
     <br>
 
     <thead>
@@ -146,7 +194,7 @@
       </tr>
 
     </tbody>
-  </table>
+  </table -->
 
 </body>
 
