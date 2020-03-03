@@ -261,10 +261,17 @@ module.exports = {
       var data = XLSX.utils.sheet_to_json(ws);
       console.log(data);
       var models = await User.createEach(data).fetch();
+
       if (models.length == 0) {
         return res.badRequest('No data imported.');
       }
-      return res.ok('Excel file imported.');
+
+      if (req.wantsJSON) {
+        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });}
+      else{
+        return res.redirect('/adminDisplay');
+      }
+      // return res.ok('Excel file imported.');
     });
   },
 
@@ -315,15 +322,12 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-  //upload event data
+  //upload event data 
+  //To be updated and debugged.
   import_event: async function (req, res) {
-
-    // if (req.method == 'GET')
-    // {return res.view('web/import_xlsx');}
-
     req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
       if (err) { return res.serverError(err); }
-      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
+      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); } //In Here
 
       var XLSX = require('xlsx');
       var workbook = XLSX.readFile(uploadedFiles[0].fd);
