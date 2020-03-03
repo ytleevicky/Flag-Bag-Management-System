@@ -54,6 +54,7 @@ module.exports.routes = {
   'GET /user/logout': 'UserController.logout',
 
   '/import_user': 'WebController.import_user',
+  '/export_admin': 'WebController.export_admin',
   '/export_user': 'WebController.export_user',
 
   '/import_event': 'WebController.import_event',

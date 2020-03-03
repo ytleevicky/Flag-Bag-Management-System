@@ -258,9 +258,31 @@ module.exports = {
   },
 
   //export user data
+  export_admin: async function (req, res) {
+
+    var models = await User.find({role:'admin'});
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        username: model.username,
+        role: model.role,
+        mail: model.mail,
+        flagstn: model.flagstn,
+        createdby: model.createdby
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
+
+    res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
   export_user: async function (req, res) {
 
-    var models = await User.find();
+    var models = await User.find({role:'stationmgr'});
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
