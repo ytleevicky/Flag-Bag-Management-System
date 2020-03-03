@@ -57,7 +57,7 @@ module.exports = {
       type: 'string'
     },
     //旗站位置
-    sLocation:{     //use in individual.ejs, stationmgDisplay.ejs
+    sLocation:{     //use in individual.ejs, stationmgDisplay.ejs, group.ejs
       type: 'string'
     },
     //旗袋編號

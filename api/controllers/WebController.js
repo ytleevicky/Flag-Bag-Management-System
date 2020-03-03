@@ -329,7 +329,7 @@ module.exports = {
     });
   },
 
-  //export event data into excel file(.xlsx format)
+  //export event data into excel file(.xlsx format)(for individual.ejs)
   export_event: async function (req, res) {
 
     var models = await Web.find();
@@ -353,6 +353,29 @@ module.exports = {
     res.set('Content-disposition', 'attachment; filename=Event_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
+
+//export event data into excel file(.xlsx format)(for group.ejs)
+export_group: async function (req, res) {
+
+  var models = await Web.find();
+
+  var XLSX = require('xlsx');
+  var wb = XLSX.utils.book_new();
+
+  var ws = XLSX.utils.json_to_sheet(models.map(model => {
+    return {
+      vGroupName: model.vGroupName, //賣旗團體名
+      sLocation: model.sLocation, //旗站位置
+      bagNumber: model.location, //賣旗地區
+      bagStats: model.numOfV, //義工人數
+    };
+  }));
+  XLSX.utils.book_append_sheet(wb, ws, 'Group_List');
+
+  res.set('Content-disposition', 'attachment; filename=Group_List.xlsx');
+  return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+},
+
 
 };
 

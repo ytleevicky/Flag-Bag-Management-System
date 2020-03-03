@@ -59,6 +59,9 @@ module.exports.routes = {
 
   '/import_event': 'WebController.import_event',
   '/export_event': 'WebController.export_event',
+  
+  '/export_group': 'WebController.export_group',
+
 
   /***************************************************************************
    *                                                                          *
