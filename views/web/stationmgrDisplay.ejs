@@ -1,4 +1,94 @@
+
 <body>
+  <!-- <br>
+    <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動使用者</h2>
+    <br> -->
+
+  <br>
+  <h2>管理旗站管理員</h2>
+
+  <br>
+  <a href="/adduser" class="btn btn-primary">新增旗站管理員</a>
+  <button type="button" class="btn btn-danger">删除</button>
+
+  <br>
+  <br>
+
+  <div class="bordered">
+
+    <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出旗站管理員資料（透過Excel）</p>
+
+    <div class="row" style="padding: 20px;">
+
+      <form action="/import_user" method="post" enctype="multipart/form-data">
+        <div class="col-sm-6">
+          <p>匯入Excel檔案：</p>
+          <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
+          <input type="submit" class="btn btn-primary" />
+        </div>
+      </form>
+
+      <div class="col-sm-6">
+        <p>以Excel檔案匯出：</p>
+        <a href="/export_statman" class="btn btn-info">匯出</a>
+        <!-- <button type="button" class="btn btn-outline-secondary">匯出</button> -->
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <h3>旗站管理員列表</h3>
+  <table class="table table-bordered">
+    <br>
+    <thead>
+      <tr>
+        <th scope="col">
+          選擇用戶
+        </th>
+        <th scope="col">用戶名稱</th>
+        <th scope="col">電郵</th>
+        <th scope="col">用戶身份</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% user.forEach( function(model) { %>
+      <tr>
+        <th scope="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1"></label>
+          </div>
+        </th>
+        <td><%= model.username %></td>
+        <td><%= model.mail %></td>
+        <td><%= model.role %></td>
+        <td><a href='' class="btn btn-primary">編輯</a></td>
+        <% }); %>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+</body>
+
+<style>
+  .bordered {
+    width: 800;
+    height: 800;
+    border: 1px solid black;
+    border-radius: 5px;
+    border-color: powderblue;
+  }
+</style>
+
+
+
+
+
+<!-- <body>
   <br />
 
   <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 旗站</h2>
@@ -24,9 +114,9 @@
 
   </div>
 
-  <br />
+  <br /> -->
   <!-- <button type="button" class="btn btn-primary">建立</button> -->
-  <a href="/addflagstn" class="btn btn-primary">建立</a>
+  <!-- <a href="/addflagstn" class="btn btn-primary">建立</a>
   <button type="button" class="btn btn-danger">删除</button>
   <br />
 
@@ -117,4 +207,4 @@
     border-radius: 5px;
     border-color: powderblue;
   }
-</style>
+</style> -->

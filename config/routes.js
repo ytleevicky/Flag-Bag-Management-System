@@ -24,7 +24,7 @@ module.exports.routes = {
   '/management': 'WebController.management',
   '/eventdetail': 'WebController.eventdetail',
   '/addflagstn': 'WebController.addflagstn',
-  '/station': 'WebController.station',
+  '/stationmgrDisplay': 'WebController.stationmgrDisplay',
   '/viewitem': 'WebController.viewitem',
   '/personalitem': 'WebController.personalitem',
   '/groupitem': 'WebController.groupitem',
@@ -55,7 +55,7 @@ module.exports.routes = {
 
   '/import_user': 'WebController.import_user',
   '/export_admin': 'WebController.export_admin',
-  '/export_user': 'WebController.export_user',
+  '/export_statman': 'WebController.export_statman',
 
   '/import_event': 'WebController.import_event',
   '/export_event': 'WebController.export_event',

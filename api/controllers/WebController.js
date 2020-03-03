@@ -78,10 +78,14 @@ module.exports = {
 
   },
 
-  station: async function (req, res) {
+  stationmgrDisplay: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/station', { webs: models });
+    
+    var models = await User.find({
+      role: 'stationmgr'
+    });
+
+    return res.view('web/stationmgrDisplay', { user: models });
 
   },
 
@@ -280,7 +284,7 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-  export_user: async function (req, res) {
+  export_statman: async function (req, res) {
 
     var models = await User.find({role:'stationmgr'});
 
@@ -296,9 +300,9 @@ module.exports = {
         createdby: model.createdby
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
+    XLSX.utils.book_append_sheet(wb, ws, 'statman_List');
 
-    res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
+    res.set('Content-disposition', 'attachment; filename=statman_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
