@@ -63,6 +63,9 @@ module.exports.routes = {
   
   '/export_group': 'WebController.export_group',
 
+  '/export_station': 'WebController.export_station',
+
+
 
   /***************************************************************************
    *                                                                          *

@@ -11,13 +11,13 @@
 
       <div class="col-sm-6">
         <p>匯入Excel檔案：</p>
-        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
+        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
         <input type="submit" class="btn btn-primary" />
       </div>
 
       <div class="col-sm-6">
         <p>以Excel檔案匯出：</p>
-        <button type="button" class="btn btn-outline-secondary">匯出</button>
+        <a href="/export_station" class="btn btn-info">匯出</a>
       </div>
 
     </div>
@@ -26,12 +26,50 @@
   </div>
 
   <br /> 
-   <button type="button" class="btn btn-primary">建立</button> 
    <a href="/addflagstn" class="btn btn-primary">建立</a>
   <button type="button" class="btn btn-danger">删除</button>
   <br />
 
   <table class="table table-bordered">
+      <br>
+      <thead>
+        <tr>
+          <th scope="col">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+          </th>
+            <th scope="col">旗站名稱</th>
+            <th scope="col">地區</th>
+            <th scope="col">旗袋總數</th>
+            <th scope="col">後備旗袋</th>
+            <th scope="col">編輯</th>
+          </tr>
+      </thead>
+
+      <tbody>
+
+          <% webs.forEach( function(model) { %>
+            <tr>
+              <th scope="row">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1"></label>
+                </div>
+              </th>
+                <td><%= model.sLocation %></td>
+                <td><%= model.location %></td>
+                <td><%= model.numOfBag %></td>
+                <td><%= model.numOfBagBackUp %></td>
+                <td><a href='' class="btn btn-primary">編輯</a>
+                  </td>
+              <% }); %>
+            </tr>
+        
+        </tbody>
+    </table>
+  <!--table class="table table-bordered">
     <br />
 
     <thead>
@@ -107,7 +145,7 @@
         <td><button type="button" class="btn btn-link">編輯</button></td>
       </tr>
     </tbody>
-  </table>
+  </table-->
 </body>
 
 <style>

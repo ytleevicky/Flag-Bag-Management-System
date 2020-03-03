@@ -57,7 +57,7 @@ module.exports = {
       type: 'string'
     },
     //旗站位置
-    sLocation:{     //use in individual.ejs, stationmgDisplay.ejs, group.ejs
+    sLocation:{     //use in individual.ejs, station.ejs, group.ejs
       type: 'string'
     },
     //旗袋編號
@@ -77,7 +77,7 @@ module.exports = {
       type: 'string'
     },
     //賣旗地區
-    location:{      //use in group.ejs, stationmgDisplay.ejs
+    location:{      //use in group.ejs, station.ejs
       type: 'string'
     },
     //義工人數
@@ -85,11 +85,11 @@ module.exports = {
       type: 'number'
     },
     //旗袋總數(for each station in each event)
-    numOfBag:{      //use in stationmgDisplay.ejs
+    numOfBag:{      //use in station.ejs
       type: 'number'
     },
     //後備旗袋
-    numOfBagBackUp:{      //use in stationmgDisplay.ejs
+    numOfBagBackUp:{      //use in station.ejs
       type: 'number'
     },
 
