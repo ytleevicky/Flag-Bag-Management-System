@@ -120,9 +120,9 @@ module.exports = {
       type: 'number'
     },
     //義工人數
-    numOfV:{      //use in eventdetail.ejs
-      type: 'number'
-    },
+    // numOfV:{      //use in eventdetail.ejs
+    //   type: 'number'
+    // },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

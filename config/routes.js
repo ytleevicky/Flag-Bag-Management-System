@@ -47,7 +47,7 @@ module.exports.routes = {
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
 
-  '/addevent': 'WebController.addevent', 
+  '/addevent': 'WebController.addevent',
 
   '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
@@ -60,7 +60,7 @@ module.exports.routes = {
 
   '/import_event': 'WebController.import_event',
   '/export_event': 'WebController.export_event',
-  
+
   '/export_group': 'WebController.export_group',
 
   '/export_station': 'WebController.export_station',
