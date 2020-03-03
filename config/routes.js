@@ -56,7 +56,7 @@ module.exports.routes = {
   '/import_user': 'WebController.import_user',
   '/export_user': 'WebController.export_user',
 
-  '/export_event': 'WebController.export_event',
+  '/import_event': 'WebController.import_event',
   '/export_event': 'WebController.export_event',
 
   /***************************************************************************
