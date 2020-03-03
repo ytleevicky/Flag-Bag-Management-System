@@ -5,23 +5,25 @@
 
   <div class="bordered">
 
-    <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+    <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出旗站管理員資料（透過Excel）</p>
 
     <div class="row" style="padding: 20px;">
 
-      <div class="col-sm-6">
-        <p>匯入Excel檔案：</p>
-        <button type="button" class="btn btn-outline-secondary">請選擇檔案</button>
-      </div>
+      <form action="/import_user" method="post" enctype="multipart/form-data">
+        <div class="col-sm-6">
+          <p>匯入Excel檔案：</p>
+          <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
+          <input type="submit" class="btn btn-primary" />
+        </div>
+      </form>
 
       <div class="col-sm-6">
         <p>以Excel檔案匯出：</p>
-        <button type="button" class="btn btn-outline-secondary">匯出</button>
+        <a href="/export_statman" class="btn btn-info">匯出</a>
+        <!-- <button type="button" class="btn btn-outline-secondary">匯出</button> -->
       </div>
 
     </div>
-
-
   </div>
 
   <br>
