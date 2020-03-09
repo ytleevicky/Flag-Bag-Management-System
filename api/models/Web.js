@@ -49,6 +49,10 @@ module.exports = {
 
     //v/V = voluteer, s = station
     //賣旗者姓名
+    // generated_timestamp: {
+    //   type: 'string'
+    // },
+
     vName:{    //use in individual.ejs
       type: 'string'
     },
