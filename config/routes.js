@@ -65,6 +65,8 @@ module.exports.routes = {
 
   '/export_station': 'WebController.export_station',
 
+  'GET /updateUser/:id': 'WebController.updateUser',
+  'POST /user/:id': 'WebController.updateUser',
 
 
   /***************************************************************************

@@ -322,7 +322,7 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-  //upload event data 
+  //upload event data
   //To be updated and debugged.
   import_event: async function (req, res) {
     req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
@@ -410,6 +410,46 @@ module.exports = {
 
     res.set('Content-disposition', 'attachment; filename=Station_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
+  updateUser: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+      var model = await User.findOne(req.params.id);
+
+      if (!model) {return res.notFound();}
+
+      return res.view('web/updateUser', { user: model });
+
+    } else {
+
+      if (!req.body.User)
+      {return res.badRequest('Form-data not received.');}
+
+      var models = await User.update(req.params.id).set({
+        username: req.body.User.username,
+        password: req.body.User.password,
+        role: req.body.User.role,
+        mail: req.body.User.mail,
+        flagstn: req.body.User.flagstn
+      }).fetch();
+
+      if (models.length == 0) {return res.notFound();}
+
+      if (req.wantsJSON) {
+        if (req.body.role == 'admin'){
+          return res.json({ message: 'User information Updated!', url: '/adminDisplay' });
+        }
+        else{
+          return res.json({ message: 'User information Updated!', url: '/contact' });    // for ajax request
+        }
+      } else {
+        return res.redirect('/adminDisplay');           // for normal request
+      }
+
+
+    }
   },
 
 };
