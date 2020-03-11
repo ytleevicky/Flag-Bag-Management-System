@@ -452,5 +452,9 @@ module.exports = {
     }
   },
 
+  personalitem: async function (req, res) {
+    return res.view('web/personalitem');
+},
+
 };
 
