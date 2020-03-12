@@ -177,8 +177,8 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/individual', { webs: models });
+    var models = await Station.find();
+    return res.view('web/individual', { stations: models });
 
   },
 

@@ -18,6 +18,10 @@ module.exports = {
       type: 'boolean'
     },
 
+    codePrintedTime:{   //use in individual.ejs
+      type: 'String'
+    },
+
     //站長人數
     numOfSuser: {      //use in eventdetail.ejs
       type: 'number'

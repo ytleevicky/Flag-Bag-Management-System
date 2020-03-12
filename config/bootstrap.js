@@ -57,8 +57,8 @@ module.exports.bootstrap = async function () {
 
     await Station.createEach([
       {
-        stationName: 'TKO-A1', codePrinted: 'false', numOfSuser: '15', numOfSBag: '20',  numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Jean', vGroupName: 'Individual', sName: 'TKO-S1' , sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'nc',
+        stationName: 'TKO-A1', codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSBag: '20',  numOfSpareBag: '5', isDeleted: 'false',
+        vName: 'Jean', vGroupName: 'Individual', sName: 'TKO-S1' , sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
         bagUpdate: '18-6-2020'
       },
     ]);
