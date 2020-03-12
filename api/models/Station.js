@@ -9,11 +9,61 @@ module.exports = {
 
   attributes: {
 
-    stationname: {
+    sName: {
       type: 'String'
     },
 
-    
+    //最後列印標籤時間
+    codePrinted:{   //use in individual.ejs
+      type: 'boolean'
+    },
+
+    //站長人數
+    numOfSuser: {      //use in eventdetail.ejs
+      type: 'number'
+    },
+
+    numOfSBag: {      //use in eventdetail.ejs
+      type: 'number'
+    },
+
+    numOfSpareBag: {      //use in eventdetail.ejs
+      type: 'number'
+    },
+
+    isDeleted:{   //use in individual.ejs
+      type: 'boolean'
+    },
+
+    vName: {    //use in individual.ejs
+      type: 'string'
+    },
+
+    //賣旗團體名
+    vGroupName: {    //use in individual.ejs, group.ejs
+      type: 'string'
+    },
+
+    //旗站位置
+    sLocation: {     //use in individual.ejs, station.ejs, group.ejs
+      type: 'string'
+    },
+
+    //旗袋編號
+    bagNumber: {     //use in individual.ejs
+      type: 'string'
+    },
+
+    //旗袋狀態
+    bagStatus: {      //use in individual.ejs
+      type: 'string'
+    },
+
+    //旗袋最後更新時間
+    bagUpdate: {     //use in individual.ejs
+      type: 'string'
+    }, 
+
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

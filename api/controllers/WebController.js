@@ -25,8 +25,8 @@ module.exports = {
 
   station: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/station', { webs: models });
+    var models = await Station.find();
+    return res.view('web/station', { stations: models });
 
   },
 
@@ -451,10 +451,5 @@ module.exports = {
 
     }
   },
-
-  personalitem: async function (req, res) {
-    return res.view('web/personalitem');
-},
-
 };
 

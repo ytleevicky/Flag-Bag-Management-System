@@ -41,7 +41,7 @@
             </div>
           </th>
             <th scope="col">旗站名稱</th>
-            <th scope="col">地區</th>
+            <th scope="col">旗站地區</th>
             <th scope="col">旗袋總數</th>
             <th scope="col">後備旗袋</th>
             <th scope="col">編輯</th>
@@ -50,7 +50,7 @@
 
       <tbody>
 
-          <% webs.forEach( function(model) { %>
+          <% stations.forEach( function(model) { %>
             <tr>
               <th scope="row">
                 <div class="form-check">
@@ -58,10 +58,10 @@
                   <label class="form-check-label" for="exampleCheck1"></label>
                 </div>
               </th>
+                <td><%= model.sName %></td>
                 <td><%= model.sLocation %></td>
-                <td><%= model.location %></td>
-                <td><%= model.numOfBag %></td>
-                <td><%= model.numOfBagBackUp %></td>
+                <td><%= model.numOfSBag %></td>
+                <td><%= model.numOfSpareBag %></td>
                 <td><a href='' class="btn btn-primary">編輯</a>
                   </td>
               <% }); %>
