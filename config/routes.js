@@ -24,7 +24,7 @@ module.exports.routes = {
   '/management': 'WebController.management',
   '/eventdetail': 'WebController.eventdetail',
   '/addflagstn': 'WebController.addflagstn',
-  '/stationmgrDisplay': 'WebController.stationmgrDisplay',
+  '/stationmgrDisplay': 'StationController.stationmgrDisplay',
   '/viewitem': 'WebController.viewitem',
   '/personalitem': 'WebController.personalitem',
   '/groupitem': 'WebController.groupitem',
