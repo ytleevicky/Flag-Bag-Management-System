@@ -87,7 +87,6 @@ module.exports = {
 
   stationmgrDisplay: async function (req, res) {
 
-
     var models = await User.find({
       role: 'stationmgr'
     });
@@ -177,15 +176,17 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var models = await Station.find();
+    var models = await Station.find(
+      {vGroupName: 'Individual'}
+    );
     return res.view('web/individual', { stations: models });
 
   },
 
   group: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/group', { webs: models });
+    var models = await Station.find();
+    return res.view('web/group', { stations: models });
 
   },
 

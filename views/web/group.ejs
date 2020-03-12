@@ -48,15 +48,17 @@
             </div>
           </th>
             <th scope="col">團體姓名</th>
+            <th scope="col">聯絡人</th>
+            <th scope="col">聯絡電話</th>
             <th scope="col">旗站位置</th>
             <th scope="col">賣旗地區</th>
-            <th scope="col">義工人數</th>
+            <th scope="col">義工人數</th> 
             <th scope="col">編輯</th>
           </tr>
       </thead>
       <tbody>
 
-        <% webs.forEach( function(model) { %>
+        <% stations.forEach( function(model) { %>
           <tr>
             <th scope="row">
               <div class="form-check">
@@ -65,9 +67,11 @@
               </div>
             </th>
               <td><%= model.vGroupName %></td>
+              <td><%= model.vName %></td>
+              <td><%= model.vContact %></td>
+              <td><%= model.sName %></td>
               <td><%= model.sLocation %></td>
-              <td><%= model.location %></td>
-              <td><%= model.numOfV %></td>
+              <td><%= model.vGroupNumber %></td>
               <td><a href='' class="btn btn-primary">編輯</a>
                 </td>
             <% }); %>

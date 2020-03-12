@@ -48,6 +48,14 @@ module.exports = {
       type: 'string'
     },
 
+    vGroupNumber: {    //use in individual.ejs, group.ejs
+      type: 'number'
+    },
+
+    vContact: {    //use in individual.ejs, group.ejs
+      type: 'string'
+    },
+
     //旗站位置
     sLocation: {     //use in individual.ejs, station.ejs, group.ejs
       type: 'string'
