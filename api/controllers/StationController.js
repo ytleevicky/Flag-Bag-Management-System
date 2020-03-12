@@ -6,16 +6,16 @@
  */
 
 module.exports = {
-    stationmgrDisplay: async function (req, res) {
+  stationmgrDisplay: async function (req, res) {
 
-        var models = await User.find({
-          role: 'stationmgr'
-        });
-    
-        return res.view('station/stationmgrDisplay', { user: models });
-    
-      },
-    
+    var models = await User.find({
+      role: 'stationmgr'
+    });
+
+    return res.view('station/stationmgrDisplay', { user: models });
+
+  },
+
 
 };
 

@@ -27,12 +27,16 @@ module.exports = {
       type: 'number'
     },
 
-    numOfSBag: {      //use in eventdetail.ejs
-      type: 'number'
-    },
+    // numOfSBag: {      //use in eventdetail.ejs
+    //   type: 'number'
+    // },
 
     numOfSpareBag: {      //use in eventdetail.ejs
       type: 'number'
+    },
+
+    isSpareBag:{   //use in individual.ejs
+      type: 'boolean'
     },
 
     isDeleted:{   //use in individual.ejs
@@ -48,9 +52,6 @@ module.exports = {
       type: 'string'
     },
 
-    vGroupNumber: {    //use in individual.ejs, group.ejs
-      type: 'number'
-    },
 
     vContact: {    //use in individual.ejs, group.ejs
       type: 'string'
@@ -74,7 +75,11 @@ module.exports = {
     //旗袋最後更新時間
     bagUpdate: {     //use in individual.ejs
       type: 'string'
-    }, 
+    },
+
+    vType: {     //use in individual.ejs
+      type: 'string'
+    },
 
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗

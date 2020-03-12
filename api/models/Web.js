@@ -13,7 +13,7 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    /*orgName: { 
+    /*orgName: {
       type: 'string'
     },
 
@@ -52,9 +52,9 @@ module.exports = {
     // generated_timestamp: {
     //   type: 'string'
     // },
-    
+
     //義工人數
-    numOfV: {      //use in group.ejs  
+    numOfV: {      //use in group.ejs
       type: 'number'
     },
     //旗袋總數(for each station in each event)
@@ -88,7 +88,11 @@ module.exports = {
     numOfEBag: {      //use in eventdetail.ejs
       type: 'number'
     },
-    
+
+    QRCodePrinted:{   //use in individual.ejs
+      type: 'boolean'
+    },
+
     //義工人數
     // numOfV:{      //use in eventdetail.ejs
     //   type: 'number'
