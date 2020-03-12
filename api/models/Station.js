@@ -22,11 +22,6 @@ module.exports = {
       type: 'String'
     },
 
-    //站長人數
-    numOfSuser: {      //use in eventdetail.ejs
-      type: 'number'
-    },
-
     // numOfSBag: {      //use in eventdetail.ejs
     //   type: 'number'
     // },
@@ -51,7 +46,6 @@ module.exports = {
     vGroupName: {    //use in individual.ejs, group.ejs
       type: 'string'
     },
-
 
     vContact: {    //use in individual.ejs, group.ejs
       type: 'string'
