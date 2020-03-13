@@ -49,6 +49,29 @@ module.exports = {
 
   },
 
+  //export station manager information(for stationmgrDisplay.ejs)
+  export_statman: async function (req, res) {
+
+    var models = await User.find({role:'stationmgr'});
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        username: model.username,
+        role: model.role,
+        mail: model.mail,
+        flagstn: model.flagstn,
+        password: model.password,
+        createdby: model.createdby
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'statman_List');
+
+    res.set('Content-disposition', 'attachment; filename=statman_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
 
 };
 
