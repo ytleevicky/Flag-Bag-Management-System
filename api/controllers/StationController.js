@@ -76,7 +76,7 @@ module.exports = {
   stationmanagement: async function (req, res) {
 
     var models = await Web.find();
-    return res.view('web/stationmanagement', { webs: models });
+    return res.view('station/stationmanagement', { webs: models });
 
   },
 
