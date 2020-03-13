@@ -17,57 +17,62 @@ module.exports.routes = {
    * `assets` directory)                                                      *
    *                                                                          *
    ***************************************************************************/
+  
+  //Use in UserController
+
+  '/': 'UserController.login',                //default page
+  //login and logout
+  'GET /user/login': 'UserController.login',
+  'POST /user/login': 'UserController.login',
+  'GET /user/logout': 'UserController.logout',
+
+  //Use in WebController
 
   '/location': 'WebController.location',
   '/setting': 'WebController.setting',
   '/contact': 'WebController.contact',
   '/management': 'WebController.management',
   '/eventdetail': 'WebController.eventdetail',
-  '/addflagstn': 'WebController.addflagstn',
-  '/stationmgrDisplay': 'StationController.stationmgrDisplay',
   '/viewitem': 'WebController.viewitem',
   '/personalitem': 'WebController.personalitem',
   '/groupitem': 'WebController.groupitem',
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
-
+  //Adding pages
+  '/addflagstn': 'WebController.addflagstn',
   '/adduser': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
-
   '/addadmin': 'WebController.addadmin',
+  '/addGroup': 'WebController.addGroup',
+  '/addevent': 'WebController.addevent',
+
   '/adminDisplay': 'WebController.adminDisplay',
 
   '/stationmanagement': 'WebController.stationmanagement',
   '/individual': 'WebController.individual',
   '/group': 'WebController.group',
   '/addIndividual': 'WebController.addIndividual',
-  '/addGroup': 'WebController.addGroup',
-  '/station': 'StationController.station',
 
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
-
-  '/addevent': 'WebController.addevent',
-
-  '/': 'UserController.login',
-  'GET /user/login': 'UserController.login',
-  'POST /user/login': 'UserController.login',
-  'GET /user/logout': 'UserController.logout',
-
+  //import and export
   '/import_user': 'WebController.import_user',
   '/export_admin': 'WebController.export_admin',
   '/export_statman': 'WebController.export_statman',
-
   '/import_event': 'WebController.import_event',
   '/export_event': 'WebController.export_event',
-
   '/export_group': 'WebController.export_group',
 
-  '/export_station': 'WebController.export_station',
-
+  
   'GET /updateUser/:id': 'WebController.updateUser',
   'POST /user/:id': 'WebController.updateUser',
 
+  //USe in StationController
+
+  '/stationmgrDisplay': 'StationController.stationmgrDisplay',
+  '/station': 'StationController.station',
+  //export
+  '/export_station': 'StationController.export_station',
 
   /***************************************************************************
    *                                                                          *
