@@ -95,7 +95,7 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-   //export station manager information(for stationmgrDisplay.ejs)
+   //export individual volunteer information(for individual.ejs)
    export_vIndividual: async function (req, res) {
 
     var models = await Station.find();
@@ -125,6 +125,13 @@ module.exports = {
 
     var models = await Web.find();
     return res.view('station/stationmanagement', { webs: models });
+
+  },
+
+  individual: async function (req, res) {
+
+    var models = await Station.find();
+    return res.view('station/individual', { stations: models });
 
   },
 

@@ -37,16 +37,6 @@ module.exports = {
 
   },
 
-  contact: async function (req, res) {
-
-    var models = await User.find({
-      role: 'stationmgr'
-    });
-
-    return res.view('web/contact', { user: models });
-
-  },
-
   adminDisplay: async function (req, res) {
 
     var models = await User.find({
@@ -147,15 +137,6 @@ module.exports = {
   //   }
 
   // },
-
-  individual: async function (req, res) {
-
-    var models = await Station.find(
-      { vGroupName: 'Individual' }
-    );
-    return res.view('web/individual', { stations: models });
-
-  },
 
   group: async function (req, res) {
 

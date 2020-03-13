@@ -47,7 +47,7 @@ module.exports.routes = {
 
   '/adminDisplay': 'WebController.adminDisplay',
 
-  '/individual': 'WebController.individual',
+  // '/individual': 'WebController.individual',
   '/group': 'WebController.group',
   '/addIndividual': 'WebController.addIndividual',
 
@@ -65,11 +65,13 @@ module.exports.routes = {
   'GET /updateUser/:id': 'WebController.updateUser',
   'POST /user/:id': 'WebController.updateUser',
 
-  //USe in StationController
+  //USE in StationController
 
+  '/individual': 'StationController.individual',
   '/stationmgrDisplay': 'StationController.stationmgrDisplay',
   '/station': 'StationController.station',
   '/stationmanagement': 'StationController.stationmanagement',
+
   //export
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',
