@@ -23,13 +23,6 @@ module.exports = {
 
   },
 
-  station: async function (req, res) {
-
-    var models = await Station.find();
-    return res.view('web/station', { stations: models });
-
-  },
-
   location: async function (req, res) {
 
     var models = await Web.find();
@@ -85,15 +78,6 @@ module.exports = {
 
   },
 
-  stationmgrDisplay: async function (req, res) {
-
-    var models = await User.find({
-      role: 'stationmgr'
-    });
-
-    return res.view('web/stationmgrDisplay', { user: models });
-
-  },
 
   viewitem: async function (req, res) {
 
@@ -387,29 +371,6 @@ module.exports = {
     XLSX.utils.book_append_sheet(wb, ws, 'Group_List');
 
     res.set('Content-disposition', 'attachment; filename=Group_List.xlsx');
-    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  },
-
-
-  //export event data into excel file(.xlsx format)(for station.ejs)
-  export_station: async function (req, res) {
-
-    var models = await Web.find();
-
-    var XLSX = require('xlsx');
-    var wb = XLSX.utils.book_new();
-
-    var ws = XLSX.utils.json_to_sheet(models.map(model => {
-      return {
-        vGroupName: model.sLocation, //旗站位置
-        sLocation: model.location, //賣旗地區
-        bagNumber: model.numOfBag, //旗袋總數
-        bagStats: model.numOfBagBackUp, //後備旗袋
-      };
-    }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Station_List');
-
-    res.set('Content-disposition', 'attachment; filename=Station_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
