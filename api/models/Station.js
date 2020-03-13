@@ -8,16 +8,16 @@
 module.exports = {
 
   attributes: {
-
+    //旗站名稱
     sName: {
       type: 'String'
     },
 
-    //最後列印標籤時間
+    //是否列印標籤
     codePrinted:{   //use in individual.ejs
       type: 'boolean'
     },
-
+    //最後列印標籤時間
     codePrintedTime:{   //use in individual.ejs
       type: 'String'
     },

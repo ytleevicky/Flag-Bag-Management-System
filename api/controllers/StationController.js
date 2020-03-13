@@ -6,6 +6,8 @@
  */
 
 module.exports = {
+
+  //need to add sum of station bag function
   //for station.ejs
   station: async function (req, res) {
 
