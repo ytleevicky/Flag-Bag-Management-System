@@ -6,6 +6,14 @@
  */
 
 module.exports = {
+  //for station.ejs
+  station: async function (req, res) {
+
+    var models = await Station.find();
+    return res.view('station/station', { stations: models });
+
+  },
+  //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 
     var models = await User.find({

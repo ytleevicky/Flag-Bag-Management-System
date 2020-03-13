@@ -42,7 +42,7 @@ module.exports.routes = {
   '/group': 'WebController.group',
   '/addIndividual': 'WebController.addIndividual',
   '/addGroup': 'WebController.addGroup',
-  '/station': 'WebController.station',
+  '/station': 'StationController.station',
 
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
