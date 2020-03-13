@@ -125,36 +125,33 @@ module.exports = {
     }
     return res.redirect('/stationmgrDisplay');           // for normal request
 
-
-    // return res.redirect('/contact');           // for normal request
-
   },
 
-  addadmin: async function (req, res) {
+  // addadmin: async function (req, res) {
 
-    if (req.method == 'GET') { return res.view('web/addadmin'); }
+  //   if (req.method == 'GET') { return res.view('web/addadmin'); }
 
-    if (!req.body.User) { return res.badRequest('Form-data not received.'); }
+  //   if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
-    var user = await User.create(req.body.User).fetch();
+  //   var user = await User.create(req.body.User).fetch();
 
-    await User.create(req.body.User);
+  //   await User.create(req.body.User);
 
-    if (req.wantsJSON) {
-      if (user.role == 'admin') {
-        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });    // for ajax request
-      }
-      else {
-        return res.redirect('/adminDisplay');
-      }           // for normal request
-    }
+  //   if (req.wantsJSON) {
+  //     if (user.role == 'admin') {
+  //       return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });    // for ajax request
+  //     }
+  //     else {
+  //       return res.redirect('/adminDisplay');
+  //     }           // for normal request
+  //   }
 
-  },
+  // },
 
   individual: async function (req, res) {
 
     var models = await Station.find(
-      {vGroupName: 'Individual'}
+      { vGroupName: 'Individual' }
     );
     return res.view('web/individual', { stations: models });
 
@@ -244,19 +241,20 @@ module.exports = {
         return res.badRequest('No data imported.');
       }
 
-      if (req.wantsJSON) {
-        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });}
-      else{
-        return res.redirect('/adminDisplay');
+      // Check the role to decide redirection
+      if (models[0].role == 'admin') {          // using models[0] to check the role (to be modified)
+          return res.redirect('/adminDisplay');
       }
-      // return res.ok('Excel file imported.');
+
+      return res.redirect('/stationmgrDisplay');
+      
     });
   },
 
   //export user data
   export_admin: async function (req, res) {
 
-    var models = await User.find({role:'admin'});
+    var models = await User.find({ role: 'admin' });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
@@ -350,14 +348,13 @@ module.exports = {
 
       var model = await User.findOne(req.params.id);
 
-      if (!model) {return res.notFound();}
+      if (!model) { return res.notFound(); }
 
       return res.view('web/updateUser', { user: model });
 
     } else {
 
-      if (!req.body.User)
-      {return res.badRequest('Form-data not received.');}
+      if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
       var models = await User.update(req.params.id).set({
         username: req.body.User.username,
@@ -367,13 +364,13 @@ module.exports = {
         flagstn: req.body.User.flagstn
       }).fetch();
 
-      if (models.length == 0) {return res.notFound();}
+      if (models.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
-        if (req.body.role == 'admin'){
+        if (req.body.role == 'admin') {
           return res.json({ message: 'User information Updated!', url: '/adminDisplay' });
         }
-        else{
+        else {
           return res.json({ message: 'User information Updated!', url: '/contact' });    // for ajax request
         }
       } else {

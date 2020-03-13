@@ -41,7 +41,7 @@ module.exports.routes = {
   '/addflagstn': 'WebController.addflagstn',
   '/adduser': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
-  '/addadmin': 'WebController.addadmin',
+  // '/addadmin': 'WebController.addadmin',
   '/addGroup': 'WebController.addGroup',
   '/addevent': 'WebController.addevent',
 
