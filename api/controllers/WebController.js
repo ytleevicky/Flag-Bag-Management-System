@@ -151,13 +151,6 @@ module.exports = {
 
   },
 
-  stationmanagement: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/stationmanagement', { webs: models });
-
-  },
-
   individual: async function (req, res) {
 
     var models = await Station.find(

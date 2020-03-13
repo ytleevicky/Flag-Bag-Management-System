@@ -48,7 +48,6 @@ module.exports.routes = {
 
   '/adminDisplay': 'WebController.adminDisplay',
 
-  '/stationmanagement': 'WebController.stationmanagement',
   '/individual': 'WebController.individual',
   '/group': 'WebController.group',
   '/addIndividual': 'WebController.addIndividual',
@@ -70,6 +69,7 @@ module.exports.routes = {
 
   '/stationmgrDisplay': 'StationController.stationmgrDisplay',
   '/station': 'StationController.station',
+  '/stationmanagement': 'StationController.stationmanagement',
   //export
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',

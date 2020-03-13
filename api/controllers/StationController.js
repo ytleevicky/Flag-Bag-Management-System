@@ -72,6 +72,13 @@ module.exports = {
     res.set('Content-disposition', 'attachment; filename=statman_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
+  //manage station information(for stationmanagement.ejs)
+  stationmanagement: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('web/stationmanagement', { webs: models });
+
+  },
 
 };
 
