@@ -26,10 +26,10 @@ module.exports = {
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        vGroupName: model.sLocation, //旗站位置
-        sLocation: model.location, //賣旗地區
-        bagNumber: model.numOfBag, //旗袋總數
-        bagStats: model.numOfBagBackUp, //後備旗袋
+        sName: model.sName, //旗站位置
+        sLocation: model.slocation, //賣旗地區
+        //bagNumber: model.numOfBag, //旗袋總數(need to add function)
+        bagStats: model.numOfSpareBag, //後備旗袋
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'Station_List');
