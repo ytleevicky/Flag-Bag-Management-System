@@ -94,6 +94,32 @@ module.exports = {
     res.set('Content-disposition', 'attachment; filename=statman_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
+
+   //export station manager information(for stationmgrDisplay.ejs)
+   export_vIndividual: async function (req, res) {
+
+    var models = await Station.find();
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        vName: model.vName,
+        vContact: model.vContact,
+        sLocation: model.sLocation,
+        bagNumber: model.bagNumber,
+        bagStatus: model.bagStatus,
+        bagUpdate: model.bagUpdate,
+        codePrintedTime: model.codePrintedTime
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'vIndividual_List');
+
+    res.set('Content-disposition', 'attachment; filename=vIndividual_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
   //manage station information(for stationmanagement.ejs)
   stationmanagement: async function (req, res) {
 
