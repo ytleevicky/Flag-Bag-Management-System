@@ -56,12 +56,9 @@ module.exports.routes = {
   //import and export
   '/import_user': 'WebController.import_user',
   '/export_admin': 'WebController.export_admin',
-  '/import_event': 'WebController.import_event',
+  // '/import_event': 'WebController.import_event',
   // '/export_event': 'WebController.export_event',
   '/export_group': 'WebController.export_group',
-  '/import_station': 'StationController.import_station',
-
-  
   'GET /updateUser/:id': 'WebController.updateUser',
   'POST /user/:id': 'WebController.updateUser',
 
@@ -76,6 +73,11 @@ module.exports.routes = {
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',
   '/export_vIndividual': 'StationController.export_vIndividual',
+
+  // import
+  '/import_station': 'StationController.import_station',
+  '/import_vIndividual': 'StationController.import_vIndividual',
+  
 
   /***************************************************************************
    *                                                                          *

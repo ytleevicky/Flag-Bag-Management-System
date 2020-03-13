@@ -14,10 +14,10 @@
   
       <div class="row" style="padding: 20px;">
   
-        <form action="/import_event" method="post" enctype="multipart/form-data">
+        <form action="/import_vIndividual" method="post" enctype="multipart/form-data">
           <div class="col-sm-6">
             <p>匯入Excel檔案：</p>
-            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple/>
+            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
             <input type="submit" class="btn btn-primary" />
           </div>
         </form>

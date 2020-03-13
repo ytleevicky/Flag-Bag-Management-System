@@ -56,7 +56,7 @@ module.exports = {
       }
 
       return res.redirect('/station');
-      
+
     });
   },
 
@@ -74,7 +74,7 @@ module.exports = {
   //export station manager information(for stationmgrDisplay.ejs)
   export_statman: async function (req, res) {
 
-    var models = await User.find({role:'stationmgr'});
+    var models = await User.find({ role: 'stationmgr' });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
@@ -95,8 +95,8 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-   //export individual volunteer information(for individual.ejs)
-   export_vIndividual: async function (req, res) {
+  //export individual volunteer information(for individual.ejs)
+  export_vIndividual: async function (req, res) {
 
     var models = await Station.find();
 
@@ -119,6 +119,30 @@ module.exports = {
     res.set('Content-disposition', 'attachment; filename=vIndividual_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
+
+  //upload individual volunteer information
+  import_vIndividual: async function (req, res) {
+
+    req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
+      if (err) { return res.serverError(err); }
+      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
+
+      var XLSX = require('xlsx');
+      var workbook = XLSX.readFile(uploadedFiles[0].fd);
+      var ws = workbook.Sheets[workbook.SheetNames[0]];
+      var data = XLSX.utils.sheet_to_json(ws);
+      console.log(data);
+      var models = await Station.createEach(data).fetch();
+
+      if (models.length == 0) {
+        return res.badRequest('No data imported.');
+      }
+    
+      return res.redirect('/individual');
+
+    });
+  },
+
 
   //manage station information(for stationmanagement.ejs)
   stationmanagement: async function (req, res) {
