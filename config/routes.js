@@ -48,7 +48,7 @@ module.exports.routes = {
   '/adminDisplay': 'WebController.adminDisplay',
 
   // '/individual': 'WebController.individual',
-  '/group': 'WebController.group',
+  // '/group': 'WebController.group',
   '/addIndividual': 'WebController.addIndividual',
 
   '/qrCode': 'WebController.qrCode',
@@ -58,7 +58,7 @@ module.exports.routes = {
   '/export_admin': 'WebController.export_admin',
   // '/import_event': 'WebController.import_event',
   // '/export_event': 'WebController.export_event',
-  '/export_group': 'WebController.export_group',
+  // '/export_group': 'WebController.export_group',
   'GET /updateUser/:id': 'WebController.updateUser',
   'POST /user/:id': 'WebController.updateUser',
 
@@ -68,15 +68,18 @@ module.exports.routes = {
   '/stationmgrDisplay': 'StationController.stationmgrDisplay',
   '/station': 'StationController.station',
   '/stationmanagement': 'StationController.stationmanagement',
+  '/group': 'StationController.group',
 
   //export
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',
   '/export_vIndividual': 'StationController.export_vIndividual',
+  '/export_group': 'StationController.export_group',
 
   // import
   '/import_station': 'StationController.import_station',
   '/import_vIndividual': 'StationController.import_vIndividual',
+  '/import_group': 'StationController.import_group',
   
 
   /***************************************************************************

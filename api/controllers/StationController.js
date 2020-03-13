@@ -107,6 +107,7 @@ module.exports = {
       return {
         vName: model.vName,
         vContact: model.vContact,
+        sName: model.sName,
         sLocation: model.sLocation,
         bagNumber: model.bagNumber,
         bagStatus: model.bagStatus,
@@ -137,7 +138,7 @@ module.exports = {
       if (models.length == 0) {
         return res.badRequest('No data imported.');
       }
-    
+
       return res.redirect('/individual');
 
     });
@@ -157,6 +158,59 @@ module.exports = {
     var models = await Station.find();
     return res.view('station/individual', { stations: models });
 
+  },
+
+  group: async function (req, res) {
+
+    var models = await Station.find();
+    return res.view('station/group', { stations: models });
+
+  },
+
+  //export group information(for group.ejs)
+  export_group: async function (req, res) {
+
+    var models = await Station.find();
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        vGroupName: model.vGroupName,
+        vName: model.vName,
+        vContact: model.vContact,
+        sName: model.sName,
+        sLocation: model.sLocation,
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
+
+    res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
+   //upload group information
+   import_group: async function (req, res) {
+
+    req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
+      if (err) { return res.serverError(err); }
+      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
+
+      var XLSX = require('xlsx');
+      var workbook = XLSX.readFile(uploadedFiles[0].fd);
+      var ws = workbook.Sheets[workbook.SheetNames[0]];
+      var data = XLSX.utils.sheet_to_json(ws);
+      console.log(data);
+      var models = await Station.createEach(data).fetch();
+
+      if (models.length == 0) {
+        return res.badRequest('No data imported.');
+      }
+
+      return res.redirect('/group');
+
+    });
   },
 
 };
