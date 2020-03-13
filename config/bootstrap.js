@@ -64,7 +64,7 @@ module.exports.bootstrap = async function () {
 
       {
         codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Kenny', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S1' , sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        vName: 'Kenny', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2' , sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
         bagUpdate: '18-6-2020'
       },
     ]);
