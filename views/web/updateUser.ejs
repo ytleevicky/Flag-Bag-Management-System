@@ -59,7 +59,11 @@
 
     <!-- <button type="button" class="btn btn-success" style="float:right;">儲存</button> -->
     <button type="submit" class="btn btn-primary" style="float:right;">儲存</button>
-    <button type="button" class="btn btn-danger" style="float:right;">取消</button>
+    <%if (user.role == "admin") { %>
+    <a href='/adminDisplay' class="btn btn-danger" style="float:right;">取消</a>
+    <% } else { %>
+    <a href='/stationmgrDisplay' class="btn btn-danger" style="float:right;">取消</a>
+    <% } %>
 
   </form>
 
