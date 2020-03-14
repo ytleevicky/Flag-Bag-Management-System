@@ -348,11 +348,11 @@ module.exports = {
       if (models.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
-        if (req.body.role == 'admin') {
-          return res.json({ message: 'User information Updated!', url: '/adminDisplay' });
+        if (req.body.User.role == 'admin') {
+          return res.json({ message: '已更新活動管理員！', url: '/adminDisplay' });
         }
         else {
-          return res.json({ message: 'User information Updated!', url: '/contact' });    // for ajax request
+          return res.json({ message: '已更新旗站站長！', url: '/stationmgrDisplay' });    // for ajax request
         }
       } else {
         return res.redirect('/adminDisplay');           // for normal request
