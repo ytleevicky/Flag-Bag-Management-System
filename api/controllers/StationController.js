@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /**
  * StationController
  *
@@ -190,8 +191,8 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
-   //upload group information
-   import_group: async function (req, res) {
+  //upload group information
+  import_group: async function (req, res) {
 
     req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
       if (err) { return res.serverError(err); }

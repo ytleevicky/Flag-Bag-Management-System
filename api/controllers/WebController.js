@@ -224,11 +224,11 @@ module.exports = {
 
       // Check the role to decide redirection
       if (models[0].role == 'admin') {          // using models[0] to check the role (to be modified)
-          return res.redirect('/adminDisplay');
+        return res.redirect('/adminDisplay');
       }
 
       return res.redirect('/stationmgrDisplay');
-      
+
     });
   },
 
@@ -360,6 +360,21 @@ module.exports = {
 
 
     }
+  },
+
+  removeUser: async function (req, res) {
+    if (req.method == "GET") return res.forbidden();
+
+    var models = await User.destroy(req.params.id).fetch();
+
+    if (models.length == 0) return res.notFound();
+
+    if (req.wantsJSON) {
+      return res.json({ message: "Estate Deleted!", url: '/' });    // for ajax request
+    } else {
+      return res.redirect('/');           // for normal request
+    }
+
   },
 };
 

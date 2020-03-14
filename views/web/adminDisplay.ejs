@@ -47,7 +47,7 @@
         <th scope="col">用戶名稱</th>
         <th scope="col">電郵</th>
         <th scope="col">用戶身份</th>
-        <th scope="col"></th>
+        <th scope="col">動作</th>
       </tr>
     </thead>
     <tbody>
@@ -63,7 +63,11 @@
         <td><%= model.username %></td>
         <td><%= model.mail %></td>
         <td><%= model.role %></td>
-        <td><a href='/updateUser/<%= model.id %>' class="btn btn-primary">編輯</a></td>
+        <td>
+          <a href='/updateUser/<%= model.id %>' class="btn btn-primary" onclick="deleteUser('<%= model.id %>')">編輯</a>
+          <a href='' class="btn btn-danger">刪除</a>
+        </td>
+
         <% }); %>
 
       </tr>
@@ -82,3 +86,30 @@
     border-color: powderblue;
   }
 </style>
+
+<script>
+  async function deleteUser(id) {
+
+    var r = confirm("Confirm Delete?");
+
+    if (r) {
+
+      var response = await fetch("/user/" + id, {
+        method: "DELETE",
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        var data = await response.json();
+        alert(data.message);
+        window.location = data.url;
+      } else {
+        alert(response.status + ": " + response.statusText);
+      }
+
+    } else {
+      alert("cancelled");
+    }
+
+  };
+</script>
