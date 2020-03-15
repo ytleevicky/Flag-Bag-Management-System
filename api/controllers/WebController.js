@@ -61,12 +61,12 @@ module.exports = {
 
   },
 
-  addflagstn: async function (req, res) {
+  // addflagstn: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/addflagstn', { webs: models });
+  //   var models = await Web.find();
+  //   return res.view('web/addflagstn', { webs: models });
 
-  },
+  // },
 
 
   viewitem: async function (req, res) {

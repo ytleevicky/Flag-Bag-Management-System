@@ -214,5 +214,14 @@ module.exports = {
     });
   },
 
+  addflagstn: async function (req, res) {
+
+    var models = await User.find({
+      role: 'stationmgr'
+    });
+    return res.view('station/addflagstn', { stations: models });
+
+  },
+
 };
 

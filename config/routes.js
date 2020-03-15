@@ -38,7 +38,6 @@ module.exports.routes = {
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
   //Adding pages
-  '/addflagstn': 'WebController.addflagstn',
   '/adduser': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
   // '/addadmin': 'WebController.addadmin',
@@ -69,6 +68,7 @@ module.exports.routes = {
   '/station': 'StationController.station',
   '/stationmanagement': 'StationController.stationmanagement',
   '/group': 'StationController.group',
+  '/addflagstn': 'StationController.addflagstn',
 
   //export
   '/export_station': 'StationController.export_station',
