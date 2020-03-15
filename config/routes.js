@@ -45,6 +45,7 @@ module.exports.routes = {
   '/addevent': 'WebController.addevent',
 
   '/adminDisplay': 'WebController.adminDisplay',
+  'DELETE /user/:id': 'WebController.removeUser',
 
   // '/individual': 'WebController.individual',
   // '/group': 'WebController.group',

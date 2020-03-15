@@ -370,10 +370,13 @@ module.exports = {
     if (models.length == 0) return res.notFound();
 
     if (req.wantsJSON) {
-      return res.json({ message: "Estate Deleted!", url: '/' });    // for ajax request
-    } else {
-      return res.redirect('/');           // for normal request
-    }
+      if (models[0].role == 'admin') {
+        return res.json({ message: '已刪除活動管理員！', url: '/adminDisplay' });
+      }
+      else {
+        return res.json({ message: '已刪除旗站站長！', url: '/stationmgrDisplay' });    // for ajax request
+      }
+    } 
 
   },
 };
