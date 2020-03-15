@@ -337,9 +337,12 @@ module.exports = {
 
       if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
+      sails.bcrypt = require('bcryptjs');
+      const saltRounds = 10;
+
       var models = await User.update(req.params.id).set({
         username: req.body.User.username,
-        password: req.body.User.password,
+        password: await sails.bcrypt.hash(req.body.User.password, saltRounds),
         role: req.body.User.role,
         mail: req.body.User.mail,
         flagstn: req.body.User.flagstn
