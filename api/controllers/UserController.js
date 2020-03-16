@@ -16,7 +16,7 @@ module.exports = {
 
     var user = await User.findOne({ username: req.body.username });
 
-    if (!user) { return res.status(401).send('使用者名稱不正確'); }
+    if (!user || !match) { return res.status(401).send('使用者或密碼名稱不正確'); }
 
     // eslint-disable-next-line eqeqeq
     // if (user.password != req.body.password)
@@ -24,7 +24,7 @@ module.exports = {
 
     const match = await sails.bcrypt.compare(req.body.password, user.password);
 
-    if (!match) { return res.status(401).send('密碼不正確'); }
+    //if (!match) { return res.status(401).send('密碼不正確'); }
 
     req.session.regenerate((err) => {
       if (err) { return res.serverError(err); }
