@@ -43,6 +43,7 @@ module.exports.routes = {
   // '/addadmin': 'WebController.addadmin',
   '/addGroup': 'WebController.addGroup',
   '/addevent': 'WebController.addevent',
+  'POST /web/': 'WebController.addevent',
 
   '/adminDisplay': 'WebController.adminDisplay',
   'DELETE /user/:id': 'WebController.removeUser',

@@ -117,6 +117,21 @@ module.exports = {
 
   },
 
+  addevent: async function (req, res) {
+
+    if (req.method == 'GET') { return res.view('web/addevent'); }
+
+    if (!req.body.Web) { return res.badRequest('Form-data not received.'); }
+
+    await Web.create(req.body.Web);
+
+    if (req.wantsJSON) {
+        return res.json({ message: '已新增活動', url: '/management' });    // for ajax request
+    }else{
+        return res.redirect('/management');// for normal request
+    }               
+  },
+
   // addadmin: async function (req, res) {
 
   //   if (req.method == 'GET') { return res.view('web/addadmin'); }
@@ -191,13 +206,6 @@ module.exports = {
 
     var models = await Web.find();
     return res.view('web/generateLabel', { user: models });
-
-  },
-
-  addevent: async function (req, res) {
-
-    var models = await User.find();
-    return res.view('web/addevent', { user: models });
 
   },
 

@@ -1,7 +1,7 @@
 <body>
     <br>
 
-    <h2><a href="/management">活動管理</a> > 活動管理</h2>
+    <h2><a href="/management">活動管理</a></h2>
     <br>
     <br>
 
@@ -10,63 +10,62 @@
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">活動名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="Web[eventName]" required>
+                <input type="text" class="form-control" name="Web[eventName]" required>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">活動日期</label>
+            <label for="inputdateOfEvent" class="col-sm-2 col-form-label">活動日期</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" id="Web[dateOfEvent]">
+                <input type="date" class="form-control" name="Web[dateOfEvent]">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">賣旗地區</label>
+            <label for="inputeventLocation" class="col-sm-2 col-form-label">賣旗地區</label>
             <div class="col-sm-10">
                 <select class="form-control" name="Web[eventLocation]" required>
                     <option value="">請選擇所屬地區</option>
                     <option value="hk">全港</option>
-                    <!-- <option value="Tin Ma Court">九龍城浸信會禧年(恩平)小學</option>
-                    <option value="City One Shatin">聖公會靈愛小學</option>
-                    <option value="City One Shatin">九龍堂宣道小學</option>
-                    <option value="City One Shatin">香港萬國宣道浸信會社會服務田裕浸信會長者鄰舍中心</option> -->
+                    <option value="hkIsland">港島</option>
+                    <option value="kwl">九龍</option>
+                    <option value="nt">新界</option>
                 </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">旗站數目</label>
+            <label for="inputnumOfStation" class="col-sm-2 col-form-label">旗站數目</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="Web[numOfStation]">
+                <input type="number" class="form-control" name="Web[numOfStation]">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="inputStation" class="col-sm-2 col-form-label">旗袋總數</label>
+            <label for="inputnumOfEBag" class="col-sm-2 col-form-label">旗袋總數</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="inputStation">
+                <input type="number" class="form-control" name="Web[numOfEBag]">
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2">站長人數</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="inputStation">
+                <input type="number" class="form-control" name="Web[numOfStation]">
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2">義工人數</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="inputStation">
+                <input type="number" class="form-control" name="Web[numOfV]">
             </div>
         </div>
 
 
-        <button type="button" class="btn btn-success" style="float:right;">儲存</button>
+        <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
 
-        <button type="button" class="btn btn-danger" style="float:right;">取消</button>
+        <a href="/management" class="btn btn-danger" style="float:right;">取消</a>
 
     </form>
 
@@ -88,7 +87,7 @@
                 // validatePwd()
                 var data = await response.json();   // for res.ok() or res.json()
                 alert(data.message);
-                windows.location = data.url;
+                window.location = data.url;
                 //location.reload(true);
             } else if (response.status == 401) {
                 var data = await response.text();   // for res.send()

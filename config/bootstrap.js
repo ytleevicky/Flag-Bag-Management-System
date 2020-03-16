@@ -47,7 +47,20 @@ module.exports.bootstrap = async function () {
     await Web.createEach([
       {
         numOfV: '60', numOfBag: '45', numOfBagBackUp: '5', eventName: 'First Event', dateOfEvent: '20-6-2020',
-        eventLocation: '全港', numOfStation: '8', numOfEBag: '55'
+        eventLocation: '全港', numOfStation: '8', numOfEBag: '50'
+      },
+      {
+        numOfV: '87', numOfBag: '55', numOfBagBackUp: '6', eventName: 'Second Event', dateOfEvent: '20-7-2020',
+        eventLocation: '港島', numOfStation: '9', numOfEBag: '61'
+      },
+      {
+        numOfV: '69', numOfBag: '60', numOfBagBackUp: '7', eventName: 'Third Event', dateOfEvent: '20-8-2020',
+        eventLocation: '九龍', numOfStation: '9', numOfEBag: '67'
+      },
+
+      {
+        numOfV: '50', numOfBag: '40', numOfBagBackUp: '8', eventName: 'Fourth Event', dateOfEvent: '20-9-2020',
+        eventLocation: '新界', numOfStation: '7', numOfEBag: '48'
       },
     ]);
 

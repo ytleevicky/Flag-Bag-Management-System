@@ -54,7 +54,7 @@ module.exports = {
     // },
 
     //義工人數
-    numOfV: {      //use in group.ejs
+    numOfV: {      //use in group.ejs, addevent.ejs
       type: 'number'
     },
     //旗袋總數(for each station in each event)
@@ -81,11 +81,11 @@ module.exports = {
       type: 'string'
     },
     //旗站數目
-    numOfStation: {      //use in eventdetail.ejs
+    numOfStation: {      //use in eventdetail.ejs, addevent.ejs
       type: 'number'
     },
     //旗袋總數(for each event)
-    numOfEBag: {      //use in eventdetail.ejs
+    numOfEBag: {      //use in eventdetail.ejs, addevent.ejs
       type: 'number'
     },
 
