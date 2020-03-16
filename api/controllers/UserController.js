@@ -16,7 +16,7 @@ module.exports = {
 
     var user = await User.findOne({ username: req.body.username });
 
-    if (!user) { return res.status(401).send('User not found'); }
+    if (!user) { return res.status(401).send('使用者名稱不正確'); }
 
     // eslint-disable-next-line eqeqeq
     // if (user.password != req.body.password)
@@ -24,7 +24,7 @@ module.exports = {
 
     const match = await sails.bcrypt.compare(req.body.password, user.password);
 
-    if (!match) { return res.status(401).send('Wrong Password'); }
+    if (!match) { return res.status(401).send('密碼不正確'); }
 
     req.session.regenerate((err) => {
       if (err) { return res.serverError(err); }
@@ -38,12 +38,17 @@ module.exports = {
 
       // eslint-disable-next-line eqeqeq
       if (req.session.role == 'admin') {
-        return res.redirect('/management');
+        if (req.wantsJSON) {
+          return res.redirect('/management');
+        } 
       }
 
       else if (req.session.role == 'stationmgr') {
-        return res.redirect('/stationmanagement');
+        if (req.wantsJSON) {
+          return res.redirect('/stationmanagement');
+        }
       }
+
     });
   },
 

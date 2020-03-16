@@ -1,4 +1,4 @@
-<form action="/user/login" method="POST">
+<form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
     <img src="/images/logo123.jpeg" style="width:150px;height:200px;">
     <br>
     <h2><b>請先登入以使用此系統</b></h2>
@@ -29,3 +29,30 @@
 
   <button type="submit" class="btn btn-primary">登入</button>
 </form>
+
+
+<script>
+  async function submitForm(oFormElement) {
+
+      var response = await fetch(oFormElement.action, {
+          method: oFormElement.method,
+          credentials: 'same-origin',
+          body: new FormData(oFormElement),
+      });
+
+      if (response.redirected) {
+          window.location = response.url;
+      } else if (response.status == 200) {
+          var data = await response.json();
+          alert(data);
+          location.reload(true);
+      } else if (response.status == 401) {
+          var data = await response.text();
+          alert(data);
+      } else {
+          alert(response.statusText);
+      }
+
+  };
+
+</script>
