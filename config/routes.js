@@ -31,7 +31,7 @@ module.exports.routes = {
   '/location': 'WebController.location',
   '/setting': 'WebController.setting',
   '/management': 'WebController.management',
-  '/eventdetail': 'WebController.eventdetail',
+  '/eventdetail/:id': 'WebController.eventdetail',
   '/viewitem': 'WebController.viewitem',
   '/distributeBag': 'WebController.distributeBag',
   '/collectBag': 'WebController.collectBag',

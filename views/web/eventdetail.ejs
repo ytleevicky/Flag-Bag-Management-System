@@ -1,6 +1,6 @@
 <body>
   <br>
-  <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動摘要</h2>
+  <h2><a href="/management">活動管理</a> > <a href="/viewitem/<%= webs.id %>"><%= webs.eventName %></a> > 活動摘要</h2>
 
   <br />
 
@@ -9,33 +9,34 @@
     <tbody>
       <tr>
         <th scope="row">活動名稱</th>
-        <td>First Event</td>
+        <td><%= webs.eventName %></td>
       </tr>
       <tr>
         <th scope="row">活動日期</th>
-        <td>20-6-2020</td>
+        <td><%= webs.dateOfEvent %></td>
       </tr>
       <tr>
         <th scope="row">賣旗地點</th>
-        <td>全港</td>
+        <td><%= webs.eventLocation %></td>
       </tr>
       <tr>
         <th scope="row">旗站數目</th>
-        <td>8</td>
+        <td><%= webs.numOfStation %></td>
       </tr>
       <tr>
         <th scope="row">旗袋總數</th>
-        <td>55</td>
+        <td><%= webs.numOfEBag %></td>
       </tr>
-      <tr>
+      <!-- <tr>
         <th scope="row">站長人數</th>
-        <td>8</td>
-      </tr>
+        <td><%= webs.eventName %></td>
+      </tr> -->
       <tr>
         <th scope="row">義工人數</th>
-        <td>60</td>
+        <td><%= webs.numOfV %></td>
       </tr>
     </tbody>
+
   </table>
 
   <a href="/viewitem" style="float: left;">編輯</a>

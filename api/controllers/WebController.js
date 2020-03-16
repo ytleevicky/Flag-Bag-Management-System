@@ -56,7 +56,8 @@ module.exports = {
 
   eventdetail: async function (req, res) {
 
-    var models = await Web.find();
+    var models = await Web.findOne(req.params.id);
+    if(!models) return res.notFound();
     return res.view('web/eventdetail', { webs: models });
 
   },
