@@ -19,4 +19,34 @@ module.exports.policies = {
 
   // '*': true,
 
+  WebController: {
+    management: 'isAdmin',
+    viewitem: 'isAdmin',
+    adminDisplay: 'isAdmin',
+    viewitem: 'isAdmin',
+    eventdetail: 'isAdmin',
+    adduser: 'isAdmin',
+    updateUser: 'isAdmin',
+    adduser: 'isAdmin',
+    addIndividual: 'isAdmin',
+    addGroup: 'isAdmin',
+    eventreport: 'isAdmin',
+    qrCode: 'isAdmin',
+    collectBag: 'isStationmgr',
+    distributeBag: 'isStationmgr',
+
+  },
+
+  StationController: {
+    stationmgrDisplay: 'isAdmin',
+    individual: 'isAdmin',
+    group: 'isAdmin',
+    station: 'isAdmin',
+    addflagstn: 'isAdmin',
+    stationmanagement: 'isStationmgr',
+
+  }
+
+  
+
 };
