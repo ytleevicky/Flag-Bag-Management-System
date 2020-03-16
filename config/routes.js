@@ -33,8 +33,8 @@ module.exports.routes = {
   '/management': 'WebController.management',
   '/eventdetail': 'WebController.eventdetail',
   '/viewitem': 'WebController.viewitem',
-  '/personalitem': 'WebController.personalitem',
-  '/groupitem': 'WebController.groupitem',
+  '/distributeBag': 'WebController.distributeBag',
+  '/collectBag': 'WebController.collectBag',
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
   //Adding pages

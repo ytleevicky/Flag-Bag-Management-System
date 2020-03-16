@@ -76,17 +76,17 @@ module.exports = {
 
   },
 
-  personalitem: async function (req, res) {
+  collectBag: async function (req, res) {
 
     var models = await Web.find();
-    return res.view('web/personalitem', { webs: models });
+    return res.view('web/collectBag', { webs: models });
 
   },
 
-  groupitem: async function (req, res) {
+  distributeBag: async function (req, res) {
 
     var models = await Web.find();
-    return res.view('web/groupitem', { webs: models });
+    return res.view('web/distributeBag', { webs: models });
 
   },
 
