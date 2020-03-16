@@ -69,11 +69,11 @@ module.exports = {
 
     //E = event, S = station, V = voluteer
     //活動名稱
-    eventName: {      //use in eventdetail.ejs
+    eventName: {      //use in eventdetail.ejs, management.ejs
       type: 'string'
     },
     //活動日期
-    dateOfEvent: {      //use in eventdetail.ejs
+    dateOfEvent: {      //use in eventdetail.ejs, management.ejs
       type: 'string'
     },
     //賣旗地點
