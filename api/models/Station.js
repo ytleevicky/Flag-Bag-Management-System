@@ -35,7 +35,8 @@ module.exports = {
     },
 
     isDeleted:{   //use in individual.ejs
-      type: 'boolean'
+      type: 'boolean',
+      required: true
     },
 
     vName: {    //use in individual.ejs
