@@ -24,7 +24,6 @@ module.exports.policies = {
     viewitem: 'isAdmin',
     adminDisplay: 'isAdmin',
     viewitem: 'isAdmin',
-    eventdetail: 'isAdmin',
     adduser: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
