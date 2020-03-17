@@ -33,11 +33,11 @@ module.exports.policies = {
     qrCode: 'isAdmin',
     collectBag: 'isStationmgr',
     distributeBag: 'isStationmgr',
+    stationmgrDisplay: 'isAdmin',
 
   },
 
   StationController: {
-    stationmgrDisplay: 'isAdmin',
     individual: 'isAdmin',
     group: 'isAdmin',
     station: 'isAdmin',

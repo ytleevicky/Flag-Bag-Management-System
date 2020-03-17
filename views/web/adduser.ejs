@@ -5,7 +5,7 @@
   <br>
   <br>
 
-  <form action="/user/" method="POST" onsubmit="createForm(this);return false">
+  <form action="/event/<%= eventid %>/adduser" method="POST">
 
     <div class="form-group row">
       <label for="inputUsername" class="col-sm-2 col-form-label">使用者名稱</label>
@@ -63,7 +63,7 @@
 
 </body>
 
-<script>
+<!-- <script>
   async function createForm(oFormElement) {
 
     // Later to be solved
@@ -79,7 +79,7 @@
     //   else return true
     // }
 
-    var response = await fetch("/user/", {
+    var response = await fetch("/event/adduser/" + eventid, {
       method: "POST",
       credentials: 'same-origin',
       headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
@@ -102,4 +102,4 @@
     }
 
   };
-</script>
+</script> -->

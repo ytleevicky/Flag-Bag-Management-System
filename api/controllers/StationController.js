@@ -62,20 +62,25 @@ module.exports = {
     });
   },
 
-  //for stationmgrDisplay.ejs
-  stationmgrDisplay: async function (req, res) {
+  // //for stationmgrDisplay.ejs
+  // stationmgrDisplay: async function (req, res) {
 
-    var models = await User.find({
-      role: 'stationmgr'
-    });
-    var model = await Web.findOne(req.params.id);
-    if(!model) return res.notFound();
+  //   // var models = await User.find(req.session.eventid, {
+  //   //   role: 'stationmgr'
+  //   // });
 
-    var sModel = await Station.find();
+  //   var models = await User.findOne(req.session.userid).populate("superviseBy");
 
-    return res.view('station/stationmgrDisplay', { user: models, webs: model, stations: sModel });
+  //   var model = await Web.findOne(req.params.id);
+  //   if(!model) return res.notFound();
 
-  },
+  //   sails.log('[req.session.id in stationmgrDisplay] ', req.session.eventid);
+
+  //   var sModel = await Station.find();
+
+  //   return res.view('station/stationmgrDisplay', { user: models, webs: model, stations: sModel, eventid: req.session.eventid });
+
+  // },
 
   //export station manager information(for stationmgrDisplay.ejs)
   export_statman: async function (req, res) {

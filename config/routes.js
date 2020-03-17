@@ -38,7 +38,7 @@ module.exports.routes = {
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
   //Adding pages
-  '/adduser': 'WebController.adduser',
+  '/event/:fk/adduser ': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
   // '/addadmin': 'WebController.addadmin',
   '/addGroup': 'WebController.addGroup',
@@ -66,7 +66,7 @@ module.exports.routes = {
   //USE in StationController
 
   '/individual/:id': 'StationController.individual',
-  '/stationmgrDisplay/:id': 'StationController.stationmgrDisplay',
+  '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station': 'StationController.station',
   '/stationmanagement': 'StationController.stationmanagement',
   '/group': 'StationController.group',
@@ -87,7 +87,7 @@ module.exports.routes = {
   //For populate
   //user and web
   'GET /user/edit': 'UserController.populate',
-  'GET /user/:id/superviseBy': 'WebController.populate',
+  'GET /event/:fk/superviseBy': 'WebController.populate',
   //web and station
   'GET /web/inside': 'StationController.populate',
   'GET /web/:id/include': 'WebController.populate1',

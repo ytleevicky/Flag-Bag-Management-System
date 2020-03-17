@@ -62,7 +62,7 @@
     <%if (user.role == "admin") { %>
     <a href='/adminDisplay' class="btn btn-danger" style="float:right;">取消</a>
     <% } else { %>
-    <a href='/stationmgrDisplay' class="btn btn-danger" style="float:right;">取消</a>
+    <a href='/stationmgrDisplay/<%= eventid %>' class="btn btn-danger" style="float:right;">取消</a>
     <% } %>
 
   </form>

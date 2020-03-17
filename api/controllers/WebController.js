@@ -50,6 +50,7 @@ module.exports = {
   management: async function (req, res) {
 
     var models = await Web.find();
+
     return res.view('web/management', { webs: models });
 
   },
@@ -75,9 +76,11 @@ module.exports = {
     var models = await Web.findOne(req.params.id);
     if(!models) return res.notFound();
 
+    req.session.eventid = models.id;
+
     var model = await Station.find();
     
-    return res.view('web/viewitem', { webs: models, stations: model });
+    return res.view('web/viewitem', { webs: models, stations: model, eventid: req.session.eventid });
 
   },
 
@@ -98,27 +101,27 @@ module.exports = {
   adduser: async function (req, res) {
 
 
-    if (req.method == 'GET') { return res.view('web/adduser'); }
+    if (req.method == 'GET') { return res.view('web/adduser', { eventid: req.session.eventid }); }
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
     // var password = ;
     // var userID = parseInt(req.body.id);
-
     sails.bcrypt = require('bcryptjs');
     const saltRounds = 10;
-
+ 
     req.body.User.password = await sails.bcrypt.hash(req.body.User.password, saltRounds);
+  
     var user = await User.create(req.body.User).fetch();
+
+   
+    // await User.findOne(user.id).populate("edit");
+
+    await User.addToCollection(user.id, 'edit').members(req.session.eventid);
 
     console.log(JSON.stringify(user));
 
-    if (req.wantsJSON) {
-
-      return res.json({ message: user.role == 'admin' ? '已新增活動管理員！' : '已新增旗站站長！', url: user.role == 'admin' ? '/adminDisplay' : '/stationmgrDisplay' });
-
-    }
-    return res.redirect('/stationmgrDisplay');           // for normal request
+    return res.redirect('/stationmgrDisplay/' + req.session.eventid);           // for normal request
 
   },
 
@@ -171,6 +174,18 @@ module.exports = {
     return res.view('web/addIndividual', { stations: models });
 
   },
+
+    //for stationmgrDisplay.ejs
+    stationmgrDisplay: async function (req, res) {
+  
+      var models = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' }});
+      if(!models) return res.notFound();
+
+      var web = await Web.findOne(req.session.eventid);
+  
+      return res.view('station/stationmgrDisplay', { name: web.eventName, go: models.superviseBy, eventid: req.session.eventid });
+  
+    },
 
   addGroup: async function (req, res) {
 
@@ -344,7 +359,7 @@ module.exports = {
 
       if (!model) { return res.notFound(); }
 
-      return res.view('web/updateUser', { user: model });
+      return res.view('web/updateUser', { user: model, eventid: req.session.eventid });
 
     } else {
 
@@ -368,7 +383,7 @@ module.exports = {
           return res.json({ message: '已更新活動管理員！', url: '/adminDisplay' });
         }
         else {
-          return res.json({ message: '已更新旗站站長！', url: '/stationmgrDisplay' });    // for ajax request
+          return res.json({ message: '已更新旗站站長！', url: '/stationmgrDisplay/' + req.session.eventid });    // for ajax request
         }
       } else {
         return res.redirect('/adminDisplay');           // for normal request
@@ -390,7 +405,7 @@ module.exports = {
         return res.json({ message: '已刪除活動管理員！', url: '/adminDisplay' });
       }
       else {
-        return res.json({ message: '已刪除旗站站長！', url: '/stationmgrDisplay' });    // for ajax request
+        return res.json({ message: '已刪除旗站站長！', url: '/stationmgrDisplay/' + req.session.eventid });    // for ajax request
       }
     } 
 

@@ -7,9 +7,9 @@
     <div>
         <div class="row">
             <div class="col col-sm-2 col-md-2">
-                <a class="nav-link active" href="/viewitem/<%= webs.id%>">活動摘要</a>
-                <a class="nav-link active" href="/stationmgrDisplay/<%= webs.id %>">活動使用者</a>
-                <a class="nav-link active" href="/individual/<%= webs.id %>">個人義工</a>
+                <a class="nav-link active" href="/viewitem/<%= eventid %>">活動摘要</a>
+                <a class="nav-link active" href="/stationmgrDisplay/<%= eventid %>">活動使用者</a>
+                <a class="nav-link active" href="/individual">個人義工</a>
                 <a class="nav-link active" href="/group">團體義工</a>
                 <a class="nav-link active" href="/station">旗站</a>
                 <a class="nav-link active" href="/eventreport">活動報告</a>
@@ -49,7 +49,7 @@
                         </tr>
                     </tbody>
                   </table>
-                  <a href="/viewitem/<%= webs.id %>" class="btn btn-info" style="float: left;">編輯</a>
+                  <a href="/viewitem/<%= eventid %>" class="btn btn-info" style="float: left;">編輯</a>
                 </div>
             </div>
     </div>

@@ -4,13 +4,14 @@
     <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動使用者</h2>
     <br> -->
   <br>
-    <h2><a href="/management">活動管理</a> > <%= webs.eventName %></h2>
+    
+    <h2><a href="/management">活動管理</a> > <%= name %></h2>
     <br>
     <div>
       <div class="row">
         <div class="col col-sm-2 col-md-2">
-          <a class="nav-link active" href="/viewitem/<%= webs.id%>">活動摘要</a>
-          <a class="nav-link active" href="/stationmgrDisplay/<%= webs.id %>">活動使用者</a>
+          <a class="nav-link active" href="/viewitem/<%= eventid %>">活動摘要</a>
+          <a class="nav-link active" href="/stationmgrDisplay/<%= eventid %>">活動使用者</a>
           <a class="nav-link active" href="/individual">個人義工</a>
           <a class="nav-link active" href="/group">團體義工</a>
           <a class="nav-link active" href="/station">旗站</a>
@@ -22,7 +23,7 @@
         <h2>管理旗站管理員</h2>
 
         <br>
-        <a href="/adduser" class="btn btn-primary">新增旗站管理員</a>
+        <a href="/event/<%= eventid %>/adduser" class="btn btn-primary">新增旗站管理員</a>
         <button type="button" class="btn btn-danger">删除</button>
 
         <br>
@@ -67,7 +68,7 @@
           </thead>
           <tbody>
 
-            <% user.forEach( function(model) { %>
+            <% go.forEach( function(model) { %>
             <tr>
               <th scope="row">
                 <div class="form-check">
@@ -82,8 +83,8 @@
                 <a href='/updateUser/<%= model.id %>' class="btn btn-primary">編輯</a>
                 <button type="submit" class="btn btn-danger" onclick="deleteUser('<%= model.id %>')">刪除</button>
               </td>
+             
               <% }); %>
-
             </tr>
 
           </tbody>
