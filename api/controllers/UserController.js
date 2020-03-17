@@ -62,7 +62,7 @@ module.exports = {
     });
   },
 
-  //action - populate
+  //action - populate(fro user and web)
   populate: async function (req, res) {
 
     var model = await User.findOne(req.params.id).populate("edit");
