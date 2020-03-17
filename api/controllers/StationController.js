@@ -13,8 +13,8 @@ module.exports = {
   station: async function (req, res) {
 
     var models = await Station.find();
-    var totalV = await Station.findOne(req.params.id).populate("inside");
-    return res.view('station/station', { stations: models , stations: totalV});
+    // var totalV = await Station.findOne(req.params.id).populate("inside");
+    return res.view('station/station', { stations: models});
 
   },
 
