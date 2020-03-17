@@ -162,8 +162,8 @@ module.exports = {
   individual: async function (req, res) {
 
     var models = await Station.find();
-
-    return res.view('station/individual', { stations: models });
+    var model = await Web.find();
+    return res.view('station/individual', { stations: models, webs: model });
 
   },
 
