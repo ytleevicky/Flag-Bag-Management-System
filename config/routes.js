@@ -38,7 +38,7 @@ module.exports.routes = {
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
   //Adding pages
-  '/event/:fk/adduser ': 'WebController.adduser',
+  '/event/adduser ': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
   // '/addadmin': 'WebController.addadmin',
   '/addGroup': 'WebController.addGroup',
