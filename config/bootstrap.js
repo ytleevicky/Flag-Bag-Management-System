@@ -30,6 +30,10 @@ module.exports.bootstrap = async function () {
   sails.bcrypt = require('bcryptjs');
   const saltRounds = 10;
 
+  // if(await User.count() > 0 || await Web.count() > 0 || Station.count() > 0){
+  //   return done();
+  // }
+
   if ((await User.count()) == 0) {
 
     const hash = await sails.bcrypt.hash('123456', saltRounds);
@@ -77,12 +81,16 @@ module.exports.bootstrap = async function () {
 
       {
         codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Kenny', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2' , sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        vName: 'Kenny', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2' , sLocation: 'PoRoad', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
         bagUpdate: '18-6-2020'
       },
     ]);
 
   }
+
+  // const n1 = await Web.findOne({eventName: "First Event"});
+  // const s1 = await Station.findOne({sLocation: "Po Lam Road"});
+  // await Web.addToCollection(n1.id,'include').members(s1.id);
 
   return;
 };

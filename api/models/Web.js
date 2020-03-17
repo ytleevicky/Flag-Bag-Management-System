@@ -112,9 +112,9 @@ module.exports = {
       via: 'edit'
     },
 
-    inside: {
+    include: {
       collection: 'Station',
-      via: 'include'
+      via: 'inside'
     },
   },
 

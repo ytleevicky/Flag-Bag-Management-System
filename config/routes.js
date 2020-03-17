@@ -32,7 +32,7 @@ module.exports.routes = {
   '/setting': 'WebController.setting',
   '/management': 'WebController.management',
   '/eventdetail/:id': 'WebController.eventdetail',
-  '/viewitem': 'WebController.viewitem',
+  '/viewitem/:id': 'WebController.viewitem',
   '/distributeBag': 'WebController.distributeBag',
   '/collectBag': 'WebController.collectBag',
   '/eventreport': 'WebController.eventreport',
@@ -89,8 +89,8 @@ module.exports.routes = {
   'GET /user/edit': 'UserController.populate',
   'GET /user/:id/superviseBy': 'WebController.populate',
   //web and station
-  'GET /web/include': 'StationController.populate',
-  'GET /web/:id/inside': 'WebController.populate1',
+  'GET /web/inside': 'StationController.populate',
+  'GET /web/:id/include': 'WebController.populate1',
 
   
 
