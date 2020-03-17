@@ -163,6 +163,7 @@ module.exports = {
 
     var models = await Station.find();
     var model = await Web.find();
+    
     return res.view('station/individual', { stations: models, webs: model });
 
   },
@@ -170,7 +171,7 @@ module.exports = {
   group: async function (req, res) {
 
     var models = await Station.find();
-    return res.view('station/group', { stations: models });
+    return res.view('station/group', { stations: models, webs: model });
 
   },
 
