@@ -391,5 +391,27 @@ module.exports = {
     } 
 
   },
+
+   //action - populate(for user and web)
+   populate: async function (req, res) {
+
+    var model = await Web.findOne(req.params.id).populate("superviseBy");
+
+    if (!model) return res.notFound();
+
+    return res.json(model);
+
+  },
+
+  //action - populate(for station and web)
+    populate1: async function (req, res) {
+
+    var model = await Web.findOne(req.params.id).populate("inside");
+  
+    if (!model) return res.notFound();
+  
+    return res.json(model);
+  
+  },
 };
 

@@ -223,5 +223,16 @@ module.exports = {
 
   },
 
+   //action - populate(for station and web)
+   populate: async function (req, res) {
+
+    var model = await Station.findOne(req.params.id).populate("include");
+
+    if (!model) return res.notFound();
+
+    return res.json(model);
+
+  },
+
 };
 

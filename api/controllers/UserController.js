@@ -64,7 +64,7 @@ module.exports = {
   //action - populate
   populate: async function (req, res) {
 
-    var model = await User.findOne(req.params.id).populate("superviseBy");
+    var model = await User.findOne(req.params.id).populate("edit");
 
     if (!model) return res.notFound();
 

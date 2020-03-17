@@ -83,8 +83,15 @@ module.exports.routes = {
   '/import_vIndividual': 'StationController.import_vIndividual',
   '/import_group': 'StationController.import_group',
 
+
+  //For populate
+  //user and web
   'GET /user/edit': 'UserController.populate',
   'GET /user/:id/superviseBy': 'WebController.populate',
+  //web and station
+  'GET /web/include': 'StationController.populate',
+  'GET /web/:id/inside': 'WebController.populate1',
+
   
 
   /***************************************************************************

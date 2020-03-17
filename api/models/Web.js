@@ -111,6 +111,11 @@ module.exports = {
       collection: 'Web',
       via: 'edit'
     },
+
+    inside: {
+      collection: 'Station',
+      via: 'include'
+    },
   },
 
 };
