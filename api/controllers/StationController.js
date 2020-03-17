@@ -71,7 +71,9 @@ module.exports = {
     var model = await Web.findOne(req.params.id);
     if(!model) return res.notFound();
 
-    return res.view('station/stationmgrDisplay', { user: models, webs: model });
+    var sModel = await Station.find();
+
+    return res.view('station/stationmgrDisplay', { user: models, webs: model, stations: sModel });
 
   },
 
@@ -160,6 +162,7 @@ module.exports = {
   individual: async function (req, res) {
 
     var models = await Station.find();
+
     return res.view('station/individual', { stations: models });
 
   },

@@ -74,7 +74,10 @@ module.exports = {
 
     var models = await Web.findOne(req.params.id);
     if(!models) return res.notFound();
-    return res.view('web/viewitem', { webs: models });
+
+    var model = await Station.find();
+    
+    return res.view('web/viewitem', { webs: models, stations: model });
 
   },
 
