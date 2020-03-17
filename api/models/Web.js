@@ -108,7 +108,7 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
     superviseBy: {
-      collection: 'Web',
+      collection: 'User',
       via: 'edit'
     },
 

@@ -13,6 +13,7 @@ module.exports = {
   station: async function (req, res) {
 
     var models = await Station.find();
+    //var totalV = await Estate.findOne(req.params.id).populate("viewFrom", {username: req.session.username});
     return res.view('station/station', { stations: models });
 
   },
