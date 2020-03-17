@@ -68,8 +68,10 @@ module.exports = {
     var models = await User.find({
       role: 'stationmgr'
     });
+    var model = await Web.findOne(req.params.id);
+    if(!model) return res.notFound();
 
-    return res.view('station/stationmgrDisplay', { user: models });
+    return res.view('station/stationmgrDisplay', { user: models, webs: model });
 
   },
 

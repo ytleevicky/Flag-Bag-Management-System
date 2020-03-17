@@ -1,6 +1,6 @@
 <body>
     <br>
-    <h2><a href="/management">活動管理</a> > First Event</h2>
+    <h2><a href="/management">活動管理</a> > <%= webs.eventName %>></h2>
 
     <br>
 
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col col-sm-2 col-md-2">
                 <a class="nav-link active" href="/viewitem/<%= webs.id%>">活動摘要</a>
-                <a class="nav-link active" href="/stationmgrDisplay">活動使用者</a>
+                <a class="nav-link active" href="/stationmgrDisplay/<%= webs.id %>">活動使用者</a>
                 <a class="nav-link active" href="/individual">個人義工</a>
                 <a class="nav-link active" href="/group">團體義工</a>
                 <a class="nav-link active" href="/station">旗站</a>

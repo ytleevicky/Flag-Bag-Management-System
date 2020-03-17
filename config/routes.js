@@ -66,7 +66,7 @@ module.exports.routes = {
   //USE in StationController
 
   '/individual': 'StationController.individual',
-  '/stationmgrDisplay': 'StationController.stationmgrDisplay',
+  '/stationmgrDisplay/:id': 'StationController.stationmgrDisplay',
   '/station': 'StationController.station',
   '/stationmanagement': 'StationController.stationmanagement',
   '/group': 'StationController.group',
