@@ -15,16 +15,15 @@ module.exports = {
     if (!req.body.username || !req.body.password) { return res.badRequest(); }
 
     var user = await User.findOne({ username: req.body.username });
-    const match = await sails.bcrypt.compare(req.body.password, user.password);
 
-    if (!user || !match) { return res.status(401).send('使用者名稱或密碼不正確'); }
+    if (!user) { return res.status(401).send('使用者名稱或密碼不正確'); }
 
 
     // eslint-disable-next-line eqeqeq
     // if (user.password != req.body.password)
     // {return res.status(401).send('Wrong Password');}
-
-    //if (!match) { return res.status(401).send('密碼不正確'); }
+    const match = await sails.bcrypt.compare(req.body.password, user.password);
+    if (!match) { return res.status(401).send('使用者名稱或密碼不正確'); }
 
     req.session.regenerate((err) => {
       if (err) { return res.serverError(err); }
