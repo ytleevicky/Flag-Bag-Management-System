@@ -7,17 +7,37 @@
     <div>
         <div class="row">
             <div class="col col-sm-2 col-md-2">
+
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">活動使用者</a>
+                    <a href="/individual" class="btn btn-info" role="button">個人義工</a>
+                    <a href="/group" class="btn btn-info" role="button">團體義工</a>
+                    <a href="/eventreport" class="btn btn-info" role="button">活動報告</a>
+                    <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
+                </div>
+
+                <!-- 
                 <a class="nav-link active" href="/viewitem/<%= eventid %>">活動摘要</a>
                 <a class="nav-link active" href="/stationmgrDisplay/<%= eventid %>">活動使用者</a>
                 <a class="nav-link active" href="/individual">個人義工</a>
                 <a class="nav-link active" href="/group">團體義工</a>
                 <a class="nav-link active" href="/station">旗站</a>
                 <a class="nav-link active" href="/eventreport">活動報告</a>
-                <a class="nav-link active" href="/qrCode">QR Code</a>
+                <a class="nav-link active" href="/qrCode">QR Code</a> -->
             </div>
             <div class="col col-sm-10 col-md-10">
                 <table class="table table-bordered">
-                    <h2>活動資料</h2>
+
+                    <div class="row">
+                        <div class="col-sm-10 col-md-10">
+                            <h2>活動資料</h2>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            <a href="/viewitem/<%= eventid %>" class="btn btn-link" style="float: right;">編輯</a>
+                        </div>
+                    </div>
+
                     <tbody>
                         <tr>
                             <th scope="row">活動名稱</th>
@@ -48,10 +68,10 @@
                             <td><%= webs.numOfV %></td>
                         </tr>
                     </tbody>
-                  </table>
-                  <a href="/viewitem/<%= eventid %>" class="btn btn-info" style="float: left;">編輯</a>
-                </div>
+                </table>
+
             </div>
+        </div>
     </div>
 
 </body>
