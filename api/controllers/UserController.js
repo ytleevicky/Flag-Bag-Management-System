@@ -28,6 +28,7 @@ module.exports = {
     req.session.regenerate((err) => {
       if (err) { return res.serverError(err); }
 
+      req.session.userid = user.id;
       req.session.username = req.body.username;
       req.session.password = user.password;
       req.session.role = user.role;
