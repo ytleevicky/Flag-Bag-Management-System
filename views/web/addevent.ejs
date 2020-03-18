@@ -1,8 +1,15 @@
 <body>
-    <br>
 
-    <h2><a href="/management">活動管理</a></h2>
-    <br>
+    <!-- <h2><a href="/management">活動管理</a></h2> -->
+    <div class="bordered2">
+        <h1>建立活動</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">建立活動</li>
+            </ol>
+        </nav>
+    </div>
     <br>
 
     <form action="/web/" method="POST" onsubmit="createForm(this);return false">
@@ -71,30 +78,39 @@
 
 </body>
 
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>
+
 <script>
     async function createForm(oFormElement) {
-    
-      var response = await fetch("/web/", {
-                method: "POST",
-                credentials: 'same-origin',
-                headers:{'content-type':'application/x-www-form-urlencoded'}, //enctype code of form
-                    //put into array            //map into input and encode                                                         //join it
-                body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
-            });
-    
-            
-            if (response.ok) {
-                // validatePwd()
-                var data = await response.json();   // for res.ok() or res.json()
-                alert(data.message);
-                window.location = data.url;
-                //location.reload(true);
-            } else if (response.status == 401) {
-                var data = await response.text();   // for res.send()
-                alert(data);
-            } else {
-                alert(response.statusText);
-            }
-    
-        };
-    </script>
+
+        var response = await fetch("/web/", {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+            //put into array            //map into input and encode                                                         //join it
+            body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+        });
+
+
+        if (response.ok) {
+            // validatePwd()
+            var data = await response.json();   // for res.ok() or res.json()
+            alert(data.message);
+            window.location = data.url;
+            //location.reload(true);
+        } else if (response.status == 401) {
+            var data = await response.text();   // for res.send()
+            alert(data);
+        } else {
+            alert(response.statusText);
+        }
+
+    };
+</script>

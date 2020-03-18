@@ -1,7 +1,16 @@
 <body>
   <table class="table table-bordered">
-    <br>
-    <h2>活動管理</h2>
+
+    <!-- <h2>活動管理</h2> -->
+
+    <div class="bordered2">
+      <h1>活動管理</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">活動管理</li>
+        </ol>
+      </nav>
+    </div>
     <br>
 
     <!-- <button type="button" class="btn btn-primary" style="float: left;">建立活動</button> -->
@@ -13,11 +22,7 @@
       <tr>
         <th scope="col">
           <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="exampleCheck1"
-            />
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
             <label class="form-check-label" for="exampleCheck1"></label>
           </div>
         </th>
@@ -31,7 +36,7 @@
       <tr>
         <th scope="row">
           <div class="form-check">
-            <input type="checkbox" class="form-check-input"  id="exampleCheck1"/>
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
             <label class="form-check-label" for="exampleCheck1"></label>
           </div>
         </th>
@@ -73,3 +78,13 @@
     </tbody>
   </table>
 </body>
+
+<style>
+
+  .bordered2 {
+    padding: 15px;
+    padding-bottom: 1px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+</style>

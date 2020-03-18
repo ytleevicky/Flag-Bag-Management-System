@@ -100,8 +100,9 @@ module.exports = {
 
   adduser: async function (req, res) {
 
+    var models = await Web.findOne(req.session.eventid);
 
-    if (req.method == 'GET') { return res.view('web/adduser', { eventid: req.session.eventid }); }
+    if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); }
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
@@ -359,7 +360,9 @@ module.exports = {
 
       if (!model) { return res.notFound(); }
 
-      return res.view('web/updateUser', { user: model, eventid: req.session.eventid });
+      var web = await Web.findOne(req.session.eventid)
+
+      return res.view('web/updateUser', { user: model, eventid: req.session.eventid, name: web.eventName });
 
     } else {
 

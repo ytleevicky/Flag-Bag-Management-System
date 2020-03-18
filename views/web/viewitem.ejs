@@ -1,6 +1,14 @@
 <body>
-    <br>
-    <h2><a href="/management">活動管理</a> > <%= webs.eventName %></h2>
+
+    <div class="bordered2">
+        <h1>活動摘要</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= webs.eventName %></li>
+            </ol>
+        </nav>
+    </div>
 
     <br>
 
@@ -75,3 +83,12 @@
     </div>
 
 </body>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>
