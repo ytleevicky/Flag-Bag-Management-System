@@ -10,13 +10,7 @@ module.exports = {
 
   //need to add sum of station bag function
   //for station.ejs
-  station: async function (req, res) {
 
-    var models = await Station.find();
-    // var totalV = await Station.findOne(req.params.id).populate("inside");
-    return res.view('station/station', { stations: models});
-
-  },
 
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
@@ -226,19 +220,21 @@ module.exports = {
     });
   },
 
-  addflagstn: async function (req, res) {
+  // addflagstn: async function (req, res) {
 
-    var models = await User.find({
-      role: 'stationmgr'
-    });
-    return res.view('station/addflagstn', { stations: models });
+    
 
-  },
+  //   var models = await User.find({
+  //     role: 'stationmgr'
+  //   });
+  //   return res.view('station/addflagstn', { stations: models });
+
+  // },
 
    //action - populate(for station and web)
    populate: async function (req, res) {
 
-    var model = await Station.findOne(req.params.id).populate("include");
+    var model = await Station.findOne(req.params.id).populate("inside");
 
     if (!model) return res.notFound();
 

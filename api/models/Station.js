@@ -34,10 +34,10 @@ module.exports = {
       type: 'boolean'
     },
 
-    isDeleted:{   //use in individual.ejs
-      type: 'boolean',
-      required: true
-    },
+    // isDeleted:{   //use in individual.ejs
+    //   type: 'boolean',
+    //   // required: true
+    // },
 
     vName: {    //use in individual.ejs
       type: 'string'

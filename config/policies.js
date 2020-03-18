@@ -24,7 +24,6 @@ module.exports.policies = {
     viewitem: 'isAdmin',
     adminDisplay: 'isAdmin',
     viewitem: 'isAdmin',
-    adduser: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
     addIndividual: 'isAdmin',
@@ -34,14 +33,14 @@ module.exports.policies = {
     collectBag: 'isStationmgr',
     distributeBag: 'isStationmgr',
     stationmgrDisplay: 'isAdmin',
+    addflagstn: 'isAdmin',
+    station: 'isAdmin',
 
   },
 
   StationController: {
     individual: 'isAdmin',
     group: 'isAdmin',
-    station: 'isAdmin',
-    addflagstn: 'isAdmin',
     stationmanagement: 'isStationmgr',
 
   }

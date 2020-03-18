@@ -65,12 +65,34 @@ module.exports = {
 
   // },
 
-  // addflagstn: async function (req, res) {
+  addflagstn: async function (req, res) {
 
-  //   var models = await Web.find();
-  //   return res.view('web/addflagstn', { webs: models });
+    if (req.method == 'GET') {
 
-  // },
+      var user = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' } });
+
+      var web = await Web.findOne(req.session.eventid);
+
+      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid })
+
+    } 
+
+    var station = await Station.create(req.body.Station).fetch();
+    console.log(JSON.stringify(station));
+
+
+    await Station.addToCollection(station.id, 'inside').members(req.session.eventid);
+    return res.redirect('/station/' + req.session.eventid);
+
+  
+      // await User.addToCollection(user.id, 'edit').members(req.session.eventid);
+      // return res.redirect('/stationmgrDisplay/' + req.session.eventid);
+    
+
+
+    // return res.view('station/addflagstn', { stations: models });
+
+  },
 
 
   viewitem: async function (req, res) {
@@ -103,7 +125,7 @@ module.exports = {
   adduser: async function (req, res) {
 
     if (!req.session.eventid) {
-      if (req.method == 'GET') { return res.view('web/adduser' ,{ eventid: "" }); }  // for add admin
+      if (req.method == 'GET') { return res.view('web/adduser', { eventid: "" }); }  // for add admin
     } else {
       var models = await Web.findOne(req.session.eventid);
       if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); } // for add event user
@@ -420,6 +442,17 @@ module.exports = {
 
   },
 
+  station: async function (req, res) {
+
+    var models = await Web.findOne(req.session.eventid).populate("include");
+    if (!models) return res.notFound();
+
+    var web = await Web.findOne(req.session.eventid);
+
+    return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
+
+  },
+
   //action - populate(for user and web)
   populate: async function (req, res) {
 
@@ -432,9 +465,9 @@ module.exports = {
   },
 
   //action - populate(for station and web)
-  populate1: async function (req, res) {
+  populate: async function (req, res) {
 
-    var model = await Web.findOne(req.params.id).populate("inside");
+    var model = await Web.findOne(req.params.id).populate("include");
 
     if (!model) return res.notFound();
 

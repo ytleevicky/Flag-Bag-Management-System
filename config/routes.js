@@ -67,10 +67,10 @@ module.exports.routes = {
 
   '/individual/:id': 'StationController.individual',
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
-  '/station': 'StationController.station',
+  '/station/:id': 'WebController.station',
   '/stationmanagement': 'StationController.stationmanagement',
   '/group': 'StationController.group',
-  '/addflagstn': 'StationController.addflagstn',
+  '/addflagstn': 'WebController.addflagstn',
 
   //export
   '/export_station': 'StationController.export_station',
@@ -89,8 +89,8 @@ module.exports.routes = {
   'GET /user/edit': 'UserController.populate',
   'GET /event/:fk/superviseBy': 'WebController.populate',
   //web and station
-  'GET /web/inside': 'StationController.populate',
-  'GET /web/:id/include': 'WebController.populate1',
+  'GET /station/inside': 'StationController.populate',
+  'GET /web/:fk/include': 'WebController.populate',
 
   
 

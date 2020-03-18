@@ -1,160 +1,112 @@
 <body>
-  <br />
 
-  <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 旗站</h2>
+  <div class="bordered2">
+    <h1>旗站</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+        <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+        <li class="breadcrumb-item active" aria-current="page">旗站</li>
+      </ol>
+    </nav>
+  </div>
   <br>
 
-  <div class="bordered">
+  <div class="row">
 
-    <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+    <div class="col col-sm-2 col-md-2">
 
-    <div class="row" style="padding: 20px;">
+      <div class="btn-group-vertical" role="group" aria-label="Basic example">
+        <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+        <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">活動使用者</a>
+        <a href="/individual" class="btn btn-info" role="button">個人義工</a>
+        <a href="/group" class="btn btn-info" role="button">團體義工</a>
+        <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+        <a href="/eventreport" class="btn btn-info" role="button">活動報告</a>
+        <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
+      </div>
 
-      <!-- <div class="col-sm-6">
+    </div>
+
+    <div class="col col-sm-10 col-md-10">
+
+      <h2>管理旗站</h2>
+      <br>
+      <a href="/addflagstn" class="btn btn-primary">建立旗站</a>
+      <button type="button" class="btn btn-danger">删除</button>
+      <br>
+      <br>
+
+      <div class="bordered">
+
+        <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+
+        <div class="row" style="padding: 20px;">
+
+          <!-- <div class="col-sm-6">
         <p>匯入Excel檔案：</p>
         <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
         <input type="submit" class="btn btn-primary" />
       </div> -->
 
-      <form action="/import_station" method="post" enctype="multipart/form-data">
-        <div class="col-sm-6">
-          <p>匯入Excel檔案：</p>
-          <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
-          <input type="submit" class="btn btn-primary" />
-        </div>
-      </form>
+          <form action="/import_station" method="post" enctype="multipart/form-data">
+            <div class="col-sm-6">
+              <p>匯入Excel檔案：</p>
+              <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                name="file" />
+              <input type="submit" class="btn btn-primary" />
+            </div>
+          </form>
 
-      <div class="col-sm-6">
-        <p>以Excel檔案匯出：</p>
-        <a href="/export_station" class="btn btn-info">匯出</a>
+          <div class="col-sm-6">
+            <p>以Excel檔案匯出：</p>
+            <a href="/export_station" class="btn btn-info">匯出</a>
+          </div>
+
+        </div>
       </div>
 
-    </div>
-
-
-  </div>
-
-  <br /> 
-   <a href="/addflagstn" class="btn btn-primary">建立</a>
-  <button type="button" class="btn btn-danger">删除</button>
-  <br />
-
-  <table class="table table-bordered">
       <br>
-      <thead>
-        <tr>
-          <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
+
+      <h3>旗站列表</h3>
+      <table class="table table-bordered">
+        <br>
+        <thead>
+          <tr>
+            <th scope="col">
+              選擇旗站
+            </th>
             <th scope="col">旗站名稱</th>
             <th scope="col">旗站地區</th>
-            <th scope="col">旗袋總數</th>
+            <!-- <th scope="col">旗袋總數</th> -->
             <th scope="col">後備旗袋</th>
             <th scope="col">編輯</th>
           </tr>
-      </thead>
+        </thead>
 
-      <tbody>
+        <tbody>
 
-          <% stations.forEach( function(model) { %>
-            <tr>
-              <th scope="row">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1"></label>
-                </div>
-              </th>
-                <td><%= model.sName %></td>
-                <td><%= model.sLocation %></td>
-                <!-- <td><%= model.sName %></td> -->
-                <td><%= model.numOfSpareBag %></td>
-                <td><a href='' class="btn btn-primary">編輯</a>
-                  </td>
-              <% }); %>
-            </tr>
-        
+          <% go.forEach( function(model) { %>
+          <tr>
+            <th scope="row">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1"></label>
+              </div>
+            </th>
+            <td><%= model.sName %></td>
+            <td><%= model.sLocation %></td>
+            <!-- <td><%= model.sName %></td> -->
+            <td><%= model.numOfSpareBag %></td>
+            <td><a href='' class="btn btn-primary">編輯</a>
+            </td>
+            <% }); %>
+          </tr>
+
         </tbody>
-    </table>
-  <!--table class="table table-bordered">
-    <br />
-
-    <thead>
-      <tr>
-        <th scope="col">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <th scope="col">旗站名稱</th>
-        <th scope="col">地區</th>
-        <th scope="col">旗袋總數</th>
-        <th scope="col">後備旗袋</th>
-        <th scope="col">編輯</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td>TKO-A1</td>
-        <td>將軍澳</td>
-        <td>45</td>
-        <td>5</td>
-        <td><button type="button" class="btn btn-link">編輯</button></td>
-      </tr>
-
-      <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td>TKO-A2</td>
-        <td>將軍澳</td>
-        <td>55</td>
-        <td>8</td>
-        <td><button type="button" class="btn btn-link">編輯</button></td>
-      </tr>
-
-      <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td>TKO-A3</td>
-        <td>將軍澳</td>
-        <td>35</td>
-        <td>6</td>
-        <td><button type="button" class="btn btn-link">編輯</button></td>
-      </tr>
-
-      <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td>KT-A1</td>
-        <td>觀塘</td>
-        <td>67</td>
-        <td>9</td>
-        <td><button type="button" class="btn btn-link">編輯</button></td>
-      </tr>
-    </tbody>
-  </table-->
+      </table>
+    </div>
+  </div>
 </body>
 
 <style>
@@ -165,4 +117,11 @@
     border-radius: 5px;
     border-color: powderblue;
   }
-</style> 
+
+  .bordered2 {
+    padding: 15px;
+    padding-bottom: 1px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+</style>
