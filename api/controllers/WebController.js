@@ -75,22 +75,17 @@ module.exports = {
 
       return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid })
 
-    } 
+    }
+
 
     var station = await Station.create(req.body.Station).fetch();
     console.log(JSON.stringify(station));
 
-
+    // association between Station && Web 
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid);
-    return res.redirect('/station/' + req.session.eventid);
-
+    // Later --> May need to create association between Station and User 
   
-      // await User.addToCollection(user.id, 'edit').members(req.session.eventid);
-      // return res.redirect('/stationmgrDisplay/' + req.session.eventid);
-    
-
-
-    // return res.view('station/addflagstn', { stations: models });
+    return res.redirect('/station/' + req.session.eventid);
 
   },
 
@@ -422,6 +417,50 @@ module.exports = {
 
 
     }
+  },
+
+
+  updateStation: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+      var model = await Station.findOne(req.params.id);
+      if (!model) { return res.notFound(); }
+
+      var user = await Web.findOne(req.session.eventid).populate("superviseBy", { where: {role: 'stationmgr'} });
+
+      var web = await Web.findOne(req.session.eventid);
+
+      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.superviseBy }); 
+
+
+    } else {
+
+      if (!req.body.User) { return res.badRequest('Form-data not received.'); }
+
+      sails.bcrypt = require('bcryptjs');
+      const saltRounds = 10;
+
+      var models = await Station.update(req.params.id).set({
+        sName: req.body.Station.sName,
+        sLocation: req.body.Station.sLocation,
+        numOfSpareBag: req.body.Station.numOfSpareBag,
+        username: req.body.User.username,
+      }).fetch();
+
+      if (models.length == 0) { return res.notFound(); }
+
+      if (req.wantsJSON) {
+
+          return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
+    
+      } 
+
+
+    }
+
+
+
   },
 
   removeUser: async function (req, res) {

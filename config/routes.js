@@ -61,7 +61,10 @@ module.exports.routes = {
   // '/export_event': 'WebController.export_event',
   // '/export_group': 'WebController.export_group',
   'GET /updateUser/:id': 'WebController.updateUser',
+  'GET /updateStation/:id': 'WebController.updateStation',
+
   'POST /user/:id': 'WebController.updateUser',
+  'POST /station/:id': 'WebController.updateStation',
 
   //USE in StationController
 

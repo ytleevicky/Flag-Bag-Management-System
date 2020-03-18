@@ -73,7 +73,7 @@
       <div class="form-group row">
         <label for="inputUsername" class="col-sm-2 col-form-label">站長名稱</label>
         <div class="col-sm-10">
-          <select class="form-control" name="User[role]" required>
+          <select class="form-control" name="User[username]" required>
             <option value="">請選擇站長：</option>
             <% go.forEach( function(model) { %>
             <option value="<%= model.username %>"><%= model.username %></option>
