@@ -1,8 +1,10 @@
 <body>
   <br>
-  <!-- <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > <a href="/contact">活動使用者</a> > 新增活動使用者</h2> -->
-  <h2>新增活動管理員 / 活動使用者</h2>
-  <br>
+  <% if(eventid != ""){ %>
+  <h2>新增站長</h2>
+  <% } else { %>
+  <h2>新增活動管理員</h2>
+  <% } %>
   <br>
 
   <form action="/event/adduser" method="POST">
@@ -16,19 +18,25 @@
 
     <div class="form-group row">
       <label for="inputUsername" class="col-sm-2 col-form-label">活動使用者身分</label>
+      <% if(eventid != ""){ %>
       <div class="col-sm-10">
         <select class="form-control" name="User[role]" required>
-          <option value="">-----</option>
-          <option value="admin">活動管理員</option>
           <option value="stationmgr">站長</option>
         </select>
       </div>
+      <% } else { %>
+      <div class="col-sm-10">
+        <select class="form-control" name="User[role]" required>
+          <option value="admin">活動管理員</option>
+        </select>
+      </div>
+      <% } %>
     </div>
 
     <div class="form-group row">
       <label for="inputEmail" class="col-sm-2 col-form-label">電郵</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputEmail" name="User[mail]">
+        <input type="email" class="form-control" id="inputEmail" name="User[mail]" required>
       </div>
     </div>
 
@@ -54,10 +62,13 @@
       </div>
     </div> -->
 
-
-    <!-- <button type="button" class="btn btn-success" style="float:right;">儲存</button> -->
     <button type="submit" class="btn btn-primary" style="float:right;">儲存</button>
-    <button type="button" class="btn btn-danger" style="float:right;">取消</button>
+
+    <%if (eventid != "") { %>
+    <a href='/stationmgrDisplay/<%= eventid %>' class="btn btn-danger" style="float:right;">取消</a>
+    <% } else { %>
+    <a href='/adminDisplay' class="btn btn-danger" style="float:right;">取消</a>
+    <% } %>
 
   </form>
 

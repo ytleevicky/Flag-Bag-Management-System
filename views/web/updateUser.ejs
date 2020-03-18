@@ -1,7 +1,12 @@
 <body>
 
   <br>
-  <h2>編輯活動管理員 / 活動使用者</h2>
+  <% if(eventid != ""){ %>
+  <h2>編輯站長</h2>
+  <% } else { %>
+  <h2>編輯活動管理員</h2>
+  <% } %>
+
   <br>
 
   <form action="/user/<%= user.id %>" method="POST" onsubmit="createForm(this);return false">
@@ -16,13 +21,19 @@
 
     <div class="form-group row">
       <label for="inputUsername" class="col-sm-2 col-form-label">活動使用者身分</label>
+      <% if(eventid != ""){ %>
       <div class="col-sm-10">
         <select class="form-control" name="User[role]" required>
-          <option value="">-----</option>
-          <option value="admin">活動管理員</option>
           <option value="stationmgr">站長</option>
         </select>
       </div>
+      <% } else { %>
+      <div class="col-sm-10">
+        <select class="form-control" name="User[role]" required>
+          <option value="admin">活動管理員</option>
+        </select>
+      </div>
+      <% } %>
     </div>
 
     <div class="form-group row">
@@ -47,13 +58,6 @@
           <input type="password" class="form-control" id="confirmPwd">
         </div>
       </div> -->
-
-    <div class="form-group row">
-      <label for="inputStation" class="col-sm-2 col-form-label">所屬旗站</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputStation" name="User[flagstn]" value="<%= user.flagstn %>">
-      </div>
-    </div>
 
 
     <!-- <button type="button" class="btn btn-success" style="float:right;">儲存</button> -->

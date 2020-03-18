@@ -39,6 +39,8 @@ module.exports = {
 
   adminDisplay: async function (req, res) {
 
+    req.session.eventid = "";
+
     var models = await User.find({
       role: 'admin'
     });
@@ -74,12 +76,12 @@ module.exports = {
   viewitem: async function (req, res) {
 
     var models = await Web.findOne(req.params.id);
-    if(!models) return res.notFound();
+    if (!models) return res.notFound();
 
     req.session.eventid = models.id;
 
     var model = await Station.find();
-    
+
     return res.view('web/viewitem', { webs: models, stations: model, eventid: req.session.eventid });
 
   },
@@ -100,29 +102,30 @@ module.exports = {
 
   adduser: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid);
-
-    if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); }
+    if (!req.session.eventid) {
+      if (req.method == 'GET') { return res.view('web/adduser' ,{ eventid: "" }); }  // for add admin
+    } else {
+      var models = await Web.findOne(req.session.eventid);
+      if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); } // for add event user
+    }
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
-    // var password = ;
-    // var userID = parseInt(req.body.id);
     sails.bcrypt = require('bcryptjs');
     const saltRounds = 10;
- 
+
     req.body.User.password = await sails.bcrypt.hash(req.body.User.password, saltRounds);
-  
+
     var user = await User.create(req.body.User).fetch();
-
-   
-    // await User.findOne(user.id).populate("edit");
-
-    await User.addToCollection(user.id, 'edit').members(req.session.eventid);
-
     console.log(JSON.stringify(user));
 
-    return res.redirect('/stationmgrDisplay/' + req.session.eventid);           // for normal request
+    if (!models) {
+      return res.redirect("/adminDisplay");
+    } else {
+      await User.addToCollection(user.id, 'edit').members(req.session.eventid);
+      return res.redirect('/stationmgrDisplay/' + req.session.eventid);
+    }
+
 
   },
 
@@ -135,10 +138,10 @@ module.exports = {
     await Web.create(req.body.Web);
 
     if (req.wantsJSON) {
-        return res.json({ message: '已新增活動', url: '/management' });    // for ajax request
-    }else{
-        return res.redirect('/management');// for normal request
-    }               
+      return res.json({ message: '已新增活動', url: '/management' });    // for ajax request
+    } else {
+      return res.redirect('/management');// for normal request
+    }
   },
 
   // addadmin: async function (req, res) {
@@ -176,17 +179,17 @@ module.exports = {
 
   },
 
-    //for stationmgrDisplay.ejs
-    stationmgrDisplay: async function (req, res) {
-  
-      var models = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' }});
-      if(!models) return res.notFound();
+  //for stationmgrDisplay.ejs
+  stationmgrDisplay: async function (req, res) {
 
-      var web = await Web.findOne(req.session.eventid);
-  
-      return res.view('station/stationmgrDisplay', { name: web.eventName, go: models.superviseBy, eventid: req.session.eventid });
-  
-    },
+    var models = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' } });
+    if (!models) return res.notFound();
+
+    var web = await Web.findOne(req.session.eventid);
+
+    return res.view('station/stationmgrDisplay', { name: web.eventName, go: models.superviseBy, eventid: req.session.eventid });
+
+  },
 
   addGroup: async function (req, res) {
 
@@ -360,9 +363,12 @@ module.exports = {
 
       if (!model) { return res.notFound(); }
 
-      var web = await Web.findOne(req.session.eventid)
-
-      return res.view('web/updateUser', { user: model, eventid: req.session.eventid, name: web.eventName });
+      if (!req.session.eventid) {
+        if (req.method == 'GET') { return res.view('web/updateUser', { user: model, eventid: "" }); }
+      } else {
+        var web = await Web.findOne(req.session.eventid);
+        if (req.method == 'GET') { return res.view('web/updateUser', { user: model, eventid: req.session.eventid, name: web.eventName }); }
+      }
 
     } else {
 
@@ -410,12 +416,12 @@ module.exports = {
       else {
         return res.json({ message: '已刪除旗站站長！', url: '/stationmgrDisplay/' + req.session.eventid });    // for ajax request
       }
-    } 
+    }
 
   },
 
-   //action - populate(for user and web)
-   populate: async function (req, res) {
+  //action - populate(for user and web)
+  populate: async function (req, res) {
 
     var model = await Web.findOne(req.params.id).populate("superviseBy");
 
@@ -426,14 +432,14 @@ module.exports = {
   },
 
   //action - populate(for station and web)
-    populate1: async function (req, res) {
+  populate1: async function (req, res) {
 
     var model = await Web.findOne(req.params.id).populate("inside");
-  
+
     if (!model) return res.notFound();
-  
+
     return res.json(model);
-  
+
   },
 };
 
