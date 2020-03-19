@@ -85,9 +85,14 @@ module.exports = {
     var station = await Station.create(req.body.Station).fetch();
     console.log(JSON.stringify(station));
 
+    sails.log("Here3");
     // association between Station && Web
-    await Station.addToCollection(station.id, 'inside').members(req.session.eventid);
+    await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event 
     // Later --> May need to create association between Station and User
+    sails.log("Here2");
+    var user = await User.findOne( {where: {username: req.body.User.username} });
+    await Station.addToCollection(station.id, 'monitorBy').members(user.id);
+    sails.log("Here1");
 
     return res.redirect('/station/' + req.session.eventid);
 
@@ -431,11 +436,13 @@ module.exports = {
       var model = await Station.findOne(req.params.id);
       if (!model) { return res.notFound(); }
 
-      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
+     // var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
 
+     var user = await Station.findOne(req.params.id).populate('monitorBy');
+  
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.superviseBy });
+      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.monitorBy });
 
 
     } else {

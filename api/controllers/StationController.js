@@ -242,5 +242,15 @@ module.exports = {
 
   },
 
+  populate: async function (req, res) {
+
+    var model = await Station.findOne(req.params.id).populate('monitorBy');
+
+    if (!model) {return res.notFound();}
+
+    return res.json(model);
+
+  },
+
 };
 

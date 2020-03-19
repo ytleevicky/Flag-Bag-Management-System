@@ -69,7 +69,7 @@
           <select class="form-control" name="User[username]" required>
             <option value="">請選擇站長：</option>
             <% go.forEach( function(model) { %>
-            <option rname %>"><%= model.username %></option>
+              <option value="<%= model.username %>"><%= model.username %></option>
             <% }); %>
           </select>
         </div>

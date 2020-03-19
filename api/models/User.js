@@ -59,6 +59,13 @@ module.exports = {
       collection: 'Web',
       via: 'superviseBy'
     },
+
+
+    monitor: {
+      collection: 'Station',
+      via: 'monitorBy'
+    }
+
   },
 
 };

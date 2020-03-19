@@ -95,7 +95,10 @@ module.exports.routes = {
   'GET /station/inside': 'StationController.populate',
   'GET /web/:fk/include': 'WebController.populate',
 
-  
+  // Station & User
+  'GET /user/monitor': 'UserController.populate',
+  'GET /station/:fk/monitorBy': 'StationController.populate',
+
 
   /***************************************************************************
    *                                                                          *

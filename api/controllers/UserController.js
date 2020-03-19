@@ -72,4 +72,14 @@ module.exports = {
     return res.json(model);
 
   },
+
+  populate: async function (req, res) {
+
+    var model = await User.findOne(req.params.id).populate('monitor');
+
+    if (!model) {return res.notFound();}
+
+    return res.json(model);
+
+  },
 };

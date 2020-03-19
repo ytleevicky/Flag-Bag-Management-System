@@ -14,11 +14,11 @@ module.exports = {
     },
 
     //是否列印標籤
-    codePrinted:{   //use in individual.ejs
+    codePrinted: {   //use in individual.ejs
       type: 'boolean'
     },
     //最後列印標籤時間
-    codePrintedTime:{   //use in individual.ejs
+    codePrintedTime: {   //use in individual.ejs
       type: 'String'
     },
 
@@ -30,7 +30,7 @@ module.exports = {
       type: 'number'
     },
 
-    isSpareBag:{   //use in individual.ejs
+    isSpareBag: {   //use in individual.ejs
       type: 'boolean'
     },
 
@@ -94,6 +94,12 @@ module.exports = {
       collection: 'Web',
       via: 'include'
     },
+
+    monitorBy: {
+      collection: 'User',
+      via: 'monitor'
+    }
+
   },
 
 };
