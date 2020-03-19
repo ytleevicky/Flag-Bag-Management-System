@@ -169,7 +169,8 @@ module.exports = {
 
   group: async function (req, res) {
 
-    var models = await Station.find();
+    var models = await Station.find({ where: {vGroupName: {'!': ''}}});
+    var model = await Web.find();
     return res.view('station/group', { stations: models, webs: model });
 
   },
