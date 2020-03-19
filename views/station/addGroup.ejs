@@ -6,7 +6,7 @@
     <br>
     <br>
 
-    <form>
+    <form action="/station/" method="POST">
         <div class="bordered">
             <h2>團體資料</h2>
             <br>
@@ -66,9 +66,9 @@
         </div>
         <br>
 
-        <button type="button" class="btn btn-success" style="float:right;">儲存</button>
+        <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
 
-        <button type="button" class="btn btn-danger" style="float:right;">取消</button>
+        <a href='/group/<%= eventid %> ' class="btn btn-danger" style="float:right;">取消</a>
 
     </form>
 
