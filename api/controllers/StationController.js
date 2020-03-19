@@ -15,7 +15,11 @@ module.exports = {
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
 
-    var models = await Station.find();
+    //var models = await Station.find();
+
+    var station = await Web.findOne(req.session.eventid).populate('include');
+
+    var models = station.include;
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
@@ -26,6 +30,7 @@ module.exports = {
         sLocation: model.sLocation, //賣旗地區
         //bagNumber: model.numOfBag, //旗袋總數(need to add function)
         numOfSpareBag: model.numOfSpareBag, //後備旗袋
+        createdby: req.session.username
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'Station_List');
