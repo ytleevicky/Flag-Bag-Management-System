@@ -104,7 +104,12 @@ module.exports.bootstrap = async function () {
   const event3 = await Web.findOne({ eventName: 'Third Event' });
   await User.addToCollection(user3.id, 'edit').members(event3.id);
 
+  // Adding association between event && Station(Group)
+  const group = await Station.findOne({ vGroupName: 'Individual' });
+  await Station.addToCollection(group.id, 'inside').members(event.id);
 
+  const group2 = await Station.findOne({ vGroupName: 'HKBU' });
+  await Station.addToCollection(group2.id, 'inside').members(event2.id);
 
   // const n1 = await Web.findOne({eventName: "First Event"});
   // const s1 = await Station.findOne({sLocation: "Po Lam Road"});

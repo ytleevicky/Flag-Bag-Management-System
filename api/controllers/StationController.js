@@ -181,9 +181,11 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid);
 
-    var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: { vGroupName: { '!=': '' } } });
 
-    return res.view('station/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
+    //var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
+
+    return res.view('station/group', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
 
   },
 
@@ -194,7 +196,7 @@ module.exports = {
       var models = await Station.find();
       // var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addGroup', { stations: models, eventid: req.session.eventid});
+      return res.view('station/addGroup', { stations: models, eventid: req.session.eventid });
 
     }
 
@@ -202,7 +204,7 @@ module.exports = {
 
     await Station.addToCollection(group.id, 'inside').members(req.session.eventid);
 
-    return res.redirect('/group/'+ req.session.eventid);
+    return res.redirect('/group/' + req.session.eventid);
 
 
   },
