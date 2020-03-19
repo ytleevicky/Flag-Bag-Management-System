@@ -39,7 +39,7 @@ module.exports = {
 
   adminDisplay: async function (req, res) {
 
-    req.session.eventid = "";
+    req.session.eventid = '';
 
     var models = await User.find({
       role: 'admin'
@@ -69,11 +69,15 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      var user = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' } });
+      // var model = await User.find(req.params.id);
+
+      // if (!model) { return res.notFound(); }
+
+      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
 
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid })
+      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid });
 
     }
 
@@ -81,10 +85,10 @@ module.exports = {
     var station = await Station.create(req.body.Station).fetch();
     console.log(JSON.stringify(station));
 
-    // association between Station && Web 
+    // association between Station && Web
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid);
-    // Later --> May need to create association between Station and User 
-  
+    // Later --> May need to create association between Station and User
+
     return res.redirect('/station/' + req.session.eventid);
 
   },
@@ -93,7 +97,7 @@ module.exports = {
   viewitem: async function (req, res) {
 
     var models = await Web.findOne(req.params.id);
-    if (!models) return res.notFound();
+    if (!models) {return res.notFound();}
 
     req.session.eventid = models.id;
 
@@ -120,7 +124,7 @@ module.exports = {
   adduser: async function (req, res) {
 
     if (!req.session.eventid) {
-      if (req.method == 'GET') { return res.view('web/adduser', { eventid: "" }); }  // for add admin
+      if (req.method == 'GET') { return res.view('web/adduser', { eventid: '' }); }  // for add admin
     } else {
       var models = await Web.findOne(req.session.eventid);
       if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); } // for add event user
@@ -137,7 +141,7 @@ module.exports = {
     console.log(JSON.stringify(user));
 
     if (!models) {
-      return res.redirect("/adminDisplay");
+      return res.redirect('/adminDisplay');
     } else {
       await User.addToCollection(user.id, 'edit').members(req.session.eventid);
       return res.redirect('/stationmgrDisplay/' + req.session.eventid);
@@ -199,8 +203,8 @@ module.exports = {
   //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate("superviseBy", { where: { role: 'stationmgr' } });
-    if (!models) return res.notFound();
+    var models = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+    if (!models) {return res.notFound();}
 
     var web = await Web.findOne(req.session.eventid);
 
@@ -381,7 +385,7 @@ module.exports = {
       if (!model) { return res.notFound(); }
 
       if (!req.session.eventid) {
-        if (req.method == 'GET') { return res.view('web/updateUser', { user: model, eventid: "" }); }
+        if (req.method == 'GET') { return res.view('web/updateUser', { user: model, eventid: '' }); }
       } else {
         var web = await Web.findOne(req.session.eventid);
         if (req.method == 'GET') { return res.view('web/updateUser', { user: model, eventid: req.session.eventid, name: web.eventName }); }
@@ -427,11 +431,11 @@ module.exports = {
       var model = await Station.findOne(req.params.id);
       if (!model) { return res.notFound(); }
 
-      var user = await Web.findOne(req.session.eventid).populate("superviseBy", { where: {role: 'stationmgr'} });
+      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
 
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.superviseBy }); 
+      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.superviseBy });
 
 
     } else {
@@ -452,9 +456,9 @@ module.exports = {
 
       if (req.wantsJSON) {
 
-          return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
-    
-      } 
+        return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
+
+      }
 
 
     }
@@ -464,11 +468,11 @@ module.exports = {
   },
 
   removeUser: async function (req, res) {
-    if (req.method == "GET") return res.forbidden();
+    if (req.method == 'GET') {return res.forbidden();}
 
     var models = await User.destroy(req.params.id).fetch();
 
-    if (models.length == 0) return res.notFound();
+    if (models.length == 0) {return res.notFound();}
 
     if (req.wantsJSON) {
       if (models[0].role == 'admin') {
@@ -483,8 +487,8 @@ module.exports = {
 
   station: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate("include");
-    if (!models) return res.notFound();
+    var models = await Web.findOne(req.session.eventid).populate('include');
+    if (!models) {return res.notFound();}
 
     var web = await Web.findOne(req.session.eventid);
 
@@ -495,9 +499,9 @@ module.exports = {
   //action - populate(for user and web)
   populate: async function (req, res) {
 
-    var model = await Web.findOne(req.params.id).populate("superviseBy");
+    var model = await Web.findOne(req.params.id).populate('superviseBy');
 
-    if (!model) return res.notFound();
+    if (!model) {return res.notFound();}
 
     return res.json(model);
 
@@ -506,9 +510,9 @@ module.exports = {
   //action - populate(for station and web)
   populate: async function (req, res) {
 
-    var model = await Web.findOne(req.params.id).populate("include");
+    var model = await Web.findOne(req.params.id).populate('include');
 
-    if (!model) return res.notFound();
+    if (!model) {return res.notFound();}
 
     return res.json(model);
 

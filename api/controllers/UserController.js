@@ -40,7 +40,7 @@ module.exports = {
       if (req.session.role == 'admin') {
         if (req.wantsJSON) {
           return res.redirect('/management');
-        } 
+        }
       }
 
       else if (req.session.role == 'stationmgr') {
@@ -65,11 +65,11 @@ module.exports = {
   //action - populate(fro user and web)
   populate: async function (req, res) {
 
-    var model = await User.findOne(req.params.id).populate("edit");
+    var model = await User.findOne(req.params.id).populate('edit');
 
-    if (!model) return res.notFound();
+    if (!model) {return res.notFound();}
 
     return res.json(model);
 
-},
+  },
 };

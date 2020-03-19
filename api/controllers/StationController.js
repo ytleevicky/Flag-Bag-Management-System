@@ -162,7 +162,7 @@ module.exports = {
 
     var models = await Station.find();
     var model = await Web.find();
-    
+
     return res.view('station/individual', { stations: models, webs: model });
 
   },
@@ -222,7 +222,7 @@ module.exports = {
 
   // addflagstn: async function (req, res) {
 
-    
+
 
   //   var models = await User.find({
   //     role: 'stationmgr'
@@ -231,12 +231,12 @@ module.exports = {
 
   // },
 
-   //action - populate(for station and web)
-   populate: async function (req, res) {
+  //action - populate(for station and web)
+  populate: async function (req, res) {
 
-    var model = await Station.findOne(req.params.id).populate("inside");
+    var model = await Station.findOne(req.params.id).populate('inside');
 
-    if (!model) return res.notFound();
+    if (!model) {return res.notFound();}
 
     return res.json(model);
 
