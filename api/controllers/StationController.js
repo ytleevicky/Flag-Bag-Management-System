@@ -160,18 +160,20 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var models = await Station.find({ where: {vGroupName: {'!': ''}}});
+    var models = await Station.find({ where: {vGroupName: {'!=': ''}}});
     var model = await Web.find();
 
-    return res.view('station/individual', { stations: models, webs: model });
+    return res.view('station/individual', { stations: models, webs: model, name: req.session.eventid });
 
   },
 
   group: async function (req, res) {
 
-    var models = await Station.find({ where: {vGroupName: {'!': ''}}});
-    var model = await Web.find();
-    return res.view('station/group', { stations: models, webs: model });
+    var model = await Web.findOne(req.session.eventid);
+
+    var models = await Station.find({ where: {vGroupName: {'!=': ''}}});
+
+    return res.view('station/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
 

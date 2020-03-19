@@ -72,7 +72,7 @@ module.exports.routes = {
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
   '/stationmanagement': 'StationController.stationmanagement',
-  '/group': 'StationController.group',
+  '/group/:id': 'StationController.group',
   '/addflagstn': 'WebController.addflagstn',
 
   //export

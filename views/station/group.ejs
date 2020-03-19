@@ -1,52 +1,80 @@
 <body>
 
-    <br>
+  <div class="bordered2">
+    <h1>團體義工</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+        <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+        <li class="breadcrumb-item active" aria-current="page">團體義工</li>
+      </ol>
+    </nav>
+  </div>
+  <br>
 
-    <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 團體義工</h2>
-  
-    <br>
-  
-    <div class="bordered">
-  
-      <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
-  
-      <div class="row" style="padding: 20px;">
-  
-        <form action="/import_group" method="post" enctype="multipart/form-data">
-          <div class="col-sm-6">
-            <p>匯入Excel檔案：</p>
-            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
-            <input type="submit" class="btn btn-primary" />
-          </div>
-        </form>
-  
-        <div class="col-sm-6">
-          <p>以Excel檔案匯出：</p>
-          <a href="/export_group" class="btn btn-info">匯出</a>
-        </div>
-  
+  <div class="row">
+
+    <div class="col col-sm-2 col-md-2">
+
+      <div class="btn-group-vertical" role="group" aria-label="Basic example">
+        <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+        <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">活動使用者</a>
+        <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
+        <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
+        <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+        <a href="/eventreport" class="btn btn-info" role="button">活動報告</a>
+        <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
       </div>
-  
-  
+
     </div>
-  
-    <br>
-  
-    <br>
-    <a href="/addGroup" class="btn btn-primary">建立</a>
-    <button type="button" class="btn btn-danger">删除</button>
-    <br>
-  
-    <table class="table table-bordered">
+
+    <div class="col col-sm-10 col-md-10">
+
+      <h2>管理團體義工</h2>
       <br>
-      <thead>
-        <tr>
-          <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
+      <a href="/addGroup" class="btn btn-primary">新增團體義工</a>
+      <button type="button" class="btn btn-danger">删除</button>
+
+      <br>
+      <br>
+
+      <div class="bordered">
+
+        <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯入及匯出</p>
+
+        <div class="row" style="padding: 20px;">
+
+          <form action="/import_group" method="post" enctype="multipart/form-data">
+            <div class="col-sm-6">
+              <p>匯入Excel檔案：</p>
+              <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                name="file" />
+              <input type="submit" class="btn btn-primary" />
             </div>
-          </th>
+          </form>
+
+          <div class="col-sm-6">
+            <p>以Excel檔案匯出：</p>
+            <a href="/export_group" class="btn btn-info">匯出</a>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <br>
+      <h3>團體義工列表</h3>
+      <table class="table table-bordered">
+        <br>
+        <thead>
+          <tr>
+            <th scope="col">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1"></label>
+              </div>
+            </th>
             <th scope="col">團體姓名</th>
             <th scope="col">聯絡人</th>
             <th scope="col">聯絡電話</th>
@@ -55,10 +83,10 @@
             <!-- <th scope="col">義工人數</th>  -->
             <th scope="col">編輯</th>
           </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
 
-        <% stations.forEach( function(model) { %>
+          <% stations.forEach( function(model) { %>
           <tr>
             <th scope="row">
               <div class="form-check">
@@ -66,107 +94,41 @@
                 <label class="form-check-label" for="exampleCheck1"></label>
               </div>
             </th>
-              <td><%= model.vGroupName %></td>
-              <td><%= model.vName %></td>
-              <td><%= model.vContact %></td>
-              <td><%= model.sName %></td>
-              <td><%= model.sLocation %></td>
-              <!-- <td><%= model.vGroupNumber %></td> -->
-              <td><a href='' class="btn btn-primary">編輯</a>
-                </td>
+            <td><%= model.vGroupName %></td>
+            <td><%= model.vName %></td>
+            <td><%= model.vContact %></td>
+            <td><%= model.sName %></td>
+            <td><%= model.sLocation %></td>
+            <!-- <td><%= model.vGroupNumber %></td> -->
+            <td><a href='' class="btn btn-primary">編輯</a>
+            </td>
             <% }); %>
           </tr>
-      
+
         </tbody>
       </table>
 
-    <!--table class="table table-bordered">
-      <br>
-  
-      <thead>
-        <tr>
-          <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <th scope="col">團體姓名</th>
-          <th scope="col">旗站位置</th>
-          <th scope="col">賣旗地區</th>
-          <th scope="col">義工人數</th>
-          <th scope="col">編輯</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>九龍城浸信會禧年(恩平)小學</td>
-          <td>TKO-A1</td>
-          <td>將軍澳</td>
-          <td>60</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>聖公會靈愛小學</td>
-          <td>TKO-A2</td>
-          <td>將軍澳</td>
-          <td>53</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>九龍堂宣道小學</td>
-          <td>KT-A1</td>
-          <td>觀塘</td>
-          <td>40</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-        <tr>
-          <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
-          <td>香港萬國宣道浸信會社會服務田裕浸信會長者鄰舍中心</td>
-          <td>TKO-A3</td>
-          <td>將軍澳</td>
-          <td>38</td>
-          <td><button type="button" class="btn btn-link">編輯</button></td>
-        </tr>
-  
-      </tbody>
-    </table-->
-  
-  </body>
-  
-  <style>
-    .bordered {
-      width: 800;
-      height: 800;
-      border: 1px solid black;
-      border-radius: 5px;
-      border-color: powderblue;
-    }
-  </style>
+    </div>
+
+
+  </div>
+
+
+</body>
+
+<style>
+  .bordered {
+    width: 800;
+    height: 800;
+    border: 1px solid black;
+    border-radius: 5px;
+    border-color: powderblue;
+  }
+
+  .bordered2 {
+    padding: 15px;
+    padding-bottom: 1px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+</style>
