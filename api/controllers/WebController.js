@@ -81,22 +81,18 @@ module.exports = {
 
     }
 
+    var stationManagers = await User.find({username:{in:req.body.User.username.split(',').map(s => s.trim())}})
 
     var station = await Station.create(req.body.Station).fetch();
-    console.log(JSON.stringify(station));
-    sails.log(station.id);
     sails.log("Here3");
     // association between Station && Web
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event 
-    sails.log(station.id);
     // Later --> May need to create association between Station and User
     sails.log("Here2");
-    var user = await User.findOne( {where: {username: req.body.User.username} });
-    await Station.addToCollection(station.id, 'monitorBy').members(user.id);
-    console.log(JSON.stringify(user));
-    console.log(JSON.stringify(station));
-    sails.log(station.id);
-    sails.log(user.id);
+    // var user = await User.findOne( {where: {username: req.body.User.username} });
+    // await Station.addToCollection(station.id, 'monitorBy').members(user.id);
+
+    await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
     sails.log("Here1");
 
     return res.redirect('/station/' + req.session.eventid);

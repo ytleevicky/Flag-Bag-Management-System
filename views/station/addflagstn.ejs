@@ -61,19 +61,23 @@
 
       <br>
 
-
-<!-- Not complete yet! May need to create association between eventUser & station -->
       <div class="form-group row">
-        <label for="inputUsername" class="col-sm-2 col-form-label">站長名稱</label>
-        <div class="col-sm-10">
-          <select class="form-control" name="User[username]" required>
-            <option value="">請選擇站長：</option>
-            <% go.forEach( function(model) { %>
-              <option value="<%= model.username %>"><%= model.username %></option>
-            <% }); %>
-          </select>
+          <label for="inputEvent" class="col-sm-2 col-form-label">站長名稱</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="usernames" type="text" name="User[username]" value="" required />
+          </div>
         </div>
-      </div>
+  
+        <div class="form-group row">
+            <label for="inputEvent" class="col-sm-2 col-form-label">請選擇站長：</label>
+            <div class="col-sm-10">
+              <select class="form-control" multiple onchange="document.getElementById('usernames').value += (document.getElementById('usernames').value.length > 0 ? ', ': '') + this.value">
+                <% go.forEach( function(model) { %>
+                <option value="<%= model.username %>"><%= model.username %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
 
       <!-- <div class="form-group row">
         <label for="inputphone" class="col-sm-2 col-form-label">聯絡電話</label>
