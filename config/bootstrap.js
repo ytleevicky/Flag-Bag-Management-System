@@ -92,16 +92,16 @@ module.exports.bootstrap = async function () {
 
 
   // Adding association between event & eventUser
-  const user = await User.findOne({ username: "station1" });
-  const event = await Web.findOne({ eventName: "First Event" })
+  const user = await User.findOne({ username: 'station1' });
+  const event = await Web.findOne({ eventName: 'First Event' });
   await User.addToCollection(user.id, 'edit').members(event.id);
 
-  const user2 = await User.findOne({ username: "eventUser2" });
-  const event2 = await Web.findOne({ eventName: "Second Event" })
+  const user2 = await User.findOne({ username: 'eventUser2' });
+  const event2 = await Web.findOne({ eventName: 'Second Event' });
   await User.addToCollection(user2.id, 'edit').members(event2.id);
 
-  const user3 = await User.findOne({ username: "eventUser3" });
-  const event3 = await Web.findOne({ eventName: "Third Event" })
+  const user3 = await User.findOne({ username: 'eventUser3' });
+  const event3 = await Web.findOne({ eventName: 'Third Event' });
   await User.addToCollection(user3.id, 'edit').members(event3.id);
 
 
