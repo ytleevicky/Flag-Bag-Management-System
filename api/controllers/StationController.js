@@ -79,7 +79,11 @@ module.exports = {
   //export station manager information(for stationmgrDisplay.ejs)
   export_statman: async function (req, res) {
 
-    var models = await User.find({ role: 'stationmgr' });
+    // var models = await User.find({ role: 'stationmgr' });
+
+    var stationmgr = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+
+    var models = stationmgr.superviseBy;
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
@@ -89,8 +93,8 @@ module.exports = {
         username: model.username,
         role: model.role,
         mail: model.mail,
-        flagstn: model.flagstn,
-        password: model.password,
+        // flagstn: model.flagstn,
+        // password: model.password,
         createdby: model.createdby
       };
     }));
@@ -162,8 +166,8 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid);
 
-    var models = await Station.find({ where: {vName: {'!=': ''}}});
-   
+    var models = await Station.find({ where: { vName: { '!=': '' } } });
+
     return res.view('station/individual', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
@@ -172,7 +176,7 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid);
 
-    var models = await Station.find({ where: {vGroupName: {'!=': ''}}});
+    var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
 
     return res.view('station/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
@@ -240,7 +244,7 @@ module.exports = {
 
     var model = await Station.findOne(req.params.id).populate('inside');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 
@@ -250,7 +254,7 @@ module.exports = {
 
     var model = await Station.findOne(req.params.id).populate('monitorBy');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 

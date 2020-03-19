@@ -143,6 +143,8 @@ module.exports = {
 
     req.body.User.password = await sails.bcrypt.hash(req.body.User.password, saltRounds);
 
+    req.body.User.createdby = await req.session.username;
+
     var user = await User.create(req.body.User).fetch();
     console.log(JSON.stringify(user));
 
@@ -275,7 +277,11 @@ module.exports = {
       var ws = workbook.Sheets[workbook.SheetNames[0]];
       var data = XLSX.utils.sheet_to_json(ws);
       console.log(data);
-      var models = await User.createEach(data).fetch();
+
+
+      var user = await User.createEach(data).fetch();
+
+      var models = await User.addToCollection(user.id, 'edit').members(req.session.eventid);
 
       if (models.length == 0) {
         return res.badRequest('No data imported.');
@@ -286,7 +292,7 @@ module.exports = {
         return res.redirect('/adminDisplay');
       }
 
-      return res.redirect('/stationmgrDisplay');
+      return res.redirect('/stationmgrDisplay/' + req.session.eventid);
 
     });
   },
