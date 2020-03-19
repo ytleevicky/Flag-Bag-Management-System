@@ -89,15 +89,15 @@ module.exports.routes = {
 
   //For populate
   //user and web
-  'GET /user/edit': 'UserController.populate',
-  'GET /event/:fk/superviseBy': 'WebController.populate',
+  'GET /user/edit': 'UserController.populate_uw',
+  'GET /event/:fk/superviseBy': 'WebController.populate_wu',
   //web and station
-  'GET /station/inside': 'StationController.populate',
-  'GET /web/:fk/include': 'WebController.populate',
+  'GET /station/inside': 'StationController.populate_sw',
+  'GET /web/:fk/include': 'WebController.populate_ws',
 
   // Station & User
-  'GET /user/monitor': 'UserController.populate',
-  'GET /station/:fk/monitorBy': 'StationController.populate',
+  'GET /user/monitor': 'UserController.populate_us',
+  'GET /station/:fk/monitorBy': 'StationController.populate_su',
 
 
   /***************************************************************************

@@ -63,7 +63,7 @@ module.exports = {
   },
 
   //action - populate(fro user and web)
-  populate: async function (req, res) {
+  populate_uw: async function (req, res) {
 
     var model = await User.findOne(req.params.id).populate('edit');
 
@@ -72,8 +72,8 @@ module.exports = {
     return res.json(model);
 
   },
-
-  populate: async function (req, res) {
+  //action - populate(fro user and station)
+  populate_us: async function (req, res) {
 
     var model = await User.findOne(req.params.id).populate('monitor');
 

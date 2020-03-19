@@ -232,7 +232,7 @@ module.exports = {
   // },
 
   //action - populate(for station and web)
-  populate: async function (req, res) {
+  populate_sw: async function (req, res) {
 
     var model = await Station.findOne(req.params.id).populate('inside');
 
@@ -241,8 +241,8 @@ module.exports = {
     return res.json(model);
 
   },
-
-  populate: async function (req, res) {
+  //action - populate(for station and user)
+  populate_su: async function (req, res) {
 
     var model = await Station.findOne(req.params.id).populate('monitorBy');
 

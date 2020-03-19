@@ -84,14 +84,19 @@ module.exports = {
 
     var station = await Station.create(req.body.Station).fetch();
     console.log(JSON.stringify(station));
-
+    sails.log(station.id);
     sails.log("Here3");
     // association between Station && Web
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event 
+    sails.log(station.id);
     // Later --> May need to create association between Station and User
     sails.log("Here2");
     var user = await User.findOne( {where: {username: req.body.User.username} });
     await Station.addToCollection(station.id, 'monitorBy').members(user.id);
+    console.log(JSON.stringify(user));
+    console.log(JSON.stringify(station));
+    sails.log(station.id);
+    sails.log(user.id);
     sails.log("Here1");
 
     return res.redirect('/station/' + req.session.eventid);
@@ -433,33 +438,44 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      var model = await Station.findOne(req.params.id);
+      var event = await Web.findOne(req.session.eventid).populate('superviseBy');
+
+      var model = await Station.findOne(req.params.id).populate('monitorBy');
       if (!model) { return res.notFound(); }
 
-     // var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
+      // var stationManagers = model.monitorBy.map(manager => manager.username).join(', ')
 
-     var user = await Station.findOne(req.params.id).populate('monitorBy');
-  
+      //var user1 = await User.find(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
+      // var users = await User.find({role:'stationmgr', });
+      var users = event.superviseBy.filter(u => u.role == 'stationmgr');
+      // var user = await Station.findOne(req.params.id).populate('monitorBy');
+
+
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, go: user.monitorBy });
+
+      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, users:users });
 
 
     } else {
 
-      if (!req.body.User) { return res.badRequest('Form-data not received.'); }
+      if (!req.body.User || !req.body.Station) { return res.badRequest('Form-data not received.'); }
 
       sails.bcrypt = require('bcryptjs');
       const saltRounds = 10;
+
+      var stationManagers = await User.find({username:{in:req.body.User.username.split(',').map(s => s.trim())}})
 
       var models = await Station.update(req.params.id).set({
         sName: req.body.Station.sName,
         sLocation: req.body.Station.sLocation,
         numOfSpareBag: req.body.Station.numOfSpareBag,
-        username: req.body.User.username,
+        // username: req.body.User.username,
       }).fetch();
 
-      if (models.length == 0) { return res.notFound(); }
+      if (models.length > 0) {
+        await Station.addToCollection(req.params.id).members(stationManagers.map(manager => manager.id));
+      } else { return res.notFound(); }
 
       if (req.wantsJSON) {
 
@@ -503,8 +519,8 @@ module.exports = {
 
   },
 
-  //action - populate(for user and web)
-  populate: async function (req, res) {
+  //action - populate(for web and user)
+  populate_wu: async function (req, res) {
 
     var model = await Web.findOne(req.params.id).populate('superviseBy');
 
@@ -514,8 +530,8 @@ module.exports = {
 
   },
 
-  //action - populate(for station and web)
-  populate: async function (req, res) {
+  //action - populate(for web and station)
+  populate_ws: async function (req, res) {
 
     var model = await Web.findOne(req.params.id).populate('include');
 
