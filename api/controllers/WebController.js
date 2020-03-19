@@ -220,12 +220,6 @@ module.exports = {
 
   },
 
-  addGroup: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/addGroup', { webs: models });
-
-  },
 
   eventreport: async function (req, res) {
 

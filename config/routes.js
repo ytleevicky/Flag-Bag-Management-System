@@ -41,7 +41,7 @@ module.exports.routes = {
   '/event/adduser ': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
   // '/addadmin': 'WebController.addadmin',
-  '/addGroup': 'WebController.addGroup',
+  
   '/addevent': 'WebController.addevent',
   'POST /web/': 'WebController.addevent',
 
@@ -74,6 +74,9 @@ module.exports.routes = {
   '/stationmanagement': 'StationController.stationmanagement',
   '/group/:id': 'StationController.group',
   '/addflagstn': 'WebController.addflagstn',
+
+  '/addGroup': 'StationController.addGroup',
+  'POST /station/': 'StationController.addGroup',
 
   //export
   '/export_station': 'StationController.export_station',

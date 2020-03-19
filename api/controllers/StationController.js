@@ -187,6 +187,13 @@ module.exports = {
 
   },
 
+  addGroup: async function (req, res) {
+
+    var models = await Station.find();
+    return res.view('station/addGroup', { stations: models });
+
+  },
+
   //export group information(for group.ejs)
   export_group: async function (req, res) {
 

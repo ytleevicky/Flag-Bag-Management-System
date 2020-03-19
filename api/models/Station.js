@@ -39,6 +39,10 @@ module.exports = {
     //   // required: true
     // },
 
+    vContacterName: {
+      type: 'string'
+    },
+
     vName: {    //use in individual.ejs
       type: 'string'
     },
@@ -81,6 +85,10 @@ module.exports = {
       // required: true
     },
 
+    numOfVolunteer: {
+      type: 'number',
+    },
+
 
 
 
@@ -97,6 +105,7 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+
     inside: {
       collection: 'Web',
       via: 'include'
