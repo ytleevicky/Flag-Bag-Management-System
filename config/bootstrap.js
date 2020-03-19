@@ -39,11 +39,11 @@ module.exports.bootstrap = async function () {
     const hash = await sails.bcrypt.hash('123456', saltRounds);
 
     await User.createEach([
-      { username: 'admin1', password: hash, role: 'admin', mail: '123@gmail.com', createdby: 'Temp' },
-      { username: 'admin2', password: hash, role: 'admin', mail: 'loveyou@bu.com', createdby: 'Temp' },
-      { username: 'station1', password: hash, role: 'stationmgr', mail: 'aarr@gmail.com', createdby: 'Temp' },
-      { username: 'eventUser2', password: hash, role: 'stationmgr', mail: 'good@gmail.com', createdby: 'Temp' },
-      { username: 'eventUser3', password: hash, role: 'stationmgr', mail: 'bad@gmail.com', createdby: 'Temp' },
+      { username: 'admin1', password: hash, role: 'admin', mail: '123@gmail.com', createdby: 'Developer' },
+      { username: 'admin2', password: hash, role: 'admin', mail: 'loveyou@bu.com', createdby: 'Developer' },
+      { username: 'station1', password: hash, role: 'stationmgr', mail: 'aarr@gmail.com', createdby: 'Developer' },
+      { username: 'eventUser2', password: hash, role: 'stationmgr', mail: 'good@gmail.com', createdby: 'Developer' },
+      { username: 'eventUser3', password: hash, role: 'stationmgr', mail: 'bad@gmail.com', createdby: 'Developer' },
       // etc.
     ]);
   }

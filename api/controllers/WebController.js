@@ -310,8 +310,8 @@ module.exports = {
         username: model.username,
         role: model.role,
         mail: model.mail,
-        flagstn: model.flagstn,
-        password: model.password,
+        // flagstn: model.flagstn,
+        // password: model.password,
         createdby: model.createdby
       };
     }));
@@ -415,7 +415,7 @@ module.exports = {
         password: await sails.bcrypt.hash(req.body.User.password, saltRounds),
         role: req.body.User.role,
         mail: req.body.User.mail,
-        flagstn: req.body.User.flagstn
+        // flagstn: req.body.User.flagstn
       }).fetch();
 
       if (models.length == 0) { return res.notFound(); }
