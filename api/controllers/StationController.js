@@ -194,9 +194,9 @@ module.exports = {
     if (req.method == 'GET') {
 
       var models = await Station.find();
-      // var web = await Web.findOne(req.session.eventid);
+      var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addGroup', { stations: models, eventid: req.session.eventid });
+      return res.view('station/addGroup', { stations: models, eventid: req.session.eventid, name: web.eventName });
 
     }
 
