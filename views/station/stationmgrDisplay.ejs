@@ -17,7 +17,7 @@
 
         <div class="btn-group-vertical" role="group" aria-label="Basic example">
           <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
-          <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">活動使用者</a>
+          <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
           <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
           <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
           <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
@@ -30,11 +30,6 @@
       <div class="col col-sm-10 col-md-10">
 
         <h2>管理旗站管理員</h2>
-        <br>
-        <a href="/event/adduser" class="btn btn-primary">新增旗站管理員</a>
-        <button type="button" class="btn btn-danger">删除</button>
-
-        <br>
         <br>
 
         <div class="bordered">
@@ -61,7 +56,7 @@
           </div>
         </div>
         <br>
-        <h3>旗站管理員列表</h3>
+        <h3>旗站管理員列表</h3> <a href="/event/adduser" class="btn btn-primary">新增旗站管理員</a>
         <table class="table table-bordered">
           <br>
           <thead>
