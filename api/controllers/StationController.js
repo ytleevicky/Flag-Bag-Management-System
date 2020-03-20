@@ -223,7 +223,12 @@ module.exports = {
 
     await Station.addToCollection(group.id, 'inside').members(req.session.eventid);
 
-    return res.redirect('/group/' + req.session.eventid);
+    if (req.wantsJSON) {
+      return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
+    } 
+    else{
+      return res.redirect('/group/' + req.session.eventid);
+    }
 
   },
 
@@ -260,7 +265,6 @@ module.exports = {
 
         if (req.wantsJSON) {
           return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
-
         } 
         else{
           return res.redirect('/group/' + req.session.eventid);

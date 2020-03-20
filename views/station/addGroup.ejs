@@ -15,7 +15,7 @@
     <br>
     <br>
 
-    <form action="/station/" method="POST">
+    <form action="/station/" method="POST" onsubmit="createForm(this);return false">
 
         <h2>團體資料</h2>
         <br>
@@ -91,3 +91,31 @@
         border-radius: 5px;
     }
 </style>
+
+<script>
+    async function createForm(oFormElement) {
+
+        var response = await fetch("/station/", {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+            //put into array            //map into input and encode                                                         //join it
+            body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+        });
+
+
+        if (response.ok) {
+            // validatePwd()
+            var data = await response.json();   // for res.ok() or res.json()
+            alert(data.message);
+            window.location = data.url;
+            //location.reload(true);
+        } else if (response.status == 401) {
+            var data = await response.text();   // for res.send()
+            alert(data);
+        } else {
+            alert(response.statusText);
+        }
+
+    };
+</script>
