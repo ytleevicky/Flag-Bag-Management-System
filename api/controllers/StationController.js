@@ -183,10 +183,16 @@ module.exports = {
 
     var models = await Station.find();
     var web = await Web.findOne(req.session.eventid);
-    
+
     return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName });
 
     }
+
+    var individual = await Station.create(req.body.Station).fetch();
+
+    await Station.addToCollection(individual.id, 'inside').members(req.session.eventid);
+
+    return res.redirect('/individual/' + req.session.eventid);
 
   },
 

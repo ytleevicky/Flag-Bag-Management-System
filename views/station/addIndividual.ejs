@@ -5,7 +5,7 @@
     </h2> -->
 
     <div class="bordered2">
-        <h1>個人義工</h1>
+        <h1>個人資料</h1>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
@@ -19,19 +19,19 @@
     <br>
     <br>
 
-    <form>
+    <form action="/station/" method="POST">
 
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">義工名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="station[vName]">
+                <input type="text" class="form-control" id="station[vName]" name="Station[vName]" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputContact" class="col-sm-2 col-form-label">聯絡電話</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="station[vContact]">
+                <input type="text" class="form-control" id="station[vContact]" name="Station[vContact]" required>
             </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="form-group row">
             <label for="inputLocation" class="col-sm-2 col-form-label">所屬旗站</label>
             <div class="col-sm-10">
-                <select class="form-control" name="Property[estate]" required>
+                <select class="form-control" name="Station[sName]"  required>
                     <option value="">請選擇所屬旗站：</option>
                     <% stations.forEach( function(model) { %>
                         <option value="<%= model.sName %>"><%= model.sName %></option>
@@ -66,7 +66,7 @@
         <div class="form-group row">
             <label class="col-sm-2">所屬團體</label>
             <div class="col-sm-10">
-                <select class="form-control" name="Property[estate]" required>
+                <select class="form-control" name="Station[vGroupName]" required>
                     <option value="">請選擇所屬團體：</option>
                     <% stations.forEach( function(model) { %>
                     <% if(model.vGroupName  != "") { %>
@@ -78,7 +78,7 @@
         </div>
 
 
-        <button type="button" class="btn btn-success" style="float:right;">儲存</button>
+        <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
 
         <button type="button" class="btn btn-danger" style="float:right;">取消</button>
 
