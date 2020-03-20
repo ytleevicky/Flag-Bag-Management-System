@@ -1,6 +1,15 @@
 <body>
-    <br>
-    <h2><a href="/management">活動管理</a> > <a href="/viewitem">First Event</a> > 活動報告</h2>
+    <div class="bordered2">
+        <h1>旗站</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">活動報告</li>
+          </ol>
+        </nav>
+      </div>
+      <br>
     <br>
 
 
@@ -10,10 +19,7 @@
 
     <!-- <a class="nav-link active" href="">籌得款項及所有支出細項</a> -->
    
-    <a class="nav-link active" href="/stationmgrDisplay">活動使用者</a>
-    <a class="nav-link active" href="/individual">個人義工</a>
-    <a class="nav-link active" href="/group">團體義工</a>
-    <a class="nav-link active" href="/station">旗站</a>
+
     <a class="nav-link active" href="/groupandindividual"> 團體義工及其所屬義工資料表（包含義工出席紀錄）</a>
 
 
@@ -23,3 +29,20 @@
 
 
 </body>
+
+<style>
+    .bordered {
+      width: 800;
+      height: 800;
+      border: 1px solid black;
+      border-radius: 5px;
+      border-color: powderblue;
+    }
+  
+    .bordered2 {
+      padding: 15px;
+      padding-bottom: 1px;
+      border: 1px solid gainsboro;
+      border-radius: 5px;
+    }
+  </style>
