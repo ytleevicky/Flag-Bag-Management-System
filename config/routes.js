@@ -50,7 +50,7 @@ module.exports.routes = {
 
   // '/individual': 'WebController.individual',
   // '/group': 'WebController.group',
-  '/addIndividual': 'WebController.addIndividual',
+  
 
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
@@ -77,6 +77,8 @@ module.exports.routes = {
 
   '/addGroup': 'StationController.addGroup',
   'POST /station/': 'StationController.addGroup',
+  '/addIndividual': 'StationController.addIndividual',
+  'POST /station/': 'StationController.addIndividual',
 
   //export
   '/export_station': 'StationController.export_station',

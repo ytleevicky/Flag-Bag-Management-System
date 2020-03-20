@@ -177,6 +177,19 @@ module.exports = {
 
   },
 
+  addIndividual: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+    var models = await Station.find();
+    var web = await Web.findOne(req.session.eventid);
+    
+    return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName });
+
+    }
+
+  },
+
   group: async function (req, res) {
 
     var model = await Web.findOne(req.session.eventid);

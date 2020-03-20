@@ -201,13 +201,6 @@ module.exports = {
 
   // },
 
-  addIndividual: async function (req, res) {
-
-    var models = await Station.find();
-    return res.view('web/addIndividual', { stations: models });
-
-  },
-
   //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 
