@@ -223,8 +223,8 @@ module.exports = {
 
   groupandindividual: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/groupandindividual', { webs: models });
+    var models = await Web.findOne(req.session.eventid);
+    return res.view('web/groupandindividual', { webs: models, name: models.eventName, eventid: req.session.eventid  });
 
   },
 

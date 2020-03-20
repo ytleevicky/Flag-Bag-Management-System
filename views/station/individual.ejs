@@ -33,11 +33,8 @@
 
     <h2>管理個人義工</h2>
     <br>
-    <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
-    <button type="button" class="btn btn-danger">删除</button>
-
-    <br>
-    <br>
+    
+    
 
     <div class="bordered">
 
@@ -64,7 +61,7 @@
     </div>
 
     <br>
-    <h3>個人義工列表</h3>
+    <h3>個人義工列表</h3><a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
     <table class="table table-bordered">
       <br>
       <thead>
@@ -105,7 +102,7 @@
           <td><%= model.bagStatus %></td>
           <td><%= model.bagUpdate %></td>
           <td><%= model.codePrintedTime %></td>
-          <td><a href='' class="btn btn-primary">編輯</a>
+          <td><a href='' class="btn btn-info">編輯</a> <button type="button" class="btn btn-danger">删除</button>
           </td>
           <% }); %>
         </tr>
