@@ -56,6 +56,10 @@ module.exports = {
       type: 'string'
     },
 
+    vGroupAddress: {
+      type: 'string'
+    },
+
     //旗站位置
     sLocation: {     //use in individual.ejs, station.ejs, group.ejs
       type: 'string'

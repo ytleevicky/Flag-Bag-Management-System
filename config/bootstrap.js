@@ -77,13 +77,13 @@ module.exports.bootstrap = async function () {
     await Station.createEach([
       {
         codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Jean', vContacterName: 'Jean', vGroupName: 'Individual', vContact: '12345678', sName: 'TKO-S1', sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        vName: 'Jean', vContacterName: 'Jean',  vGroupAddress: 'Tuen Mun', vGroupName: 'Individual', vContact: '12345678', sName: 'TKO-S1', sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
         bagUpdate: '18-6-2020 13:35'
       },
 
       {
         codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Kenny', vContacterName: 'Jean', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2', sLocation: 'PoRoad', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        vName: 'Kenny', vContacterName: 'Jean', vGroupAddress: 'Tuen Mun', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2', sLocation: 'PoRoad', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
         bagUpdate: '18-6-2020'
       },
     ]);
