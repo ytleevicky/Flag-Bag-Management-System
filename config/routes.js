@@ -74,11 +74,13 @@ module.exports.routes = {
   '/stationmanagement': 'StationController.stationmanagement',
   '/group/:id': 'StationController.group',
   '/addflagstn': 'WebController.addflagstn',
-
   '/addGroup': 'StationController.addGroup',
   'POST /station/': 'StationController.addGroup',
   '/addIndividual': 'StationController.addIndividual',
   'POST /station/': 'StationController.addIndividual',
+
+  'GET /updateGroup/:id': 'StationController.updateGroup',
+  'POST /station/:id': 'StationController.updateGroup',
 
   //export
   '/export_station': 'StationController.export_station',

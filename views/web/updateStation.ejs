@@ -97,19 +97,6 @@
   
     async function createForm(oFormElement) {
   
-      // Later to be solved
-      // function validatePwd() {
-      //   var pwd = $("#inputPassword").val
-      //   var cpw = $("#confirmPwd").val
-  
-      //   if (pwd != cpw) {
-      //     alert("Password does not match.")
-      //     return false
-      //   }
-  
-      //   else return true
-      // }
-  
       console.log(Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'))
   
       var response = await fetch("/station/<%= station.id %>", {

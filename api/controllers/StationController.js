@@ -225,6 +225,48 @@ module.exports = {
 
     return res.redirect('/group/' + req.session.eventid);
 
+  },
+
+  updateGroup: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+      // var event = await Web.findOne(req.params.id);
+      var models = await Station.findOne(req.params.id).populate('inside');
+
+      if (!models) { return res.notFound(); }
+
+      if (!req.session.eventid) {
+        if (req.method == 'GET') { return res.view('station/updateGroup', { stations: models, eventid: '' }); }
+      }
+      else{
+        var web = await Web.findOne(req.session.eventid);
+        return res.view('station/updateGroup', { stations: models, eventid: req.session.eventid, name: web.eventName });
+      }
+    }
+
+    	else {
+        if (!req.body.User || req.body.Station) { return res.badRequest('Form-data not received.'); }
+
+        var models = await Station.update(req.params.id).set({
+          vGroupName: req.body.Station.vGroupName,
+          sLocation: req.body.Station.sLocation,
+          sName: req.body.Station.sName,
+          vContacterName: req.body.Station.vContacterName,
+          vContact: req.body.Station.vContact
+        }).fetch();
+
+        if (models.length == 0) { return res.notFound(); }
+
+        if (req.wantsJSON) {
+          return res.JSON({message: '已更新團體！', url: '/group/' + req.session.eventid});
+
+        } 
+        else{
+          return res.redirect('/group/' + req.session.eventid);
+        }
+      }
+    
 
   },
 

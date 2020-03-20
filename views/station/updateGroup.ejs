@@ -1,0 +1,122 @@
+<body>
+
+    <div class="bordered2">
+        <h1>編輯團體義工</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+                <li class="breadcrumb-item"><a href="/group/<%= eventid %>">團體義工</a></li>
+                <li class="breadcrumb-item active" aria-current="page">編輯團體義工</li>
+            </ol>
+        </nav>
+    </div>
+
+    <br>
+    <br>
+
+    <form action="/station/<%= stations.id %>" method="POST" onsubmit="createForm(this);return false">
+
+        <h2>團體資料</h2>
+        <br>
+        <div class="form-group row">
+            <label for="inputUsername" class="col-sm-2 col-form-label">團體名稱</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUsername" name="Station[vGroupName]" value="<%= stations.vGroupName %>">
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+                <label for="inputUsername" class="col-sm-2 col-form-label">義工人數</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputUsername" name="Station[numOfVolunteer]">
+                </div>
+            </div> -->
+
+
+        <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">賣旗地點</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword" name="Station[sLocation]" value="<%= stations.sLocation %>">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputStation" class="col-sm-2 col-form-label">所屬旗站</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputStation" name="Station[sName]" value="<%= stations.sName %>">
+            </div>
+        </div>
+
+        <br>
+        <h2>負責人資料</h2>
+        <br>
+        <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">負責人名稱</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail" name="Station[vContacterName]" value="<%= stations.vContacterName %>">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電話</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail" name="Station[vContact]" value="<%= stations.vContact %>">
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電郵</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputEmail">
+                </div>
+            </div> -->
+
+
+        <br>
+
+        <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
+
+        <a href='/group/<%= eventid %> ' class="btn btn-danger" style="float:right;">取消</a>
+
+    </form>
+
+</body>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+  
+    async function createForm(oFormElement) {
+  
+      var response = await fetch("/station/<%= stations.id %>", {
+        method: "POST",
+        credentials: 'same-origin',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+        //put into array            //map into input and encode                                                         //join it
+        body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+      });
+  
+  
+      if (response.ok) {
+        // validatePwd()
+        var data = await response.json();   // for res.ok() or res.json()
+        alert(data.message);
+        window.location = data.url;
+        //location.reload(true);
+      } else if (response.status == 401) {
+        var data = await response.text();   // for res.send()
+        alert(data);
+      } else {
+        alert(response.statusText);
+      }
+  
+    };
+  </script>
