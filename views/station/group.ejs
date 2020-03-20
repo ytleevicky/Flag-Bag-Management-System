@@ -32,11 +32,6 @@
 
       <h2>管理團體義工</h2>
       <br>
-      <a href="/addGroup" class="btn btn-primary">新增團體義工</a>
-      <button type="button" class="btn btn-danger">删除</button>
-
-      <br>
-      <br>
 
       <div class="bordered">
 
@@ -64,7 +59,9 @@
       </div>
 
       <br>
-      <h3>團體義工列表</h3>
+      <h3>團體義工列表</h3> <a href="/addGroup" class="btn btn-primary">新增團體義工</a>      
+      
+      <br>
       <table class="table table-bordered">
         <br>
         <thead>
@@ -100,7 +97,7 @@
             <td><%= model.sName %></td>
             <td><%= model.sLocation %></td>
             <!-- <td><%= model.vGroupNumber %></td> -->
-            <td><a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a>
+            <td><a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a> <button type="button" class="btn btn-danger">删除</button>
             </td>
             <% }); %>
           </tr>
