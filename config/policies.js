@@ -26,7 +26,6 @@ module.exports.policies = {
     viewitem: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
-    addIndividual: 'isAdmin',
     eventreport: 'isAdmin',
     qrCode: 'isAdmin',
     collectBag: 'isStationmgr',
@@ -42,6 +41,7 @@ module.exports.policies = {
     group: 'isAdmin',
     stationmanagement: 'isStationmgr',
     addGroup: 'isAdmin',
+    addIndividual: 'isAdmin',
 
   }
 
