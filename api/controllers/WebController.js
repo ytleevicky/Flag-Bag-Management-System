@@ -231,7 +231,9 @@ module.exports = {
   qrCode: async function (req, res) {
 
     var models = await Web.find();
-    return res.view('web/qrCode', { webs: models });
+
+    var web = await Web.findOne(req.session.eventid);
+    return res.view('web/qrCode', { webs: models, name: web.eventName, eventid: req.session.eventid  });
 
   },
 
