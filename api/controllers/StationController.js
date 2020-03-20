@@ -246,7 +246,7 @@ module.exports = {
     }
 
     	else {
-        if (!req.body.User || req.body.Station) { return res.badRequest('Form-data not received.'); }
+        if (!req.body.Station) { return res.badRequest('Form-data not received.'); }
 
         var models = await Station.update(req.params.id).set({
           vGroupName: req.body.Station.vGroupName,
@@ -259,7 +259,7 @@ module.exports = {
         if (models.length == 0) { return res.notFound(); }
 
         if (req.wantsJSON) {
-          return res.JSON({message: '已更新團體！', url: '/group/' + req.session.eventid});
+          return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
 
         } 
         else{
