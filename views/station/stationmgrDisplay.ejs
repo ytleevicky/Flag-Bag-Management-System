@@ -66,9 +66,9 @@
           <br>
           <thead>
             <tr>
-              <th scope="col">
+              <!-- <th scope="col">
                 選擇用戶
-              </th>
+              </th> -->
               <th scope="col">用戶名稱</th>
               <th scope="col">電郵</th>
               <th scope="col">用戶身份</th>
@@ -79,12 +79,12 @@
 
             <% go.forEach( function(model) { %>
             <tr>
-              <th scope="row">
+              <!-- <th scope="row">
                 <div class="form-check">
                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                   <label class="form-check-label" for="exampleCheck1"></label>
                 </div>
-              </th>
+              </th> -->
               <td><%= model.username %></td>
               <td><%= model.mail %></td>
               <td><%= model.role %></td>
