@@ -216,19 +216,13 @@ module.exports = {
       var web = await Web.findOne(req.session.eventid);
 
       return res.view('station/addGroup', { stations: models, eventid: req.session.eventid, name: web.eventName });
-
     }
 
     var group = await Station.create(req.body.Station).fetch();
 
     await Station.addToCollection(group.id, 'inside').members(req.session.eventid);
-
-    if (req.wantsJSON) {
-      return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
-    } 
-    else{
-      return res.redirect('/group/' + req.session.eventid);
-    }
+      
+    return res.redirect('/group/' + req.session.eventid);
 
   },
 
