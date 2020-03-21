@@ -52,11 +52,15 @@ module.exports = {
       console.log(data);
       var models = await Station.createEach(data).fetch();
 
+      models.forEach(async m => {
+        await Station.addToCollection(m.id, 'inside').members(req.session.eventid); // add station to the event 
+      });
+
       if (models.length == 0) {
         return res.badRequest('No data imported.');
       }
 
-      return res.redirect('/station');
+      return res.redirect('/station/' + req.session.eventid);
 
     });
   },
