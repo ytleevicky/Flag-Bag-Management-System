@@ -63,10 +63,10 @@
         <ul class="navbar-nav">
           <%if (req.session.role == "admin") {%>
           <li class="nav-item">
-            <a class="nav-link" href="/management">活動管理</a>
+            <a class="nav-item nav-link <%= req.path == "/management" ? "active" : "" %>" href="/management">活動管理</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/adminDisplay">活動管理員</a>
+            <a class="nav-link nav-link <%= req.path == "/adminDisplay" ? "active" : "" %>" href="/adminDisplay">活動管理員</a>
           </li>
           
           <!-- <li class="nav-item">
