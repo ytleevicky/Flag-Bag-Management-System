@@ -77,7 +77,7 @@ module.exports = {
 
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid });
+      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid, adminName: req.session.username });
 
     }
 

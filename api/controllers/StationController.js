@@ -30,7 +30,7 @@ module.exports = {
         sLocation: model.sLocation, //賣旗地區
         //bagNumber: model.numOfBag, //旗袋總數(need to add function)
         numOfSpareBag: model.numOfSpareBag, //後備旗袋
-        createdby: req.session.username
+        createdby: model.createdby
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'Station_List');
