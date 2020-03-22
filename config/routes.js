@@ -85,7 +85,8 @@ module.exports.routes = {
   // 'GET /updateGroup/:id': 'StationController.updateGroup',
   // 'POST /station/:id': 'StationController.updateGroup',
 
-  '/viewIndividual/:id': 'StationController.viewIndividual',
+  // Waiting to be developed
+  // '/viewIndividual/:id': 'StationController.viewIndividual',
 
   //export
   '/export_station': 'StationController.export_station',
