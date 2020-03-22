@@ -465,7 +465,7 @@ module.exports = {
       }).fetch();
 
       if (models.length > 0) {
-        await Station.addToCollection(req.params.id).members(stationManagers.map(manager => manager.id));
+        await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
       } else { return res.notFound(); }
 
       if (req.wantsJSON) {

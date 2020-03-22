@@ -78,11 +78,14 @@ module.exports.routes = {
   '/addGroup': 'StationController.addGroup',
   'POST /station/': 'StationController.addGroup',
 
-  '/addIndividual': 'StationController.addIndividual',
-  'POST /station/': 'StationController.addIndividual',
+  // Collapsion on POST station id
+  // '/addIndividual': 'StationController.addIndividual',
+  // 'POST /station/': 'StationController.addIndividual',
 
-  'GET /updateGroup/:id': 'StationController.updateGroup',
-  'POST /station/:id': 'StationController.updateGroup',
+  // 'GET /updateGroup/:id': 'StationController.updateGroup',
+  // 'POST /station/:id': 'StationController.updateGroup',
+
+  '/viewIndividual/:id': 'StationController.viewIndividual',
 
   //export
   '/export_station': 'StationController.export_station',
