@@ -100,7 +100,7 @@
       console.log(Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'))
   
       var response = await fetch("/station/<%= station.id %>", {
-        method: "POST",
+        method: "PATCH",
         credentials: 'same-origin',
         headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
         //put into array            //map into input and encode                                                         //join it

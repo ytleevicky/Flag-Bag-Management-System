@@ -63,8 +63,8 @@ module.exports.routes = {
   'GET /updateUser/:id': 'WebController.updateUser',
   'GET /updateStation/:id': 'WebController.updateStation',
 
-  'POST /user/:id': 'WebController.updateUser',
-  'POST /station/:id': 'WebController.updateStation',
+  'PATCH /user/:id': 'WebController.updateUser',
+  'PATCH /station/:id': 'WebController.updateStation',
 
   //USE in StationController
 
@@ -82,8 +82,8 @@ module.exports.routes = {
   // '/addIndividual': 'StationController.addIndividual',
   // 'POST /station/': 'StationController.addIndividual',
 
-  // 'GET /updateGroup/:id': 'StationController.updateGroup',
-  // 'POST /station/:id': 'StationController.updateGroup',
+   'GET /updateGroup/:id': 'StationController.updateGroup',
+   'PATCH /station/:id': 'StationController.updateGroup',
 
   // Waiting to be developed
   // '/viewIndividual/:id': 'StationController.viewIndividual',

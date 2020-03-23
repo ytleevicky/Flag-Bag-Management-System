@@ -97,7 +97,7 @@
     async function createForm(oFormElement) {
   
       var response = await fetch("/station/<%= stations.id %>", {
-        method: "POST",
+        method: "PATCH",
         credentials: 'same-origin',
         headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
         //put into array            //map into input and encode                                                         //join it
