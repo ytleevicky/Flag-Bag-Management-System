@@ -1,106 +1,110 @@
 <body>
 
-    <div class="bordered2">
-      <h1>個人義工</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
-          <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= eventname %></a></li>
-          <li class="breadcrumb-item"><a href="/individual/<%= eventid %>">個人義工</a></li>
-          <li class="breadcrumb-item active" aria-current="page">個人義工詳細資料</li>
-        </ol>
-      </nav>
-    </div>
-  
-    <br>
-  
-    <div class="row">
-  
-      <div class="col col-sm-2 col-md-2">
-  
-        <div class="btn-group-vertical" role="group" aria-label="Basic example">
-          <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
-          <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
-          <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
-          <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
-          <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
-          <!-- <a href="/eventreport" class="btn btn-info" role="button">活動報告</a> -->
-          <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
-        </div>
-  
+  <div class="bordered2">
+    <h1>個人義工</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+        <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= eventname %></a></li>
+        <li class="breadcrumb-item"><a href="/individual/<%= eventid %>">個人義工</a></li>
+        <li class="breadcrumb-item active" aria-current="page">個人義工詳細資料</li>
+      </ol>
+    </nav>
+  </div>
+
+  <br>
+
+  <div class="row">
+
+    <div class="col col-sm-2 col-md-2">
+
+      <div class="btn-group-vertical" role="group" aria-label="Basic example">
+        <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+        <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
+        <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
+        <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
+        <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+        <!-- <a href="/eventreport" class="btn btn-info" role="button">活動報告</a> -->
+        <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
       </div>
-  
-      <div class="col col-sm-10 col-md-10">
+
+    </div>
+
+    <div class="col col-sm-10 col-md-10">
 
       <table class="table table-bordered">
 
         <div class="row">
-            <div class="col-sm-10 col-md-10">
-                <h2>個人義工詳細資料</h2>
-            </div>
-            <div class="col-sm-2 col-md-2">
-                <a href='k' class="btn btn-primary" style="float: right;">編輯</a>
-            </div>
+          <div class="col-sm-10 col-md-10">
+            <h2>個人義工詳細資料</h2>
+          </div>
+          <div class="col-sm-2 col-md-2">
+            <a href='k' class="btn btn-primary" style="float: right;">編輯</a>
+          </div>
         </div>
 
         <tbody>
-            <tr>
-                <th scope="row">姓名</th>
-                <td><%= stations.vName %></td>
-            </tr>
-            <tr>
-                <th scope="row">聯絡電話</th>
-                <td><%= stations.vContact %></td>
-            </tr>
-            <tr>
-                <th scope="row">旗站名稱</th>
-                <td><%= stations.sName %></td>
-            </tr>
-            <tr>
-                <th scope="row">旗站位置</th>
-                <td><%= stations.sLocation %></td>
-            </tr>
-            <tr>
-                <th scope="row">旗袋編號</th>
-                <td><%= stations.bagNumber %></td>
-            </tr>
-            <tr>
-                <th scope="row">旗袋狀態</th>
-                <td><%= stations.bagStatus %></td>
-            </tr>
-            <tr>
-                <th scope="row">QR Code 1</th>
-                <td><%= stations.codePrinted %></td>
-            </tr>
-            <tr>
-                <th scope="row">QR Code 2</th>
-                <td><%= stations.codePrintedTime %></td>
-            </tr>
-            <tr>
-                <th scope="row">Bag Last Update</th>
-                <td><%= stations.bagUpdate %></td>
-            </tr>
-            
+          <tr>
+            <th scope="row">姓名</th>
+            <td><%= stations.vName %></td>
+          </tr>
+          <tr>
+            <th scope="row">聯絡電話</th>
+            <td><%= stations.vContact %></td>
+          </tr>
+          <tr>
+            <th scope="row">所屬團體</th>
+            <td><%= stations.vGroupName %></td>
+          </tr>
+          <tr>
+            <th scope="row">旗站名稱</th>
+            <td><%= stations.sName %></td>
+          </tr>
+          <tr>
+            <th scope="row">旗站位置</th>
+            <td><%= stations.sLocation %></td>
+          </tr>
+          <tr>
+            <th scope="row">旗袋編號</th>
+            <td><%= stations.bagNumber %></td>
+          </tr>
+          <tr>
+            <th scope="row">旗袋狀態</th>
+            <td><%= stations.bagStatus %></td>
+          </tr>
+          <tr>
+            <th scope="row">QR Code 1</th>
+            <td><%= stations.codePrinted %></td>
+          </tr>
+          <tr>
+            <th scope="row">QR Code 2</th>
+            <td><%= stations.codePrintedTime %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bag Last Update</th>
+            <td><%= stations.bagUpdate %></td>
+          </tr>
+
         </tbody>
-    </table>
-   
+      </table>
+
     </div>
-  
-  </body>
-  
-  <style>
-    .bordered {
-      width: 800;
-      height: 800;
-      border: 1px solid black;
-      border-radius: 5px;
-      border-color: powderblue;
-    }
-  
-    .bordered2 {
-      padding: 15px;
-      padding-bottom: 1px;
-      border: 1px solid gainsboro;
-      border-radius: 5px;
-    }
-  </style>
+
+</body>
+
+<style>
+  .bordered {
+    width: 800;
+    height: 800;
+    border: 1px solid black;
+    border-radius: 5px;
+    border-color: powderblue;
+  }
+
+  .bordered2 {
+    padding: 15px;
+    padding-bottom: 1px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+</style>
