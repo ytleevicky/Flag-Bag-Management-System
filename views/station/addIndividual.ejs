@@ -68,11 +68,17 @@
             <div class="col-sm-10">
                 <select class="form-control" name="Station[vGroupName]" required>
                     <option value="">請選擇所屬團體：</option>
-                    <% stations.forEach( function(model) { %>
+                    <!-- <% stations.forEach( function(model) { %>
                     <% if(model.vGroupName  != "") { %>
                         <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
                     <% } %>
-                    <% }); %>
+                    <% }); %> -->
+
+                    <% groups.forEach( function(model) { %>
+                        
+                            <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
+                   
+                        <% }); %>
                 </select>
             </div>
         </div>

@@ -187,10 +187,12 @@ module.exports = {
 
     if (req.method == 'GET') {
 
+      var groupList = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
+
       var models = await Station.find();
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName });
+      return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName, groups: groupList.include });
 
     }
 
@@ -206,9 +208,10 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid);
 
-    var models = await Web.findOne(req.session.eventid).populate('include', { where: { vGroupName: { '!=': '' } } });
+    // var models = await Web.findOne(req.session.eventid).populate('include', { where: { vGroupName: { '!=': '' } } });
 
-    //var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
+    // var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
 
     return res.view('station/group', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
 
