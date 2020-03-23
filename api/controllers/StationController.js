@@ -175,9 +175,11 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid);
 
-    var models = await Station.find({ where: { vName: { '!=': '' } } });
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: { vName: { '!=': '' } } });
 
-    return res.view('station/individual', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
+    // var models = await Station.find({ where: { vName: { '!=': '' } } });
+
+    return res.view('station/individual', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
 
   },
 
