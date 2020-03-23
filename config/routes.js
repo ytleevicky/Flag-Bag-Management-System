@@ -17,7 +17,7 @@ module.exports.routes = {
    * `assets` directory)                                                      *
    *                                                                          *
    ***************************************************************************/
-  
+
   //Use in UserController
 
   '/': 'UserController.login',                //default page
@@ -41,7 +41,7 @@ module.exports.routes = {
   '/event/adduser ': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
   // '/addadmin': 'WebController.addadmin',
-  
+
   '/addevent': 'WebController.addevent',
   'POST /web/': 'WebController.addevent',
 
@@ -50,7 +50,7 @@ module.exports.routes = {
 
   // '/individual': 'WebController.individual',
   // '/group': 'WebController.group',
-  
+
 
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
@@ -76,14 +76,14 @@ module.exports.routes = {
   '/addflagstn': 'WebController.addflagstn',
 
   '/addGroup': 'StationController.addGroup',
-  'POST /station/': 'StationController.addGroup',
+  'POST /station/group': 'StationController.addGroup',
 
   // Collapsion on POST station id
-  // '/addIndividual': 'StationController.addIndividual',
-  // 'POST /station/': 'StationController.addIndividual',
+  '/addIndividual': 'StationController.addIndividual',
+  'POST /station/individual': 'StationController.addIndividual',
 
-   'GET /updateGroup/:id': 'StationController.updateGroup',
-   'PATCH /station/:id': 'StationController.updateGroup',
+  'GET /updateGroup/:id': 'StationController.updateGroup',
+  'PATCH /station/group/:id': 'StationController.updateGroup',
 
   // Waiting to be developed
   // '/viewIndividual/:id': 'StationController.viewIndividual',

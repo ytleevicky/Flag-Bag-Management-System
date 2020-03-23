@@ -53,7 +53,7 @@ module.exports = {
       var models = await Station.createEach(data).fetch();
 
       models.forEach(async m => {
-        await Station.addToCollection(m.id, 'inside').members(req.session.eventid); // add station to the event 
+        await Station.addToCollection(m.id, 'inside').members(req.session.eventid); // add station to the event
       });
 
       if (models.length == 0) {
@@ -185,10 +185,10 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-    var models = await Station.find();
-    var web = await Web.findOne(req.session.eventid);
+      var models = await Station.find();
+      var web = await Web.findOne(req.session.eventid);
 
-    return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName });
+      return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName });
 
     }
 
@@ -225,7 +225,7 @@ module.exports = {
     var group = await Station.create(req.body.Station).fetch();
 
     await Station.addToCollection(group.id, 'inside').members(req.session.eventid);
-      
+
     return res.redirect('/group/' + req.session.eventid);
 
   },
@@ -249,26 +249,26 @@ module.exports = {
     }
 
     	else {
-        if (!req.body.Station) { return res.badRequest('Form-data not received.'); }
+      if (!req.body.Station) { return res.badRequest('Form-data not received.'); }
 
-        var models = await Station.update(req.params.id).set({
-          vGroupName: req.body.Station.vGroupName,
-          sLocation: req.body.Station.sLocation,
-          sName: req.body.Station.sName,
-          vContacterName: req.body.Station.vContacterName,
-          vContact: req.body.Station.vContact
-        }).fetch();
+      var models = await Station.update(req.params.id).set({
+        vGroupName: req.body.Station.vGroupName,
+        sLocation: req.body.Station.sLocation,
+        sName: req.body.Station.sName,
+        vContacterName: req.body.Station.vContacterName,
+        vContact: req.body.Station.vContact
+      }).fetch();
 
-        if (models.length == 0) { return res.notFound(); }
+      if (models.length == 0) { return res.notFound(); }
 
-        if (req.wantsJSON) {
-          return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
-        } 
-        else{
-          return res.redirect('/group/' + req.session.eventid);
-        }
+      if (req.wantsJSON) {
+        return res.json({message: '已更新團體！', url: '/group/' + req.session.eventid});
       }
-    
+      else{
+        return res.redirect('/group/' + req.session.eventid);
+      }
+    }
+
 
   },
 
