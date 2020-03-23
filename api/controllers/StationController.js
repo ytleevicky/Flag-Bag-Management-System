@@ -268,7 +268,20 @@ module.exports = {
         return res.redirect('/group/' + req.session.eventid);
       }
     }
+  },
 
+  viewIndividual: async function (req, res) {
+    console.log(req.session.eventid);
+    var event = await Web.findOne(parseInt(req.session.eventid));
+
+    var models = await Station.findOne(req.params.id);
+    if (!models) {return res.notFound();}
+
+    req.session.stationid = models.id;
+
+    var model = await Station.find();
+
+    return res.view('station/viewIndividual', { name: model.eventName, stations: models, eventid: event.id, eventname: event.eventName });
 
   },
 

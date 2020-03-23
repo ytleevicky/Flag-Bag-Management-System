@@ -86,7 +86,7 @@ module.exports.routes = {
   'PATCH /station/group/:id': 'StationController.updateGroup',
 
   // Waiting to be developed
-  // '/viewIndividual/:id': 'StationController.viewIndividual',
+  '/viewIndividual/:id': 'StationController.viewIndividual',
 
   //export
   '/export_station': 'StationController.export_station',
