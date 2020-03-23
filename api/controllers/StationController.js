@@ -189,10 +189,12 @@ module.exports = {
 
       var groupList = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
 
-      var models = await Station.find();
+      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': 0 } }});
+
+      // var models = await Station.find();
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addIndividual', { stations: models, eventid: req.session.eventid, name: web.eventName, groups: groupList.include });
+      return res.view('station/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.include, stations: stationList.include });
 
     }
 
@@ -221,10 +223,12 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      var models = await Station.find();
+      // var models = await Station.find();
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addGroup', { stations: models, eventid: req.session.eventid, name: web.eventName });
+      var stationList = await Web.findOne(req.session.eventid).populate('include', { where: {numOfSpareBag: {'!=': 0 } }});
+
+      return res.view('station/addGroup', { eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
     }
 
     var group = await Station.create(req.body.Station).fetch();

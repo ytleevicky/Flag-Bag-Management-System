@@ -501,7 +501,7 @@ module.exports = {
 
   station: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate('include');
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: {numOfSpareBag: {'!=': 0 } }});
     if (!models) {return res.notFound();}
 
     var web = await Web.findOne(req.session.eventid);

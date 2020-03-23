@@ -7,14 +7,15 @@
     <div class="bordered2">
         <h1>個人資料</h1>
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
-            <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="/individual/<%= eventid %>">個人義工</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新增個人義工</li>
-          </ol>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/individual/<%= eventid %>">個人義工</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">新增個人義工</li>
+            </ol>
         </nav>
-      </div>
+    </div>
 
     <br>
     <br>
@@ -46,10 +47,10 @@
         <div class="form-group row">
             <label for="inputLocation" class="col-sm-2 col-form-label">所屬旗站</label>
             <div class="col-sm-10">
-                <select class="form-control" name="Station[sName]"  required>
+                <select class="form-control" name="Station[sName]" required>
                     <option value="">請選擇所屬旗站：</option>
                     <% stations.forEach( function(model) { %>
-                        <option value="<%= model.sName %>"><%= model.sName %></option>
+                    <option value="<%= model.sName %>"><%= model.sName %></option>
                     <% }); %>
                 </select>
             </div>
@@ -75,10 +76,10 @@
                     <% }); %> -->
 
                     <% groups.forEach( function(model) { %>
-                        
-                            <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
-                   
-                        <% }); %>
+
+                    <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
+
+                    <% }); %>
                 </select>
             </div>
         </div>
@@ -86,7 +87,7 @@
 
         <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
 
-        <button type="button" class="btn btn-danger" style="float:right;">取消</button>
+        <a href='/individual/<%= eventid %> ' class="btn btn-danger" style="float:right;">取消</a>
 
     </form>
 
@@ -94,9 +95,9 @@
 
 <style>
     .bordered2 {
-      padding: 15px;
-      padding-bottom: 1px;
-      border: 1px solid gainsboro;
-      border-radius: 5px;
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
     }
-  </style>
+</style>
