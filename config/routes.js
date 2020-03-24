@@ -88,6 +88,9 @@ module.exports.routes = {
   // Waiting to be developed
   '/viewIndividual/:id': 'StationController.viewIndividual',
 
+  // 'GET /updateIndividual/:id': 'StationController.updateIndividual',
+  // 'PATCH /station/individual/:id': 'StationController.updateIndividual',
+
   //export
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',

@@ -104,11 +104,11 @@
         <ul class="navbar-nav">
           <%if (req.session.username) {%>
           <li class="nav-item">
-            <a class="nav-link" href="/user/logout">Hi, <%= req.session.username %> (Logout) </a>
+            <a class="nav-link" href="/user/logout">你好, <%= req.session.username %> (登出) </a>
           </li>
           <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="/">Login</a>
+            <a class="nav-link" href="/">登入</a>
           </li>
           <% } %>
         </ul>
