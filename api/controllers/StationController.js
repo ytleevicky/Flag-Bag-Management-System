@@ -189,7 +189,7 @@ module.exports = {
 
       var groupList = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
 
-      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': 0 } }});
+      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': '' } }});
 
       // var models = await Station.find();
       var web = await Web.findOne(req.session.eventid);
