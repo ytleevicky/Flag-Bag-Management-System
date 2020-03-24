@@ -126,7 +126,6 @@ module.exports = {
         vName: model.vName,
         vContact: model.vContact,
         sName: model.sName,
-        sLocation: model.sLocation,
         bagNumber: model.bagNumber,
         bagStatus: model.bagStatus,
         bagUpdate: model.bagUpdate,
@@ -282,13 +281,12 @@ module.exports = {
   viewIndividual: async function (req, res) {
     var event = await Web.findOne(parseInt(req.session.eventid));
 
-    var models = await Station.findOne(req.params.id);
+    var models = await Station.findOne(req.params.id).populate('');
     if (!models) {return res.notFound();}
     console.log(models);
 
     var s = await Web.findOne(req.session.eventid).populate('include', {sName: models.sName});
     if (!s) { return res.notFound(); }
-    console.log(s.include);
 
     var model = await Station.find();
 
@@ -310,7 +308,6 @@ module.exports = {
         vName: model.vName,
         vContact: model.vContact,
         sName: model.sName,
-        sLocation: model.sLocation,
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
@@ -341,17 +338,6 @@ module.exports = {
 
     });
   },
-
-  // addflagstn: async function (req, res) {
-
-
-
-  //   var models = await User.find({
-  //     role: 'stationmgr'
-  //   });
-  //   return res.view('station/addflagstn', { stations: models });
-
-  // },
 
   //action - populate(for station and web)
   populate_sw: async function (req, res) {

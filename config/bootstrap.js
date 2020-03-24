@@ -41,9 +41,9 @@ module.exports.bootstrap = async function () {
     await User.createEach([
       { username: 'admin1', password: hash, role: 'admin', mail: '123@gmail.com', createdby: 'Developer' },
       { username: 'admin2', password: hash, role: 'admin', mail: 'loveyou@bu.com', createdby: 'Developer' },
-      { username: 'station1', password: hash, role: 'stationmgr', mail: 'aarr@gmail.com', createdby: 'Developer' },
-      { username: 'eventUser2', password: hash, role: 'stationmgr', mail: 'good@gmail.com', createdby: 'Developer' },
-      { username: 'eventUser3', password: hash, role: 'stationmgr', mail: 'bad@gmail.com', createdby: 'Developer' },
+      { username: 'stationmgr1', password: hash, role: 'stationmgr', mail: 'mgr1@gmail.com', createdby: 'admin1' },
+      { username: 'stationmgr2', password: hash, role: 'stationmgr', mail: 'mgr2@gmail.com', createdby: 'admin2' },
+      { username: 'stationmgr3', password: hash, role: 'stationmgr', mail: 'mgr3@gmail.com', createdby: 'admin1' },
       // etc.
     ]);
   }
@@ -52,21 +52,16 @@ module.exports.bootstrap = async function () {
 
     await Web.createEach([
       {
-        numOfV: '60', numOfBag: '45', numOfBagBackUp: '5', eventName: 'First Event', dateOfEvent: '20-6-2020',
+        numOfV: '60', numOfBag: '45', numOfBagBackUp: '5', eventName: '齊抗武漢肺炎賣旗活動', dateOfEvent: '20-06-2020',
         eventLocation: '全港', numOfStation: '8', numOfEBag: '50'
       },
       {
-        numOfV: '87', numOfBag: '55', numOfBagBackUp: '6', eventName: 'Second Event', dateOfEvent: '20-7-2020',
+        numOfV: '87', numOfBag: '55', numOfBagBackUp: '6', eventName: '賣得旗所', dateOfEvent: '01-08-2020',
         eventLocation: '港島', numOfStation: '9', numOfEBag: '61'
       },
       {
-        numOfV: '69', numOfBag: '60', numOfBagBackUp: '7', eventName: 'Third Event', dateOfEvent: '20-8-2020',
+        numOfV: '69', numOfBag: '60', numOfBagBackUp: '7', eventName: '結伴賣旗日', dateOfEvent: '17-09-2020',
         eventLocation: '九龍', numOfStation: '9', numOfEBag: '67'
-      },
-
-      {
-        numOfV: '50', numOfBag: '40', numOfBagBackUp: '8', eventName: 'Fourth Event', dateOfEvent: '20-9-2020',
-        eventLocation: '新界', numOfStation: '7', numOfEBag: '48'
       },
     ]);
 
@@ -75,16 +70,23 @@ module.exports.bootstrap = async function () {
   if (await Station.count() == 0) {
 
     await Station.createEach([
+
       {
-        codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Jean', vContacterName: 'Jean',  vGroupAddress: 'Tuen Mun', vGroupName: 'Individual', vContact: '12345678', sName: 'TKO-S1', sLocation: 'Po Lam Road', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-        bagUpdate: '18-6-2020 13:35'
+        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+        vName: 'Leung Wing Yan', vContacterName: '',  vGroupAddress: '', vGroupName: '個人', vContact: '95473162', sName: 'TSW-S1', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
       },
 
       {
-        codePrinted: 'true', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Kenny', vContacterName: 'Jean', vGroupAddress: 'Tuen Mun', vGroupName: 'HKBU', vContact: '12345679', sName: 'TKO-S2', sLocation: 'PoRoad', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-        bagUpdate: '18-6-2020'
+        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+        vName: 'Lo Hoi Wing Jill', vContacterName: 'Chan Sum Yi',  vGroupAddress: '新界天水圍天晴邨天晴服務設施大樓地下1號', vGroupName: '平安福音堂幼稚園(天水圍)', vContact: '99781354', sName: 'TSW-S2', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
+      },
+
+      {
+        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+        vName: 'Wong Ming Ho Leon', vContacterName: 'Chris Chan KY', vGroupAddress: '九龍塘蘭開夏道2號', vGroupName: '九龍塘宣道小學', vContact: '96843135', sName: 'KLT-S1', sLocation: '九龍塘', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+        bagUpdate: '18-6-2020 11:00', createdby: 'admin2'
       },
     ]);
 
@@ -92,16 +94,16 @@ module.exports.bootstrap = async function () {
 
 
   // Adding association between event & eventUser
-  const user = await User.findOne({ username: 'station1' });
-  const event = await Web.findOne({ eventName: 'First Event' });
+  const user = await User.findOne({ username: 'stationmgr1' });
+  const event = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   await User.addToCollection(user.id, 'edit').members(event.id);
 
-  const user2 = await User.findOne({ username: 'eventUser2' });
-  const event2 = await Web.findOne({ eventName: 'Second Event' });
+  const user2 = await User.findOne({ username: 'stationmgr2' });
+  const event2 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   await User.addToCollection(user2.id, 'edit').members(event2.id);
 
-  const user3 = await User.findOne({ username: 'eventUser3' });
-  const event3 = await Web.findOne({ eventName: 'Third Event' });
+  const user3 = await User.findOne({ username: 'stationmgr3' });
+  const event3 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   await User.addToCollection(user3.id, 'edit').members(event3.id);
 
   // Adding association between event && Station(Group)

@@ -427,18 +427,20 @@ module.exports = {
 
   updateStation: async function (req, res) {
 
+    var model = await Station.findOne(req.params.id).populate('monitorBy');
     if (req.method == 'GET') {
 
       var event = await Web.findOne(req.session.eventid).populate('superviseBy');
 
-      var model = await Station.findOne(req.params.id).populate('monitorBy');
+      var users = event.superviseBy.filter(u => u.role == 'stationmgr');
+
       if (!model) { return res.notFound(); }
 
       // var stationManagers = model.monitorBy.map(manager => manager.username).join(', ')
 
       //var user1 = await User.find(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
       // var users = await User.find({role:'stationmgr', });
-      var users = event.superviseBy.filter(u => u.role == 'stationmgr');
+     
       // var user = await Station.findOne(req.params.id).populate('monitorBy');
 
 
@@ -457,6 +459,10 @@ module.exports = {
 
       var stationManagers = await User.find({username:{in:req.body.User.username.split(',').map(s => s.trim())}})
 
+
+
+      // users.map()
+
       var models = await Station.update(req.params.id).set({
         sName: req.body.Station.sName,
         sLocation: req.body.Station.sLocation,
@@ -465,6 +471,8 @@ module.exports = {
       }).fetch();
 
       if (models.length > 0) {
+        if (model.monitorBy.length > 0)
+          await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));
         await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
       } else { return res.notFound(); }
 
