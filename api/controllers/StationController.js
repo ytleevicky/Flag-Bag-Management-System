@@ -177,8 +177,8 @@ module.exports = {
 
     var models = await Web.findOne(req.session.eventid).populate('include', { where: { vName: { '!=': '' } } });
 
-    // var models = await Station.find({ where: { vName: { '!=': '' } } });
-
+    //  var model1 = await Station.find({ where: { vName: { '!=': '' } } });
+    //  console.log(model1);
     return res.view('station/individual', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
 
   },
@@ -189,7 +189,7 @@ module.exports = {
 
       var groupList = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
 
-      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': '' } }});
+      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': 0 } }});
 
       // var models = await Station.find();
       var web = await Web.findOne(req.session.eventid);
@@ -280,17 +280,19 @@ module.exports = {
   },
 
   viewIndividual: async function (req, res) {
-    console.log(req.session.eventid);
     var event = await Web.findOne(parseInt(req.session.eventid));
 
     var models = await Station.findOne(req.params.id);
     if (!models) {return res.notFound();}
+    console.log(models);
 
-    req.session.stationid = models.id;
+    var s = await Web.findOne(req.session.eventid).populate('include', {sName: models.sName});
+    if (!s) { return res.notFound(); }
+    console.log(s.include);
 
     var model = await Station.find();
 
-    return res.view('station/viewIndividual', { name: model.eventName, stations: models, eventid: event.id, eventname: event.eventName });
+    return res.view('station/viewIndividual', { name: model.eventName, stations: models, eventid: event.id, eventname: event.eventName, go: s.include});
 
   },
 
