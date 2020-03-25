@@ -58,29 +58,30 @@ module.exports = {
 
         if (req.method == 'GET') {
 
-            // var event = await Web.findOne(req.params.id);
-            var models = await Station.findOne(req.params.id).populate('inside');
+            // var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group'}});
+
+            var models = await Volunteer.findOne(req.params.id).populate('within');
+            console.log(req.params.id);
 
             if (!models) { return res.notFound(); }
 
-            if (!req.session.eventid) {
-                if (req.method == 'GET') { return res.view('station/updateGroup', { stations: models, eventid: '' }); }
-            }
-            else {
-                var web = await Web.findOne(req.session.eventid);
-                return res.view('volunteer/updateGroup', { stations: models, eventid: req.session.eventid, name: web.eventName });
-            }
+            var web = await Web.findOne(req.session.eventid);
+
+            var stationList = await Web.findOne(req.session.eventid).populate('include');
+
+            return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
+
         }
 
         else {
-            if (!req.body.Station) { return res.badRequest('Form-data not received.'); }
+            if (!req.body.Volunteer) { return res.badRequest('Form-data not received.'); }
 
-            var models = await Station.update(req.params.id).set({
-                vGroupName: req.body.Station.vGroupName,
-                sLocation: req.body.Station.sLocation,
-                sName: req.body.Station.sName,
-                vContacterName: req.body.Station.vContacterName,
-                vContact: req.body.Station.vContact
+            var models = await Volunteer.update(req.params.id).set({
+                vGroupName: req.body.Volunteer.vGroupName,
+                vGroupAddress: req.body.Volunteer.vGroupAddress,
+                // sName: req.body.Station.sName,
+                vName: req.body.Volunteer.vName,
+                vContact: req.body.Volunteer.vContact
             }).fetch();
 
             if (models.length == 0) { return res.notFound(); }
