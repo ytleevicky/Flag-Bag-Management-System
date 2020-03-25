@@ -171,30 +171,6 @@ module.exports = {
   },
 
 
-  addIndividual: async function (req, res) {
-
-    if (req.method == 'GET') {
-
-      var groupList = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': ''  }} });
-
-      var stationList = await Web.findOne(req.session.eventid).populate('include' , { where: {numOfSpareBag: {'!=': 0 } }});
-
-      // var models = await Station.find();
-      var web = await Web.findOne(req.session.eventid);
-
-      return res.view('station/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.include, stations: stationList.include });
-
-    }
-
-    var individual = await Station.create(req.body.Station).fetch();
-
-    await Station.addToCollection(individual.id, 'inside').members(req.session.eventid);
-
-    return res.redirect('/individual/' + req.session.eventid);
-
-  },
-
-
   viewIndividual: async function (req, res) {
     var event = await Web.findOne(parseInt(req.session.eventid));
 

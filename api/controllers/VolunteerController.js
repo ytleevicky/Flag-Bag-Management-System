@@ -11,7 +11,7 @@ module.exports = {
 
         var model = await Web.findOne(req.session.eventid);  // for eventName
 
-        var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group' } });
+        var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
         console.log(group);
         // console.log(group.contain[0].id); 
@@ -98,12 +98,54 @@ module.exports = {
     individual: async function (req, res) {
 
         var model = await Web.findOne(req.session.eventid);     // for eventName
-    
-        var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'individual' }});
-    
+
+        var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
+
         return res.view('volunteer/individual', { name: model.eventName, stations: individual.contain, webs: model, eventid: req.session.eventid });
-    
-      },
+
+    },
+
+    addIndividual: async function (req, res) {
+
+        if (req.method == 'GET') {
+
+            var web = await Web.findOne(req.session.eventid);
+
+            var stationList = await Web.findOne(req.session.eventid).populate('include');
+
+            var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group' , isContacter:  'true' } });
+
+            return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include });
+
+        }
+
+        if (req.body.Volunteer.vGroupName == '') {
+
+            var individual = await Volunteer.create(req.body.Volunteer).fetch();
+
+            await Volunteer.update(individual.id).set({ vType: 'individual' }).fetch();
+
+        } else {
+
+            var individual = await Volunteer.create(req.body.Volunteer).fetch();
+
+            await Volunteer.update(individual.id).set({ vType: 'group' }).fetch();
+
+        }
+
+        await Volunteer.addToCollection(individual.id, 'in').members(req.session.eventid);  // 1. Add a Volunteer to that particular event
+
+        var station = req.body.Station.sName;
+
+        var stat = await Station.find({ where: { sName: station } });
+        var json = JSON.parse(JSON.stringify(stat));
+        var stationid = json[0].id;     // get the stationid 
+
+        await Volunteer.addToCollection(individual.id, 'within').members(stationid);   // 2. add volunteer to that particular station
+
+        return res.redirect('/individual/' + req.session.eventid);
+
+    },
 
     //action - populate(for volunteer and station)
     populate_vs: async function (req, res) {

@@ -74,10 +74,6 @@ module.exports.routes = {
   
   '/addflagstn': 'WebController.addflagstn',
 
-  // Collapsion on POST station id
-  '/addIndividual': 'StationController.addIndividual',
-  'POST /station/individual': 'StationController.addIndividual',
-
 
   // Waiting to be developed
   '/viewIndividual/:id': 'StationController.viewIndividual',
@@ -96,6 +92,9 @@ module.exports.routes = {
   'PATCH /volunteer/group/:id': 'VolunteerController.updateGroup',
 
   '/individual/:id': 'VolunteerController.individual',
+
+  '/addIndividual': 'VolunteerController.addIndividual',
+  'POST /volunteer/individual': 'VolunteerController.addIndividual',
 
 
   //export

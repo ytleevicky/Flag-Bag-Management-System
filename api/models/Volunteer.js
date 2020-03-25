@@ -34,6 +34,9 @@ module.exports = {
       type: 'string'
     },
 
+    isContacter: {    //use in individual.ejs, group.ejs
+      type: 'boolean'
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

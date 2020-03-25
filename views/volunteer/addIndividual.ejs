@@ -20,19 +20,19 @@
     <br>
     <br>
 
-    <form action="/station/individual" method="POST">
+    <form action="/volunteer/individual" method="POST">
 
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">義工名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="station[vName]" name="Station[vName]" required>
+                <input type="text" class="form-control" id="station[vName]" name="Volunteer[vName]" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputContact" class="col-sm-2 col-form-label">聯絡電話</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="station[vContact]" name="Station[vContact]" required>
+                <input type="text" class="form-control" id="station[vContact]" name="Volunteer[vContact]" required>
             </div>
         </div>
 
@@ -67,14 +67,14 @@
         <div class="form-group row">
             <label class="col-sm-2">所屬團體</label>
             <div class="col-sm-10">
-                <select class="form-control" name="Station[vGroupName]" required>
+                <select class="form-control" name="Volunteer[vGroupName]" required>
                     <option value="">請選擇所屬團體：</option>
                     <!-- <% stations.forEach( function(model) { %>
                     <% if(model.vGroupName  != "") { %>
                         <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
                     <% } %>
                     <% }); %> -->
-                    <option value="個人">個人</option>
+                    <option value="">個人</option>
                     <% groups.forEach( function(model) { %>
 
                     <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
