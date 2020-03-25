@@ -170,17 +170,6 @@ module.exports = {
 
   },
 
-  individual: async function (req, res) {
-
-    var model = await Web.findOne(req.session.eventid);
-
-    var models = await Web.findOne(req.session.eventid).populate('include', { where: { vName: { '!=': '' } } });
-
-    //  var model1 = await Station.find({ where: { vName: { '!=': '' } } });
-    //  console.log(model1);
-    return res.view('station/individual', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
-
-  },
 
   addIndividual: async function (req, res) {
 

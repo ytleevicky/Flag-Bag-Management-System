@@ -95,6 +95,16 @@ module.exports = {
         }
     },
 
+    individual: async function (req, res) {
+
+        var model = await Web.findOne(req.session.eventid);     // for eventName
+    
+        var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'individual' }});
+    
+        return res.view('volunteer/individual', { name: model.eventName, stations: individual.contain, webs: model, eventid: req.session.eventid });
+    
+      },
+
     //action - populate(for volunteer and station)
     populate_vs: async function (req, res) {
 

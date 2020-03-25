@@ -68,7 +68,6 @@ module.exports.routes = {
 
   //USE in StationController
 
-  '/individual/:id': 'StationController.individual',
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
   '/stationmanagement': 'StationController.stationmanagement',
@@ -95,6 +94,8 @@ module.exports.routes = {
 
   'GET /updateGroup/:id': 'VolunteerController.updateGroup',
   'PATCH /volunteer/group/:id': 'VolunteerController.updateGroup',
+
+  '/individual/:id': 'VolunteerController.individual',
 
 
   //export
