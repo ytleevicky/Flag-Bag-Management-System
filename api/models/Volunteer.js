@@ -40,6 +40,16 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
+    within: {
+      collection: 'Station',
+      via: 'has'
+    },
+
+    in: {
+      collection: 'Web',
+      via: 'contain'
+    }
+    
   },
 
 };

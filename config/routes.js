@@ -116,6 +116,15 @@ module.exports.routes = {
   'GET /station/:fk/monitorBy': 'StationController.populate_su',
 
 
+  // Volunteer & Station
+  'GET /station/:fk/has': 'StationController.populate_sv',
+  'GET /volunteer/:fk/within': 'VolunteerController.populate_vs',
+
+  // Volunteer & web
+  'GET /web/contain': 'WebController.populate_wv',
+  'GET /volunteer/:fk/in': 'VolunteerController.populate_vw',
+
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

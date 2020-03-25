@@ -81,7 +81,7 @@ module.exports = {
 
     }
 
-    var stationManagers = await User.find({username:{in:req.body.User.username.split(',').map(s => s.trim())}})
+    var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } })
 
     var station = await Station.create(req.body.Station).fetch();
     sails.log("Here3");
@@ -103,7 +103,7 @@ module.exports = {
   viewitem: async function (req, res) {
 
     var models = await Web.findOne(req.params.id);
-    if (!models) {return res.notFound();}
+    if (!models) { return res.notFound(); }
 
     req.session.eventid = models.id;
 
@@ -205,7 +205,7 @@ module.exports = {
   stationmgrDisplay: async function (req, res) {
 
     var models = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
-    if (!models) {return res.notFound();}
+    if (!models) { return res.notFound(); }
 
     var web = await Web.findOne(req.session.eventid);
 
@@ -224,7 +224,7 @@ module.exports = {
   groupandindividual: async function (req, res) {
 
     var models = await Web.findOne(req.session.eventid);
-    return res.view('web/groupandindividual', { webs: models, name: models.eventName, eventid: req.session.eventid  });
+    return res.view('web/groupandindividual', { webs: models, name: models.eventName, eventid: req.session.eventid });
 
   },
 
@@ -233,7 +233,7 @@ module.exports = {
     var models = await Web.find();
 
     var web = await Web.findOne(req.session.eventid);
-    return res.view('web/qrCode', { webs: models, name: web.eventName, eventid: req.session.eventid  });
+    return res.view('web/qrCode', { webs: models, name: web.eventName, eventid: req.session.eventid });
 
   },
 
@@ -440,14 +440,14 @@ module.exports = {
 
       //var user1 = await User.find(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
       // var users = await User.find({role:'stationmgr', });
-     
+
       // var user = await Station.findOne(req.params.id).populate('monitorBy');
 
 
       var web = await Web.findOne(req.session.eventid);
 
 
-      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, users:users });
+      return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, users: users });
 
 
     } else {
@@ -457,7 +457,7 @@ module.exports = {
       sails.bcrypt = require('bcryptjs');
       const saltRounds = 10;
 
-      var stationManagers = await User.find({username:{in:req.body.User.username.split(',').map(s => s.trim())}})
+      var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } })
 
 
 
@@ -490,11 +490,11 @@ module.exports = {
   },
 
   removeUser: async function (req, res) {
-    if (req.method == 'GET') {return res.forbidden();}
+    if (req.method == 'GET') { return res.forbidden(); }
 
     var models = await User.destroy(req.params.id).fetch();
 
-    if (models.length == 0) {return res.notFound();}
+    if (models.length == 0) { return res.notFound(); }
 
     if (req.wantsJSON) {
       if (models[0].role == 'admin') {
@@ -509,8 +509,8 @@ module.exports = {
 
   station: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate('include', { where: {numOfSpareBag: {'!=': 0 } }});
-    if (!models) {return res.notFound();}
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: { numOfSpareBag: { '!=': 0 } } });
+    if (!models) { return res.notFound(); }
 
     var web = await Web.findOne(req.session.eventid);
 
@@ -523,7 +523,7 @@ module.exports = {
 
     var model = await Web.findOne(req.params.id).populate('superviseBy');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 
@@ -534,7 +534,18 @@ module.exports = {
 
     var model = await Web.findOne(req.params.id).populate('include');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
+
+    return res.json(model);
+
+  },
+
+  //action - populate(for web and volunteer)
+  populate_wv: async function (req, res) {
+
+    var model = await Web.findOne(req.params.id).populate('contain');
+
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 

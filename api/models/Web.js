@@ -116,6 +116,12 @@ module.exports = {
       collection: 'Station',
       via: 'inside'
     },
+
+    contain: {
+      collection: 'Volunteer',
+      via: 'in'
+    },
+
   },
 
 };

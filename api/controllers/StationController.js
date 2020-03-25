@@ -360,5 +360,15 @@ module.exports = {
 
   },
 
+  populate_sv: async function (req, res) {
+
+    var model = await Station.findOne(req.params.id).populate('has');
+
+    if (!model) { return res.notFound(); }
+
+    return res.json(model);
+
+  },
+
 };
 

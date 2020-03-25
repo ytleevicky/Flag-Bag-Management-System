@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    
+
      //旗站名稱
      sName: {
       type: 'String'
@@ -46,6 +46,11 @@ module.exports = {
     monitorBy: {
       collection: 'User',
       via: 'monitor'
+    },
+
+    has: {
+      collection: 'Volunteer',
+      via: 'within'
     }
 
   },
