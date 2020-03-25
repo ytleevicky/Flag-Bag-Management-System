@@ -13,6 +13,23 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
+    vName: {    //use in individual.ejs
+      type: 'string'
+    },
+
+    //賣旗團體名
+    vGroupName: {    //use in individual.ejs, group.ejs
+      type: 'string'
+    },
+
+    vType: {     //use in individual.ejs
+      type: 'string'
+    },
+
+    vContact: {    //use in individual.ejs, group.ejs
+      type: 'string'
+    },
+
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
