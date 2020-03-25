@@ -72,24 +72,30 @@ module.exports.routes = {
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
   '/stationmanagement': 'StationController.stationmanagement',
-  '/group/:id': 'StationController.group',
+  
   '/addflagstn': 'WebController.addflagstn',
-
-  '/addGroup': 'StationController.addGroup',
-  'POST /station/group': 'StationController.addGroup',
 
   // Collapsion on POST station id
   '/addIndividual': 'StationController.addIndividual',
   'POST /station/individual': 'StationController.addIndividual',
 
-  'GET /updateGroup/:id': 'StationController.updateGroup',
-  'PATCH /station/group/:id': 'StationController.updateGroup',
 
   // Waiting to be developed
   '/viewIndividual/:id': 'StationController.viewIndividual',
 
   // 'GET /updateIndividual/:id': 'StationController.updateIndividual',
   // 'PATCH /station/individual/:id': 'StationController.updateIndividual',
+
+
+  // Used in VolunteerController.js
+  '/group/:id': 'VolunteerController.group',
+
+  '/addGroup': 'VolunteerController.addGroup',
+  'POST /volunteer/group': 'VolunteerController.addGroup',
+
+  'GET /updateGroup/:id': 'VolunteerController.updateGroup',
+  'PATCH /volunteer/group/:id': 'VolunteerController.updateGroup',
+
 
   //export
   '/export_station': 'StationController.export_station',

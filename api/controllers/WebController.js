@@ -173,34 +173,6 @@ module.exports = {
     }
   },
 
-  // addadmin: async function (req, res) {
-
-  //   if (req.method == 'GET') { return res.view('web/addadmin'); }
-
-  //   if (!req.body.User) { return res.badRequest('Form-data not received.'); }
-
-  //   var user = await User.create(req.body.User).fetch();
-
-  //   await User.create(req.body.User);
-
-  //   if (req.wantsJSON) {
-  //     if (user.role == 'admin') {
-  //       return res.json({ message: '已新增活動管理員！', url: '/adminDisplay' });    // for ajax request
-  //     }
-  //     else {
-  //       return res.redirect('/adminDisplay');
-  //     }           // for normal request
-  //   }
-
-  // },
-
-  // group: async function (req, res) {
-
-  //   var models = await Station.find();
-  //   return res.view('station/group', { stations: models });
-
-  // },
-
   //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 
