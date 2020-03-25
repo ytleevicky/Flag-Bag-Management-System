@@ -22,6 +22,10 @@ module.exports = {
       type: 'string'
     },
 
+    vGroupAddress: {
+      type: 'string'
+    },
+
     vType: {     //use in individual.ejs
       type: 'string'
     },

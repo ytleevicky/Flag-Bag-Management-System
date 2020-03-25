@@ -15,21 +15,21 @@
     <br>
     <br>
 
-    <form action="/station/group" method="POST">
+    <form action="/volunteer/group" method="POST">
 
         <h2>團體資料</h2>
         <br>
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">團體名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputUsername" name="Station[vGroupName]">
+                <input type="text" class="form-control" id="inputUsername" name="Volunteer[vGroupName]">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">團體地址</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputUsername" name="Station[vGroupAddress]">
+                <input type="text" class="form-control" id="inputUsername" name="Volunteer[vGroupAddress]">
             </div>
         </div>
 
@@ -76,16 +76,18 @@
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">負責人名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail" name="Station[vContacterName]">
+                <input type="text" class="form-control" id="inputEmail" name="Volunteer[vName]">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電話</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail" name="Station[vContact]">
+                <input type="text" class="form-control" id="inputEmail" name="Volunteer[vContact]">
             </div>
         </div>
+
+        <input type="hidden" id="inputCreatedBy" name="Volunteer[vType]" value="group">
 
         <!-- <div class="form-group row">
                 <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電郵</label>

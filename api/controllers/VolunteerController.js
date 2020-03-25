@@ -26,26 +26,33 @@ module.exports = {
 
     },
 
-
     addGroup: async function (req, res) {
 
         if (req.method == 'GET') {
 
-            // var models = await Station.find();
             var web = await Web.findOne(req.session.eventid);
 
-            var stationList = await Web.findOne(req.session.eventid).populate('include', { where: { numOfSpareBag: { '!=': 0 } } });
+            var stationList = await Web.findOne(req.session.eventid).populate('include');
 
             return res.view('volunteer/addGroup', { eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
         }
 
-        var group = await Station.create(req.body.Station).fetch();
+        var group = await Volunteer.create(req.body.Volunteer).fetch();
 
-        await Station.addToCollection(group.id, 'inside').members(req.session.eventid);
+        await Volunteer.addToCollection(group.id, 'in').members(req.session.eventid);      // Add a Volunteer to that particular event 
+
+        var station = req.body.Station.sName;
+
+        var stat = await Station.find({ where: { sName: station } });
+        var json = JSON.parse(JSON.stringify(stat));
+        var stationid = json[0].id;     // To get the stationid 
+
+        await Volunteer.addToCollection(group.id, 'within').members(stationid);   // Add volunteer to that particular station
 
         return res.redirect('/group/' + req.session.eventid);
 
     },
+
 
     updateGroup: async function (req, res) {
 
