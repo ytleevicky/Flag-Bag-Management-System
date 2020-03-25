@@ -67,30 +67,64 @@ module.exports.bootstrap = async function () {
 
   }
 
-  if (await Station.count() == 0) {
+  // if (await Station.count() == 0) {
 
-    await Station.createEach([
+  //   await Station.createEach([
+
+  //     {
+  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+  //       vName: 'Leung Wing Yan', vContacterName: '',  vGroupAddress: '', vGroupName: '個人', vContact: '95473162', sName: 'TSW-S1', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+  //       bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
+  //     },
+
+  //     {
+  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+  //       vName: 'Lo Hoi Wing Jill', vContacterName: 'Chan Sum Yi',  vGroupAddress: '新界天水圍天晴邨天晴服務設施大樓地下1號', vGroupName: '平安福音堂幼稚園(天水圍)', vContact: '99781354', sName: 'TSW-S2', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+  //       bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
+  //     },
+
+  //     {
+  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
+  //       vName: 'Wong Ming Ho Leon', vContacterName: 'Chris Chan KY', vGroupAddress: '九龍塘蘭開夏道2號', vGroupName: '九龍塘宣道小學', vContact: '96843135', sName: 'KLT-S1', sLocation: '九龍塘', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
+  //       bagUpdate: '18-6-2020 11:00', createdby: 'admin2'
+  //     },
+  //   ]);
+
+  // }
+
+  if (await Volunteer.count() == 0) {
+
+    await Volunteer.createEach([
 
       {
-        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Leung Wing Yan', vContacterName: '',  vGroupAddress: '', vGroupName: '個人', vContact: '95473162', sName: 'TSW-S1', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-        bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
+        vName: 'Mr Tang PK', vGroupName: 'HKBU', vType: 'group', vContact: '92348888' 
       },
 
       {
-        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Lo Hoi Wing Jill', vContacterName: 'Chan Sum Yi',  vGroupAddress: '新界天水圍天晴邨天晴服務設施大樓地下1號', vGroupName: '平安福音堂幼稚園(天水圍)', vContact: '99781354', sName: 'TSW-S2', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-        bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
+        vName: 'Ms Hailey Wood', vGroupName: 'HKUST', vType: 'group', vContact: '23439862' 
       },
 
       {
-        codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-        vName: 'Wong Ming Ho Leon', vContacterName: 'Chris Chan KY', vGroupAddress: '九龍塘蘭開夏道2號', vGroupName: '九龍塘宣道小學', vContact: '96843135', sName: 'KLT-S1', sLocation: '九龍塘', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-        bagUpdate: '18-6-2020 11:00', createdby: 'admin2'
+        vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vContact: '4621889' 
       },
+
+     
     ]);
 
   }
+
+  // Add association between volunteer && event 
+  const vol = await Volunteer.findOne({ vGroupName: 'HKBU' });
+  const event7 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Volunteer.addToCollection(vol.id, 'in').members(event7.id);
+
+  const vol2 = await Volunteer.findOne({ vGroupName: 'HKUST' });
+  const event8 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Volunteer.addToCollection(vol2.id, 'in').members(event8.id);
+
+  const vol3 = await Volunteer.findOne({ vName: 'Leo Cruz' });
+  const event9 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Volunteer.addToCollection(vol3.id, 'in').members(event9.id);
 
 
   // Adding association between event & eventUser
