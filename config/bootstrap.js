@@ -67,45 +67,40 @@ module.exports.bootstrap = async function () {
 
   }
 
-  // if (await Station.count() == 0) {
+  if (await Station.count() == 0) {
 
-  //   await Station.createEach([
+    await Station.createEach([
 
-  //     {
-  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-  //       vName: 'Leung Wing Yan', vContacterName: '',  vGroupAddress: '', vGroupName: '個人', vContact: '95473162', sName: 'TSW-S1', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-  //       bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
-  //     },
+      {
+        sName: 'TSW-S1', sLocation: '天水圍', numOfSpareBag: '5', createdby: 'admin1', 
+      },
 
-  //     {
-  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-  //       vName: 'Lo Hoi Wing Jill', vContacterName: 'Chan Sum Yi',  vGroupAddress: '新界天水圍天晴邨天晴服務設施大樓地下1號', vGroupName: '平安福音堂幼稚園(天水圍)', vContact: '99781354', sName: 'TSW-S2', sLocation: '天水圍', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-  //       bagUpdate: '18-6-2020 13:35', createdby: 'admin1'
-  //     },
+      {
+        sName: 'KLT-S1', sLocation: '九龍堂', numOfSpareBag: '7', createdby: 'admin1', 
+      },
 
-  //     {
-  //       codePrinted: 'false', codePrintedTime: '18-6-2020 13:35', numOfSuser: '15', numOfSpareBag: '5', isDeleted: 'false',
-  //       vName: 'Wong Ming Ho Leon', vContacterName: 'Chris Chan KY', vGroupAddress: '九龍塘蘭開夏道2號', vGroupName: '九龍塘宣道小學', vContact: '96843135', sName: 'KLT-S1', sLocation: '九龍塘', bagNumber: 'FFRE-1233', bagStatus: 'not collected',
-  //       bagUpdate: '18-6-2020 11:00', createdby: 'admin2'
-  //     },
-  //   ]);
+      {
+        sName: 'TKO-S1', sLocation: '將軍澳', numOfSpareBag: '6', createdby: 'admin1', 
+      },
 
-  // }
+    ]);
+
+  }
 
   if (await Volunteer.count() == 0) {
 
     await Volunteer.createEach([
 
       {
-        vName: 'Mr Tang PK', vGroupName: 'HKBU', vType: 'group', vContact: '92348888' 
+        vName: 'Mr Tang PK', vGroupName: 'HKBU', vGroupAddress: 'Hong Kong Baptist Road', vType: 'group', vContact: '94328888' 
       },
 
       {
-        vName: 'Ms Hailey Wood', vGroupName: 'HKUST', vType: 'group', vContact: '23439862' 
+        vName: 'Ms Hailey Wood', vGroupName: 'HKUST', vGroupAddress: 'UST 1311 Road, TKO', vType: 'group', vContact: '66239964' 
       },
 
       {
-        vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vContact: '4621889' 
+        vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vGroupAddress: '', vContact: '51114553' 
       },
 
      
@@ -125,6 +120,51 @@ module.exports.bootstrap = async function () {
   const vol3 = await Volunteer.findOne({ vName: 'Leo Cruz' });
   const event9 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   await Volunteer.addToCollection(vol3.id, 'in').members(event9.id);
+
+
+  // Add association between station && event
+  const s = await Station.findOne({ sName: 'TSW-S1' });
+  const e = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Station.addToCollection(s.id, 'inside').members(e.id);
+
+  const s2 = await Station.findOne({ sName: 'KLT-S1' });
+  const e2 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Station.addToCollection(s2.id, 'inside').members(e2.id);
+
+  const s3 = await Station.findOne({ sName: 'TKO-S1' });
+  const e3 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
+  await Station.addToCollection(s3.id, 'inside').members(e3.id);
+
+
+  // Add association between station && stationmgr 
+  const a = await Station.findOne({ sName: 'TSW-S1' });
+  const u1 = await User.findOne({ username: 'stationmgr1' });
+  await Station.addToCollection(a.id, 'monitorBy').members(u1.id);
+
+  const b = await Station.findOne({ sName: 'KLT-S1' });
+  const u2 = await User.findOne({ username: 'stationmgr2' });
+  await Station.addToCollection(b.id, 'monitorBy').members(u2.id);
+
+  const c = await Station.findOne({ sName: 'TKO-S1' });
+  const u3 = await User.findOne({ username: 'stationmgr3' });
+  await Station.addToCollection(c.id, 'monitorBy').members(u3.id);
+
+
+  // Add association between (group) volunteer && station 
+  const y = await Volunteer.findOne({ vGroupName: 'HKBU' });
+  const x = await Station.findOne({ sName: 'KLT-S1' });
+  await Volunteer.addToCollection(y.id, 'within').members(x.id);
+
+  const y2 = await Volunteer.findOne({ vGroupName: 'HKUST' });
+  const x2 = await Station.findOne({ sName: 'TKO-S1' });
+  await Volunteer.addToCollection(y2.id, 'within').members(x2.id);
+
+
+  // Add association between (individual) volunteer && station
+  const iName = await Volunteer.findOne({ vName: 'Leo Cruz' });
+  const sta2 = await Station.findOne({ sName: 'TKO-S1' });
+  await Volunteer.addToCollection(iName.id, 'within').members(sta2.id);
+
 
 
   // Adding association between event & eventUser
