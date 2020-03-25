@@ -38,10 +38,14 @@ module.exports.policies = {
 
   StationController: {
     individual: 'isAdmin',
-    group: 'isAdmin',
     stationmanagement: 'isStationmgr',
-    addGroup: 'isAdmin',
     addIndividual: 'isAdmin',
+
+  },
+
+  VolunteerController: {
+    group: 'isAdmin',
+    addGroup: 'isAdmin',
 
   }
 
