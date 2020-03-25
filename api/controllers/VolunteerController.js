@@ -9,14 +9,20 @@ module.exports = {
 
     group: async function (req, res) {
 
-        var model = await Web.findOne(req.session.eventid);
+        var model = await Web.findOne(req.session.eventid);  // for eventName
 
-        // var models = await Web.findOne(req.session.eventid).populate('include', { where: { vGroupName: { '!=': '' } } });
+        var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group' } });
 
-        var models = await Web.findOne(req.session.eventid).populate('include', { where: { vContacterName: { '!=': '' } } || { vGroupName: { '!=': '' } } });
-        // var models = await Station.find({ where: { vGroupName: { '!=': '' } } });
+        console.log(group);
+        // console.log(group.contain[0].id); 
 
-        return res.view('volunteer/group', { name: model.eventName, stations: models.include, webs: model, eventid: req.session.eventid });
+        // var abc = await Volunteer.findOne(66).populate('within')
+
+        // var json = JSON.parse(JSON.stringify(abc.within));
+        // var show = json[0].sName;    
+        // console.log(show);
+
+        return res.view('volunteer/group', { name: model.eventName, stations: group.contain, webs: model, eventid: req.session.eventid });
 
     },
 
