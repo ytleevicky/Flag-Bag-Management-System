@@ -281,7 +281,7 @@ module.exports = {
   viewIndividual: async function (req, res) {
     var event = await Web.findOne(parseInt(req.session.eventid));
 
-    var models = await Station.findOne(req.params.id).populate('');
+    var models = await Station.findOne(req.params.id);
     if (!models) {return res.notFound();}
     console.log(models);
 

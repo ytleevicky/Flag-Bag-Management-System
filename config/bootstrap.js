@@ -52,15 +52,15 @@ module.exports.bootstrap = async function () {
 
     await Web.createEach([
       {
-        numOfV: '60', numOfBag: '45', numOfBagBackUp: '5', eventName: '齊抗武漢肺炎賣旗活動', dateOfEvent: '20-06-2020',
+        numOfV: '60', numOfBag: '45', numOfBagBackUp: '5', eventName: '齊抗武漢肺炎賣旗活動', dateOfEvent: '2020-06-20',
         eventLocation: '全港', numOfStation: '8', numOfEBag: '50'
       },
       {
-        numOfV: '87', numOfBag: '55', numOfBagBackUp: '6', eventName: '賣得旗所', dateOfEvent: '01-08-2020',
+        numOfV: '87', numOfBag: '55', numOfBagBackUp: '6', eventName: '賣得旗所', dateOfEvent: '2020-08-01',
         eventLocation: '港島', numOfStation: '9', numOfEBag: '61'
       },
       {
-        numOfV: '69', numOfBag: '60', numOfBagBackUp: '7', eventName: '結伴賣旗日', dateOfEvent: '17-09-2020',
+        numOfV: '69', numOfBag: '60', numOfBagBackUp: '7', eventName: '結伴賣旗日', dateOfEvent: '2020-09-17',
         eventLocation: '九龍', numOfStation: '9', numOfEBag: '67'
       },
     ]);
