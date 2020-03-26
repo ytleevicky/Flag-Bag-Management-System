@@ -58,12 +58,16 @@ module.exports = {
 
   updateGroup: async function (req, res) {
 
+    var stationName = await Volunteer.findOne(req.params.id).populate('within');
+
     if (req.method == 'GET') {
 
       // var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group'}});
 
       var models = await Volunteer.findOne(req.params.id).populate('within');
-      console.log(req.params.id);
+      var json = JSON.parse(JSON.stringify(models.within));
+      var a = json[0].sName; 
+      console.log(a);
 
       if (!models) { return res.notFound(); }
 
@@ -71,7 +75,7 @@ module.exports = {
 
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
-      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
+      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, s: a});
 
     }
 
@@ -81,10 +85,18 @@ module.exports = {
       var models = await Volunteer.update(req.params.id).set({
         vGroupName: req.body.Volunteer.vGroupName,
         vGroupAddress: req.body.Volunteer.vGroupAddress,
-        // sName: req.body.Station.sName,
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact
       }).fetch();
+
+
+      await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
+      var stat = await Station.find({ where: { sName: req.body.Station.sName } });
+      var json = JSON.parse(JSON.stringify(stat));
+      var stationid = json[0].id;     // To get the stationid
+
+      await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
+
 
       if (models.length == 0) { return res.notFound(); }
 
