@@ -40,17 +40,12 @@ module.exports.routes = {
   //Adding pages
   '/event/adduser ': 'WebController.adduser',
   'POST /user/': 'WebController.adduser',
-  // '/addadmin': 'WebController.addadmin',
 
   '/addevent': 'WebController.addevent',
   'POST /web/': 'WebController.addevent',
 
   '/adminDisplay': 'WebController.adminDisplay',
   'DELETE /user/:id': 'WebController.removeUser',
-
-  // '/individual': 'WebController.individual',
-  // '/group': 'WebController.group',
-
 
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',

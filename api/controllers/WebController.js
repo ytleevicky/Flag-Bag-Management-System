@@ -81,19 +81,19 @@ module.exports = {
 
     }
 
-    var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } })
+    var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
     var station = await Station.create(req.body.Station).fetch();
-    sails.log("Here3");
+    sails.log('Here3');
     // association between Station && Web
-    await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event 
+    await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
     // Later --> May need to create association between Station and User
-    sails.log("Here2");
+    sails.log('Here2');
     // var user = await User.findOne( {where: {username: req.body.User.username} });
     // await Station.addToCollection(station.id, 'monitorBy').members(user.id);
 
     await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
-    sails.log("Here1");
+    sails.log('Here1');
 
     return res.redirect('/station/' + req.session.eventid);
 
@@ -148,6 +148,7 @@ module.exports = {
     var user = await User.create(req.body.User).fetch();
     console.log(JSON.stringify(user));
 
+    // eslint-disable-next-line block-scoped-var
     if (!models) {
       return res.redirect('/adminDisplay');
     } else {
@@ -429,7 +430,7 @@ module.exports = {
       sails.bcrypt = require('bcryptjs');
       const saltRounds = 10;
 
-      var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } })
+      var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
 
 
@@ -444,7 +445,7 @@ module.exports = {
 
       if (models.length > 0) {
         if (model.monitorBy.length > 0)
-          await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));
+        {await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));}
         await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
       } else { return res.notFound(); }
 

@@ -68,19 +68,19 @@
     </div>
 
     <!-- Request by Kenny -->
-    <!-- <div class="form-group row">
+    <div class="form-group row">
       <label for="inputPassword" class="col-sm-2 col-form-label">確認密碼</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="confirmPwd">
+        <input type="password" class="form-control" id="confirmPwd" required>
       </div>
-    </div> -->
+    </div>
 
-   
+
 
     <button type="submit" class="btn btn-primary" style="float:right;">儲存</button>
 
     <%if (eventid != "") { %>
-    <a href='/stationmgrDisplay/<%= eventid %>' class="btn btn-danger" style="float:right;">取消</a>
+    <a href='/stationmgrDisplay/<%= eventid %>' id="sendRequest" class="btn btn-danger" style="float:right;">取消</a>
     <% } else { %>
     <a href='/adminDisplay' class="btn btn-danger" style="float:right;">取消</a>
     <% } %>
@@ -97,6 +97,27 @@
     border-radius: 5px;
   }
 </style>
+
+<script>
+
+  var pwdValue = document.getElementById('inputPassword');
+  var confirmPwdValue = document.getElementById('confirmPwd');
+
+  function validatePwd() {
+    if (pwdValue.value != confirmPwdValue.value) {
+      confirmPwdValue.setCustomValidity("Passwords Don't Match");
+      document.getElementById('sendRequest').disabled = true;
+    }
+
+    else {
+      confirmPwdValue.setCustomValidity("")
+    }
+  }
+
+  pwdValue.onchange = validatePwd;
+  confirmPwdValue.onkeyup = validatePwd;
+
+</script>
 
 <!-- <script>
   async function createForm(oFormElement) {
