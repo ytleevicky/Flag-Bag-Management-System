@@ -11,7 +11,7 @@ module.exports = {
 
   group: async function (req, res) {
 
-    var model = await Web.findOne(req.session.eventid).populate('contain');  // for eventName
+    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });  // for eventName
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
     //var models = await Volunteer.find({id:{'in':model.contain.map(v => v.id)}}).populate('within');
@@ -118,11 +118,13 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var model = await Web.findOne(req.session.eventid);     // for eventName
+    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });  // for eventName
+
+    var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
 
     var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
 
-    return res.view('volunteer/individual', { name: model.eventName, stations: individual.contain, webs: model, eventid: req.session.eventid });
+    return res.view('volunteer/individual', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
 

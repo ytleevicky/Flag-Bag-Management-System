@@ -87,7 +87,7 @@
 
       <tbody>
 
-        <% stations.forEach( function(model) { %>
+        <% stations.sort((e1, e2) => e1.within[0].sName > e2.within[0].sName).forEach( function(model) { %>
         <tr>
           <!-- <th scope="row">
             <div class="form-check">
@@ -97,7 +97,7 @@
           </th> -->
           <td><%= model.vName %></td>
           <!-- <td><%= model.vContact %></td> -->
-          <td><%= model.sName %></td>
+          <td><%= model.within[0].sName %></td>
           <!-- <td><%= model.sLocation %></td> -->
           <td><%= model.bagNumber %></td>
           <td><%= model.bagStatus %></td>
