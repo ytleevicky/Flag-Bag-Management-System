@@ -83,7 +83,7 @@
         </thead>
         <tbody>
 
-          <% stations.forEach( function(model) { %>
+          <% stations.sort((e1, e2) => e1.within[0].sName > e2.within[0].sName).forEach( function(model) { %>
           <tr>
             <!-- <th scope="row">
               <div class="form-check">
@@ -94,7 +94,7 @@
             <td><%= model.vGroupName %></td>
             <td><%= model.vName %></td>
             <td><%= model.vContact %></td>
-            <td><%= model.sName %></td>
+            <td><%= model.within[0].sName %></td>
             <!-- <td><%= model.sLocation %></td> -->
             <!-- <td><%= model.vGroupNumber %></td> -->
             <td><a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a> <button type="button" class="btn btn-danger">删除</button>

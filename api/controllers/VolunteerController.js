@@ -11,7 +11,14 @@ module.exports = {
 
   group: async function (req, res) {
 
-    var model = await Web.findOne(req.session.eventid);  // for eventName
+    var model = await Web.findOne(req.session.eventid).populate('contain');  // for eventName
+
+    var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
+    //var models = await Volunteer.find({id:{'in':model.contain.map(v => v.id)}}).populate('within');
+
+
+    // var a = await Volunteer.findOne().populate('within');
+    // console.log(a.within[0]);
 
     var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
@@ -24,7 +31,7 @@ module.exports = {
     // var show = json[0].sName;
     // console.log(show);
 
-    return res.view('volunteer/group', { name: model.eventName, stations: group.contain, webs: model, eventid: req.session.eventid });
+    return res.view('volunteer/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
 
