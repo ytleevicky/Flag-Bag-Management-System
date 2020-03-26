@@ -97,7 +97,7 @@
           </th> -->
           <td><%= model.vName %></td>
           <!-- <td><%= model.vContact %></td> -->
-          <td><%= model.within[0].sName %></td>
+          <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
           <!-- <td><%= model.sLocation %></td> -->
           <td><%= model.bagNumber %></td>
           <td><%= model.bagStatus %></td>

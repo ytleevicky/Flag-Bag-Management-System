@@ -94,7 +94,7 @@
             <td><%= model.vGroupName %></td>
             <td><%= model.vName %></td>
             <td><%= model.vContact %></td>
-            <td><%= model.within[0].sName %></td>
+            <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
             <!-- <td><%= model.sLocation %></td> -->
             <!-- <td><%= model.vGroupNumber %></td> -->
             <td><a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a> <button type="button" class="btn btn-danger">删除</button>

@@ -444,8 +444,7 @@ module.exports = {
       }).fetch();
 
       if (models.length > 0) {
-        if (model.monitorBy.length > 0)
-        {await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));}
+        if (model.monitorBy.length > 0) { await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id)); }
         await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
       } else { return res.notFound(); }
 
@@ -488,6 +487,22 @@ module.exports = {
     var web = await Web.findOne(req.session.eventid);
 
     return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
+
+  },
+
+  removeStation: async function (req, res) {
+    if (req.method == 'GET') { return res.forbidden(); }
+    
+    var models = await Station.destroy(req.params.id).fetch();
+
+
+    if (models.length == 0) { return res.notFound(); }
+
+    if (req.wantsJSON) {
+
+      return res.json({ message: '已刪除旗站！', url: '/station/' + req.session.eventid });    // for ajax request
+
+    }
 
   },
 

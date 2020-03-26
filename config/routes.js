@@ -69,6 +69,8 @@ module.exports.routes = {
   
   '/addflagstn': 'WebController.addflagstn',
 
+  'DELETE /station/:id': 'WebController.removeStation',
+
 
   // 'GET /updateIndividual/:id': 'StationController.updateIndividual',
   // 'PATCH /station/individual/:id': 'StationController.updateIndividual',

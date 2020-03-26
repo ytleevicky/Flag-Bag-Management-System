@@ -73,7 +73,12 @@ module.exports = {
 
       var models = await Volunteer.findOne(req.params.id).populate('within');
       var json = JSON.parse(JSON.stringify(models.within));
-      var a = json[0].sName; 
+      if(models.within.legth >0){
+        var a = json[0].sName;
+      }else{
+        a = "";
+      }
+         
       console.log(a);
 
       if (!models) { return res.notFound(); }
