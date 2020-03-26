@@ -75,9 +75,6 @@ module.exports.routes = {
   '/addflagstn': 'WebController.addflagstn',
 
 
-  // Waiting to be developed
-  '/viewIndividual/:id': 'StationController.viewIndividual',
-
   // 'GET /updateIndividual/:id': 'StationController.updateIndividual',
   // 'PATCH /station/individual/:id': 'StationController.updateIndividual',
 
@@ -95,6 +92,8 @@ module.exports.routes = {
 
   '/addIndividual': 'VolunteerController.addIndividual',
   'POST /volunteer/individual': 'VolunteerController.addIndividual',
+
+  '/viewIndividual/:id': 'VolunteerController.viewIndividual',
 
 
   //export

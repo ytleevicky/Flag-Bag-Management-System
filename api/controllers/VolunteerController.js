@@ -113,7 +113,7 @@ module.exports = {
 
             var stationList = await Web.findOne(req.session.eventid).populate('include');
 
-            var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group' , isContacter:  'true' } });
+            var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
             return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include });
 
@@ -144,6 +144,25 @@ module.exports = {
         await Volunteer.addToCollection(individual.id, 'within').members(stationid);   // 2. add volunteer to that particular station
 
         return res.redirect('/individual/' + req.session.eventid);
+
+    },
+
+
+    viewIndividual: async function (req, res) {
+        
+        var event = await Web.findOne(req.session.eventid);
+
+        var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false', id: req.params.id } });
+
+        var json = JSON.parse(JSON.stringify(individual.contain));
+        var abc = json[0]; 
+
+        var station = await Volunteer.findOne(abc.id).populate('within');
+
+        var json1 = JSON.parse(JSON.stringify(station.within));
+        var tmp = json1[0]; 
+
+        return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid ,go: abc, station: tmp });
 
     },
 

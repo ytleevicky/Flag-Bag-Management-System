@@ -171,22 +171,6 @@ module.exports = {
   },
 
 
-  viewIndividual: async function (req, res) {
-    var event = await Web.findOne(parseInt(req.session.eventid));
-
-    var models = await Station.findOne(req.params.id);
-    if (!models) {return res.notFound();}
-    console.log(models);
-
-    var s = await Web.findOne(req.session.eventid).populate('include', {sName: models.sName});
-    if (!s) { return res.notFound(); }
-
-    var model = await Station.find();
-
-    return res.view('station/viewIndividual', { name: model.eventName, stations: models, eventid: event.id, eventname: event.eventName, go: s.include});
-
-  },
-
   //export group information(for group.ejs)
   export_group: async function (req, res) {
 
