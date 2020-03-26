@@ -22,14 +22,16 @@
         <div class="form-group row">
             <label for="inputGroupName" class="col-sm-2 col-form-label">團體名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputGroupName" name="Volunteer[vGroupName]" value="<%= groups.vGroupName %>">
+                <input type="text" class="form-control" id="inputGroupName" name="Volunteer[vGroupName]"
+                    value="<%= groups.vGroupName %>">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputGroupAddress" class="col-sm-2 col-form-label">團體地址</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputGroupAddress" name="Volunteer[vGroupAddress]" value="<%= groups.vGroupAddress %>">
+                <input type="text" class="form-control" id="inputGroupAddress" name="Volunteer[vGroupAddress]"
+                    value="<%= groups.vGroupAddress %>">
             </div>
         </div>
 
@@ -41,7 +43,7 @@
             </div> -->
 
 
-            <!-- It is already selected when creating a station (redundant) -->
+        <!-- It is already selected when creating a station (redundant) -->
         <!-- <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">賣旗地點</label>
             <div class="col-sm-10">
@@ -52,7 +54,13 @@
         <div class="form-group row">
             <label for="inputStation" class="col-sm-2 col-form-label">所屬旗站</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputStation" name="Station[sName]" value="<%= groups.sName %>">
+                <select class="form-control" name="Station[sName]" required>
+                    <% stations.forEach( function(model) { %>
+                    <option value="<% model.sName %>"> <%= model.sName %> </option>
+                    <% }); %>
+                    <!-- <input type="text" class="form-control" id="inputStation" name="Station[sName]"
+                        value="<%= groups.sName %>"> -->
+                </select>
             </div>
         </div>
 
@@ -62,14 +70,16 @@
         <div class="form-group row">
             <label for="inputvName" class="col-sm-2 col-form-label">負責人名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputvName" name="Volunteer[vName]" value="<%= groups.vName %>">
+                <input type="text" class="form-control" id="inputvName" name="Volunteer[vName]"
+                    value="<%= groups.vName %>">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputContact" class="col-sm-2 col-form-label">聯絡電話</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputContact" name="Volunteer[vContact]" value="<%= groups.vContact %>">
+                <input type="text" class="form-control" id="inputContact" name="Volunteer[vContact]"
+                    value="<%= groups.vContact %>">
             </div>
         </div>
 
@@ -101,30 +111,30 @@
 </style>
 
 <script>
-  
+
     async function createForm(oFormElement) {
-  
-      var response = await fetch("/volunteer/group/<%= groups.id %>", {
-        method: "PATCH",
-        credentials: 'same-origin',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
-        //put into array            //map into input and encode                                                         //join it
-        body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
-      });
-  
-  
-      if (response.ok) {
-        // validatePwd()
-        var data = await response.json();   // for res.ok() or res.json()
-        alert(data.message);
-        window.location = data.url;
-        //location.reload(true);
-      } else if (response.status == 401) {
-        var data = await response.text();   // for res.send()
-        alert(data);
-      } else {
-        alert(response.statusText);
-      }
-  
+
+        var response = await fetch("/volunteer/group/<%= groups.id %>", {
+            method: "PATCH",
+            credentials: 'same-origin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+            //put into array            //map into input and encode                                                         //join it
+            body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+        });
+
+
+        if (response.ok) {
+            // validatePwd()
+            var data = await response.json();   // for res.ok() or res.json()
+            alert(data.message);
+            window.location = data.url;
+            //location.reload(true);
+        } else if (response.status == 401) {
+            var data = await response.text();   // for res.send()
+            alert(data);
+        } else {
+            alert(response.statusText);
+        }
+
     };
-  </script>
+</script>

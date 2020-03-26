@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable block-scoped-var */
 /**
  * VolunteerController
