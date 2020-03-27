@@ -219,8 +219,14 @@ module.exports = {
 
   generateLabel: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('web/generateLabel', { user: models });
+    var qrcode = require('qrcode-generator');
+    var qr = qrcode(4, 'L');
+    qr.addData('https//sailsjs.com/');    // data that stored inside the QR code
+    qr.make();
+
+    var models = await Web.findOne(req.session.eventid);
+
+    return res.view('web/generateLabel', { user : models, 'qrsrc':qr.createDataURL() });
 
   },
 
