@@ -54,12 +54,12 @@
           </tr>
           <tr>
             <th scope="row">所屬團體</th>
-            <td><%= go.vGroupName %></td>
+            <td><%= go.vGroupName == "" ? '---' : go.vGroupName %></td>
           </tr>
           <tr>
             <th scope="row">旗站名稱</th>
-            <td><%= station.sName %></td>
-   
+            <td><%= station.within.length > 0 ? station.within[0].sName: "" %></td>
+  
           </tr>
           <tr>
             <th scope="row">旗袋編號</th>

@@ -173,10 +173,10 @@ module.exports = {
     var json = JSON.parse(JSON.stringify(individual.contain));
     var abc = json[0];
 
-    var station = await Volunteer.findOne(abc.id).populate('within');
+    var tmp = await Volunteer.findOne(abc.id).populate('within');
 
-    var json1 = JSON.parse(JSON.stringify(station.within));
-    var tmp = json1[0];
+    // var json1 = JSON.parse(JSON.stringify(station.within));
+    // var tmp = json1[0];
 
     return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid ,go: abc, station: tmp });
 
