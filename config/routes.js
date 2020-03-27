@@ -85,6 +85,8 @@ module.exports.routes = {
   'GET /updateGroup/:id': 'VolunteerController.updateGroup',
   'PATCH /volunteer/group/:id': 'VolunteerController.updateGroup',
 
+  'DELETE /volunteer/:id': 'VolunteerController.removeVolunteer',
+
   '/individual/:id': 'VolunteerController.individual',
 
   '/addIndividual': 'VolunteerController.addIndividual',

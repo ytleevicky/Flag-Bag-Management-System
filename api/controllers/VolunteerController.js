@@ -77,7 +77,7 @@ module.exports = {
 
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
-      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include});
+      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
 
     }
 
@@ -109,6 +109,42 @@ module.exports = {
         return res.redirect('/group/' + req.session.eventid);
       }
     }
+  },
+
+  // Remove : For both group volunteer && individual volunteer 
+  removeVolunteer: async function (req, res) {
+    if (req.method == 'GET') { return res.forbidden(); }
+
+    var volunteer = await Volunteer.findOne(req.params.id);
+
+    if (volunteer.vType == 'group') {  
+      // Remove Group Volunteer 
+
+      var find = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volunteer.vGroupName } });
+
+      // Update the volunteers that belongs to this particular Group 
+      await Volunteer.update(find.contain.map(s => s.id)).set({
+        vGroupName: '',
+        vType: 'individual'         // Not sure whether it is '' / group / individual
+      }).fetch();
+
+      var models = await Volunteer.destroy(req.params.id).fetch();
+
+    } else {
+      // Remove Individual Volunteer
+
+      var models = await Volunteer.destroy(req.params.id).fetch();
+
+    }
+
+    if (models.length == 0) { return res.notFound(); }
+
+    if (req.wantsJSON) {
+
+      return res.json({ message: '已刪除團體！', url: '/group/' + req.session.eventid });    // for ajax request
+
+    }
+
   },
 
   individual: async function (req, res) {
@@ -178,7 +214,7 @@ module.exports = {
     // var json1 = JSON.parse(JSON.stringify(station.within));
     // var tmp = json1[0];
 
-    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid ,go: abc, station: tmp });
+    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp });
 
   },
 

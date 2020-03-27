@@ -53,6 +53,10 @@
             <td><%= go.vContact %></td>
           </tr>
           <tr>
+            <th scope="row">義工類別</th>
+            <td><%= go.vType == 'group' ? '團體': '個人' %></td>
+          </tr>
+          <tr>
             <th scope="row">所屬團體</th>
             <td><%= go.vGroupName == "" ? '---' : go.vGroupName %></td>
           </tr>
