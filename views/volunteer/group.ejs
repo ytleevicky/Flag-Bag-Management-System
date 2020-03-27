@@ -83,7 +83,7 @@
         </thead>
         <tbody>
 
-          <% stations.sort((e1, e2) => e1.within[0].sName > e2.within[0].sName).forEach( function(model) { %>
+          <% stations.sort((e1, e2) => (e1.within.length > 0 ? e1.within[0].sName: "") > (e2.within.length > 0 ? e2.within[0].sName: "")).forEach( function(model) { %>
           <tr>
             <!-- <th scope="row">
               <div class="form-check">

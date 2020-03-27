@@ -14,15 +14,7 @@ module.exports = {
     var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });  // for eventName
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
-    //var models = await Volunteer.find({id:{'in':model.contain.map(v => v.id)}}).populate('within');
 
-
-    // var a = await Volunteer.findOne().populate('within');
-    // console.log(a.within[0]);
-
-    var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
-
-    console.log(group);
     // console.log(group.contain[0].id);
 
     // var abc = await Volunteer.findOne(66).populate('within')
@@ -72,14 +64,12 @@ module.exports = {
       // var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group'}});
 
       var models = await Volunteer.findOne(req.params.id).populate('within');
-      var json = JSON.parse(JSON.stringify(models.within));
-      if(models.within.legth >0){
-        var a = json[0].sName;
-      }else{
-        a = "";
-      }
-         
-      console.log(a);
+      // var json = JSON.parse(JSON.stringify(models.within));
+      // if(models.within.legth >0){
+      //   var a = json[0].sName;
+      // }else{
+      //   a = "";
+      // }
 
       if (!models) { return res.notFound(); }
 
@@ -87,7 +77,7 @@ module.exports = {
 
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
-      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, s: a});
+      return res.view('volunteer/updateGroup', { groups: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include});
 
     }
 
