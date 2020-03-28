@@ -31,18 +31,18 @@
 
     <div class="col col-sm-10 col-md-10">
 
-    <h2>管理個人義工</h2>
-    <br>
-    
-    
+      <h2>管理個人義工</h2>
+      <br>
 
-    <div class="bordered">
 
-      <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯出團體義工（透過Excel）</p>
 
-      <div class="row" style="padding: 20px;">
+      <div class="bordered">
 
-        <!-- <form action="/import_vIndividual" method="post" enctype="multipart/form-data">
+        <p class="font-weight-bold" style="background-color:powderblue; padding: 10px; ">匯出團體義工（透過Excel）</p>
+
+        <div class="row" style="padding: 20px;">
+
+          <!-- <form action="/import_vIndividual" method="post" enctype="multipart/form-data">
           <div class="col-sm-6">
             <p>匯入Excel檔案：</p>
             <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" />
@@ -50,70 +50,72 @@
           </div>
         </form> -->
 
-        <div class="col-sm-6">
-          <p>以Excel檔案匯出：</p>
-          <a href="/export_vIndividual" class="btn btn-info">匯出</a>
+          <div class="col-sm-6">
+            <p>以Excel檔案匯出：</p>
+            <a href="/export_vIndividual" class="btn btn-info">匯出</a>
+          </div>
+
         </div>
+
 
       </div>
 
+      <br>
+      <h3>個人義工列表</h3><a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
+      <br>
+      <table class="table table-bordered">
+        <br>
+        <thead>
+          <tr>
+            <!-- <th scope="col">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+          </th> -->
+            <th scope="col">姓名</th>
+            <!-- <th scope="col">聯絡電話</th> -->
+            <th scope="col">旗站名稱</th>
+            <!-- <th scope="col">旗站地區</th> -->
+            <th scope="col">旗袋編號</th>
+            <th scope="col">旗袋狀態</th>
+            <!-- <th scope="col">旗袋最後更新時間</th>
+          <th scope="col">最後列印標籤時間</th> -->
+            <th scope="col">更多</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <% stations.forEach( function(model) { %>
+          <tr>
+            <!-- <th scope="row">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+          </th> -->
+            <td><%= model.vName %></td>
+            <!-- <td><%= model.vContact %></td> -->
+            <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
+            <!-- <td><%= model.sLocation %></td> -->
+            <td><%= model.bagNumber %></td>
+            <td><%= model.bagStatus %></td>
+            <!-- <td><%= model.bagUpdate %></td>
+          <td><%= model.codePrintedTime %></td> -->
+            <td>
+              <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
+              <button type="submit" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
+            </td>
+            <% }); %>
+          </tr>
+
+          <input type="hidden" id="inputCreatedBy" name="Volunteer[isContacter]" value="false">
+
+        </tbody>
+      </table>
 
     </div>
-
-    <br>
-    <h3>個人義工列表</h3><a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
-    <br>
-    <table class="table table-bordered">
-      <br>
-      <thead>
-        <tr>
-          <!-- <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th> -->
-          <th scope="col">姓名</th>
-          <!-- <th scope="col">聯絡電話</th> -->
-          <th scope="col">旗站名稱</th>
-          <!-- <th scope="col">旗站地區</th> -->
-          <th scope="col">旗袋編號</th>
-          <th scope="col">旗袋狀態</th>
-          <!-- <th scope="col">旗袋最後更新時間</th>
-          <th scope="col">最後列印標籤時間</th> -->
-          <th scope="col">更多</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <% stations.forEach( function(model) { %>
-        <tr>
-          <!-- <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th> -->
-          <td><%= model.vName %></td>
-          <!-- <td><%= model.vContact %></td> -->
-          <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
-          <!-- <td><%= model.sLocation %></td> -->
-          <td><%= model.bagNumber %></td>
-          <td><%= model.bagStatus %></td>
-          <!-- <td><%= model.bagUpdate %></td>
-          <td><%= model.codePrintedTime %></td> -->
-          <td><a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a> <button type="button" class="btn btn-danger">删除</button>
-          </td>
-          <% }); %>
-        </tr>
-
-        <input type="hidden" id="inputCreatedBy" name="Volunteer[isContacter]" value="false">
-
-      </tbody>
-    </table>
- 
-  </div>
 
 </body>
 
@@ -133,3 +135,34 @@
     border-radius: 5px;
   }
 </style>
+
+<script>
+
+  async function deleteVolunteer(id) {
+
+    var r = confirm("確認刪除個人義工?");
+
+    if (r) {
+
+      var response = await fetch("/volunteer/" + id, {
+        method: "DELETE",
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        var data = await response.json();
+        alert(data.message);
+        window.location = data.url;
+      } else {
+        alert(response.status + ": " + response.statusText);
+      }
+
+    } else {
+      alert("cancelled");
+    }
+
+  };
+
+
+
+</script>
