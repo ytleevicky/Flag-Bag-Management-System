@@ -84,13 +84,24 @@ module.exports = {
     else {
       if (!req.body.Volunteer) { return res.badRequest('Form-data not received.'); }
 
+
+      var vol = await Volunteer.findOne(req.params.id);
+
+      var store = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.vGroupName } });
+
+      // Update all the GroupName in Individual Volunteer 
+      // (change the groupName from old to new)
+      await Volunteer.update(store.contain.map(s => s.id)).set({
+        vGroupName: req.body.Volunteer.vGroupName
+      }).fetch();
+
+      // Update the information of that particular Group Volunteer
       var models = await Volunteer.update(req.params.id).set({
         vGroupName: req.body.Volunteer.vGroupName,
         vGroupAddress: req.body.Volunteer.vGroupAddress,
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact
-      }).fetch();
-
+      }).fetch()
 
       await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
       var stat = await Station.find({ where: { sName: req.body.Station.sName } });
@@ -117,7 +128,7 @@ module.exports = {
 
     var volunteer = await Volunteer.findOne(req.params.id);
 
-    if (volunteer.vType == 'group') {  
+    if (volunteer.vType == 'group') {
       // Remove Group Volunteer 
 
       var find = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volunteer.vGroupName } });
@@ -152,8 +163,6 @@ module.exports = {
     var model = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });  // for eventName
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
-
-    var individual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
 
     return res.view('volunteer/individual', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
@@ -227,7 +236,7 @@ module.exports = {
       var web = await Web.findOne(req.session.eventid);
 
       var models = await Volunteer.findOne(req.params.id).populate('within');
-    
+
       if (!models) { return res.notFound(); }
 
       var stationList = await Web.findOne(req.session.eventid).populate('include');
@@ -243,10 +252,10 @@ module.exports = {
 
       var groupName = req.body.Volunteer.vGroupName;
 
-      if(groupName == "---"){
+      if (groupName == "---") {
         var type = 'individual';
         var groupname = "";
-      }else{
+      } else {
         var type = 'group';
         var groupname = req.body.Volunteer.vGroupName;
       }
