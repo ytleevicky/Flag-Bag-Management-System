@@ -218,6 +218,68 @@ module.exports = {
 
   },
 
+  updateIndividual: async function (req, res) {
+
+    var stationName = await Volunteer.findOne(req.params.id).populate('within');
+
+    if (req.method == 'GET') {
+
+      var web = await Web.findOne(req.session.eventid);
+
+      var models = await Volunteer.findOne(req.params.id).populate('within');
+    
+      if (!models) { return res.notFound(); }
+
+      var stationList = await Web.findOne(req.session.eventid).populate('include');
+
+      var findGroup = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
+
+      return res.view('volunteer/updateIndividual', { individuals: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, grouplist: findGroup });
+
+    }
+
+    else {
+      if (!req.body.Volunteer) { return res.badRequest('Form-data not received.'); }
+
+      var groupName = req.body.Volunteer.vGroupName;
+
+      if(groupName == "---"){
+        var type = 'individual';
+        var groupname = "";
+      }else{
+        var type = 'group';
+        var groupname = req.body.Volunteer.vGroupName;
+      }
+
+
+      var models = await Volunteer.update(req.params.id).set({
+        vName: req.body.Volunteer.vName,
+        vContact: req.body.Volunteer.vContact,
+        vGroupName: groupname,
+        vType: type
+      }).fetch();
+
+      await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
+      var stat = await Station.find({ where: { sName: req.body.Station.sName } });
+      var json = JSON.parse(JSON.stringify(stat));
+      var stationid = json[0].id;     // To get the stationid
+
+      await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
+
+      if (models.length == 0) { return res.notFound(); }
+
+      if (req.wantsJSON) {
+        return res.json({ message: '已更新個人義工！', url: '/viewIndividual/' + req.params.id });
+      }
+      else {
+        return res.redirect('/viewIndividual/' + req.params.id);
+      }
+    }
+
+
+
+  },
+
   //action - populate(for volunteer and station)
   populate_vs: async function (req, res) {
 

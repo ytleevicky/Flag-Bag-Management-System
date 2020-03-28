@@ -94,6 +94,9 @@ module.exports.routes = {
 
   '/viewIndividual/:id': 'VolunteerController.viewIndividual',
 
+  'GET /updateIndividual/:id': 'VolunteerController.updateIndividual',
+  'PATCH /volunteer/individual/:id': 'VolunteerController.updateIndividual',
+
 
   //export
   '/export_station': 'StationController.export_station',
