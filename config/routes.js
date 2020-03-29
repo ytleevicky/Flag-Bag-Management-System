@@ -19,10 +19,8 @@ module.exports.routes = {
    ***************************************************************************/
 
   //Use in UserController
-
-  
   //login and logout
-  '/': 'UserController.login',                //default page
+  '/': 'UserController.login',       
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',
   'GET /user/logout': 'UserController.logout',
@@ -32,40 +30,45 @@ module.exports.routes = {
   '/location': 'WebController.location',
   '/setting': 'WebController.setting',
   '/management': 'WebController.management',
+
   '/viewitem/:id': 'WebController.viewitem',
   '/distributeBag': 'WebController.distributeBag',
   '/collectBag': 'WebController.collectBag',
+  
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
+
   '/qrCode': 'WebController.qrCode',
   '/generateLabel': 'WebController.generateLabel',
 
-  //Adding pages
-  '/event/adduser ': 'WebController.adduser',
-  'POST /user/': 'WebController.adduser',
-  '/addevent': 'WebController.addevent',
-  'POST /web/': 'WebController.addevent',
-  '/adminDisplay': 'WebController.adminDisplay',
-  'DELETE /user/:id': 'WebController.removeUser',
-
-  //import and export
-  '/import_user': 'WebController.import_user',
-  '/export_admin': 'WebController.export_admin',
-  'GET /updateUser/:id': 'WebController.updateUser',
-  'GET /updateStation/:id': 'WebController.updateStation',
-
-  //WebController update function
-  'PATCH /user/:id': 'WebController.updateUser',
-  'PATCH /station/:id': 'WebController.updateStation',
-
-  //USE in StationController
-  //View information only
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
   '/stationmanagement': 'StationController.stationmanagement',
-  '/addflagstn': 'WebController.addflagstn',
-  'DELETE /station/:id': 'WebController.removeStation',
 
+  //Adding, deleting and updating WebController info
+  '/event/adduser ': 'WebController.adduser',
+  'POST /user/': 'WebController.adduser',
+
+  '/addevent': 'WebController.addevent',
+  'POST /web/': 'WebController.addevent',
+
+  'GET /updateStation/:id': 'WebController.updateStation',
+  'PATCH /station/:id': 'WebController.updateStation',
+
+  'GET /updateUser/:id': 'WebController.updateUser',
+  'PATCH /user/:id': 'WebController.updateUser',
+
+  '/addflagstn': 'WebController.addflagstn',
+   'DELETE /station/:id': 'WebController.removeStation',
+
+  '/adminDisplay': 'WebController.adminDisplay',
+  'DELETE /user/:id': 'WebController.removeUser',
+
+
+  //export
+  '/export_admin': 'WebController.export_admin',
+  
+  //USE in StationController
   //export in StationController
   '/export_station': 'StationController.export_station',
   '/export_statman': 'StationController.export_statman',
