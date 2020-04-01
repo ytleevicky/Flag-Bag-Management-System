@@ -154,17 +154,19 @@ module.exports = {
   //export group information(for group.ejs)
   export_group: async function (req, res) {
 
-    var models = await Station.find();
+    var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+    var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
+
       return {
         vGroupName: model.vGroupName,
+        vGroupAddress: model.vGroupAddress,
         vName: model.vName,
         vContact: model.vContact,
-        sName: model.sName,
+        // sName: model.sName,
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
