@@ -295,7 +295,19 @@ module.exports = {
       }
     }
 
+  },
 
+
+  print: async function (req, res) {
+    const qrcode = require('qrcode-generator');
+    var vol = await Volunteer.findOne(req.params.id);
+    var stat = await Volunteer.findOne(req.params.id).populate('within');
+
+    let qr = qrcode(4, 'H');
+    qr.addData(`${vol.vContact}`);    // tmp (store the flag bag no. later )
+    qr.make();
+
+    return res.view('volunteer/print', { volunteer: vol, 'qrsrc':qr.createDataURL(), station: stat });
 
   },
 

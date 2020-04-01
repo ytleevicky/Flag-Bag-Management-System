@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Print QR Code</title>
+	<style>
+	html, body {
+        margin: 0 auto;     /* put it at the center */ 
+		width: 248mm;     /* Define the page size (try different value !!)   */  
+	}
+	</style>
+</head>
+
+<body>
+
+		<div style="margin-bottom:1em">
+            <h5>姓名: <%= volunteer.vName %></h5>
+            <h5>電話: <%= volunteer.vContact %></h5>
+            <h5>旗站: <%= station.within.length > 0 ? station.within[0].sName : "" %></h5>
+			<img src="<%- qrsrc %>" />
+		</div>
+
+	<script>
+		window.print();
+		window.onfocus = () => window.close();
+	</script>
+</body>
+</html>

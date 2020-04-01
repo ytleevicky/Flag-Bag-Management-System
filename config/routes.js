@@ -96,6 +96,8 @@ module.exports.routes = {
   'GET /updateIndividual/:id': 'VolunteerController.updateIndividual',
   'PATCH /volunteer/individual/:id': 'VolunteerController.updateIndividual',
 
+  '/printQRcode/:id':'VolunteerController.print',
+
   //For populate
   //user and web
   'GET /user/edit': 'UserController.populate_uw',

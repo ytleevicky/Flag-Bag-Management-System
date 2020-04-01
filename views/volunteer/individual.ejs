@@ -106,6 +106,7 @@
             <td>
               <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
               <button type="submit" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
+              <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success">列印</a>
             </td>
             <% }); %>
           </tr>
