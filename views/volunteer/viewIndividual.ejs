@@ -67,19 +67,22 @@
           </tr>
           <tr>
             <th scope="row">旗袋編號</th>
+            <td><%= flagbag[0].bagNumber %></td>
 
           </tr>
           <tr>
             <th scope="row">旗袋狀態</th>
+            <td><%= flagbag[0].bagStatus %></td>
      
           </tr>
           <tr>
             <th scope="row">QR Code</th>
+            <td><%=  flagbag[0].isCodePrinted == false ?  '未列印' : '已列印' %></td>
 
           </tr>
           <tr>
             <th scope="row">Bag Last Update</th>
-          
+            <td><%= new Date(flagbag[0].updatedAt).toLocaleString() %></td>
           </tr>
 
         </tbody>

@@ -15,14 +15,14 @@
     <br>
     <br>
 
-    <form action="/volunteer/group" method="POST">
+    <form action="/volunteer/group" method="POST" onsubmit="createForm(this);return false">
 
         <h2>團體資料</h2>
         <br>
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">團體名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputUsername" name="Volunteer[vGroupName]">
+                <input type="text" class="form-control" id="inputGroupName" name="Volunteer[vGroupName]">
             </div>
         </div>
 
@@ -119,10 +119,19 @@
 </style>
 
 <script>
+
     async function createForm(oFormElement) {
 
+        var existingGroupNames = <%- JSON.stringify(groups.map(group => group.vGroupName)) %>;
+        var a = document.getElementById('inputGroupName').value;
+        if (existingGroupNames.includes(a)) {
+            alert('Duplicated group name');
+            return;
+        }
+
+
         var response = await fetch(oFormElement.action, {
-            method: oFormElement.method,
+            method: "POST",
             credentials: 'same-origin',
             headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
             //put into array            //map into input and encode                                                         //join it

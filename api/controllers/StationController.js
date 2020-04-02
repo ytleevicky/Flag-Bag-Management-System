@@ -153,11 +153,19 @@ module.exports = {
 
   //export group information(for group.ejs)
   export_group: async function (req, res) {
-
-    var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
+    
+    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
+
+    console.log(models.include);
+
+    for (var model in models.contain) {
+      var v = await Volunteer.findOne(model.id).populate('within');
+
+      // v.within[0]
+    }
 
     var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
 

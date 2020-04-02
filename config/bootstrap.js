@@ -26,7 +26,7 @@ module.exports.bootstrap = async function () {
   //   // etc.
   // ]);
   // ```
-
+  // process.env.TZ = 'UTC / 00:00' ;
   sails.bcrypt = require('bcryptjs');
   const saltRounds = 10;
 
@@ -107,6 +107,7 @@ module.exports.bootstrap = async function () {
     ]);
 
   }
+
 
   // //Add association between volunteer && event 
   // const vol = await Volunteer.findOne({ vGroupName: 'HKBU' });

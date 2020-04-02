@@ -35,7 +35,9 @@ module.exports = {
 
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
-      return res.view('volunteer/addGroup', { eventid: req.session.eventid, name: web.eventName, stations: stationList.include });
+      var groupList = await Web.findOne(req.session.eventid).populate('contain');
+
+      return res.view('volunteer/addGroup', { eventid: req.session.eventid, name: web.eventName, stations: stationList.include, groups: groupList.contain });
     }
 
     var group = await Volunteer.create(req.body.Volunteer).fetch();
@@ -50,7 +52,12 @@ module.exports = {
 
     await Volunteer.addToCollection(group.id, 'within').members(stationid);   // Add volunteer to that particular station
 
-    return res.redirect('/group/' + req.session.eventid);
+    if (req.wantsJSON) {
+      return res.json({ message: '已加入團體！', url: '/group/' + req.session.eventid });
+    }
+    else {
+      return res.redirect('/group/' + req.session.eventid);
+    }
 
   },
 
@@ -181,15 +188,11 @@ module.exports = {
 
       var web = await Web.findOne(req.session.eventid);
 
-      var abc = await Web.findOne(req.session.eventid).populate('comprise');
-
-      console.log(abc.comprise);
-
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
       var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include, qrNo: abc.comprise });
+      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include});
 
     }
 
@@ -237,7 +240,9 @@ module.exports = {
     // var json1 = JSON.parse(JSON.stringify(station.within));
     // var tmp = json1[0];
 
-    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp });
+    var bag = await Volunteer.findOne(abc.id).populate('assignTo');
+
+    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp, flagbag: bag.assignTo });
 
   },
 
@@ -307,8 +312,19 @@ module.exports = {
     var vol = await Volunteer.findOne(req.params.id);
     var stat = await Volunteer.findOne(req.params.id).populate('within');
 
+    var bag = await Volunteer.findOne(vol.id).populate('assignTo');
+
+    await Flagbag.update(bag.assignTo[0].id).set({
+
+      bagStatus: '未派發',
+      bagNumber: bag.assignTo[0].id,
+      codePrintedTime: bag.assignTo[0].updatedAt,
+      isCodePrinted: true,
+
+    }).fetch();
+
     let qr = qrcode(4, 'H');
-    qr.addData(`${vol.vContact}`);    // tmp (store the flag bag no. later )
+    qr.addData(`${bag.assignTo[0].id}`);
     qr.make();
 
     return res.view('volunteer/print', { volunteer: vol, 'qrsrc': qr.createDataURL(), station: stat });
