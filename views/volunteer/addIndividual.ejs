@@ -39,7 +39,7 @@
         <div class="form-group row">
             <label class="col-sm-2">旗袋號碼</label>
             <div class="col-sm-10">
-                <p id="flagbagno"> </p>
+                <p id="FlagBag[bagNumber]"> </p>
                 <button class="btn btn-info" id="generate">generate</button>
             </div>
 
@@ -99,29 +99,55 @@
 
 <script>
 
-//  let output = document.querySelector("p");
+    //  let output = document.querySelector("p");
 
-    function getRandomNumber(min, max){
+    function getRandomNumber(min, max) {
         let step1 = max - min + 1;
         let step2 = Math.random() * step1;
         let result = Math.floor(step2) + min;
+        console.log("pass");
+        if (qrNo.length > 0) {
+            compareBagNumber(qrNo, numbersArray, result);
+        }
+
         return result;
     }
 
-    function createArrayOfNumbers(start, end){
+    function compareBagNumber(qrNo, numbersArray, result) {
+        console.log("pass1");
+        if (qrNo.length > 0) {
+            console.log("pass2");
+            for (let i = 0; i < qrNo.length; i++) {
+                for (let j = 0; j < numbersArray.length; j++) {
+                    if (qrNo[i].bagNumber.localCompare(numbersArray[j].toString()) == 0) {
+                        const index = numbersArray.indexOf(numbersArray[j]);
+                        if (index > -1) {
+                            numbersArray.splice(index, 1);
+                            result = getRandomNumber(0, numbersArray.length - 1);
+                            return result;
+                        }
+                    }
+                }
+            }
+        } else {
+            return result;
+        }
+    }
+
+    function createArrayOfNumbers(start, end) {
         let myArray = [];
 
-        for(let i = start; i <= end; i++){
+        for (let i = start; i <= end; i++) {
             myArray.push(i);
         }
         return myArray;
     }
 
-    let numbersArray = createArrayOfNumbers(1,20);
+    let numbersArray = createArrayOfNumbers(1, 20);
 
     document.getElementById("generate").addEventListener('click', () => {
 
-        if(numbersArray.length == 0){
+        if (numbersArray.length == 0) {
             document.querySelector("p").innerText = "No more Random number";
             document.getElementById("generate").disabled = true;
             return;
@@ -130,7 +156,9 @@
         let randomIndex = getRandomNumber(0, numbersArray.length - 1);
         let randomNumber = numbersArray[randomIndex];
         numbersArray.splice(randomIndex, 1);
+
         document.querySelector("p").innerText = randomNumber;
+        document.getElementById("generate").disabled = true;
     });
-    
+
 </script>

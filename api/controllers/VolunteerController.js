@@ -181,11 +181,15 @@ module.exports = {
 
       var web = await Web.findOne(req.session.eventid);
 
+      var abc = await Web.findOne(req.session.eventid).populate('comprise');
+
+      console.log(abc.comprise);
+
       var stationList = await Web.findOne(req.session.eventid).populate('include');
 
       var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include });
+      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include, qrNo: abc.comprise });
 
     }
 
@@ -201,6 +205,9 @@ module.exports = {
 
     }
 
+    var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+    await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
+    await Volunteer.addToCollection(individual.id, 'assignTo').members(flagbag.id);
     await Volunteer.addToCollection(individual.id, 'in').members(req.session.eventid);  // 1. Add a Volunteer to that particular event
 
     var station = req.body.Station.sName;
