@@ -69,33 +69,32 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      // var model = await User.find(req.params.id);
-
-      // if (!model) { return res.notFound(); }
-
       var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
 
       var web = await Web.findOne(req.session.eventid);
 
-      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid, adminName: req.session.username });
+      var stationList = await Web.findOne(req.session.eventid).populate('include');
+
+      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid, adminName: req.session.username, stations: stationList.include });
 
     }
 
     var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
     var station = await Station.create(req.body.Station).fetch();
-    sails.log('Here3');
-    // association between Station && Web
+   
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
-    // Later --> May need to create association between Station and User
-    sails.log('Here2');
-    // var user = await User.findOne( {where: {username: req.body.User.username} });
-    // await Station.addToCollection(station.id, 'monitorBy').members(user.id);
 
     await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
-    sails.log('Here1');
+   
 
-    return res.redirect('/station/' + req.session.eventid);
+    if (req.wantsJSON) {
+      return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
+    }
+    else {
+      return res.redirect('/station/' + req.session.eventid);
+    }
+
 
   },
 

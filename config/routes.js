@@ -59,6 +59,8 @@ module.exports.routes = {
   'PATCH /user/:id': 'WebController.updateUser',
 
   '/addflagstn': 'WebController.addflagstn',
+  'POST /addflagstn': 'WebController.addflagstn',
+
    'DELETE /station/:id': 'WebController.removeStation',
 
   '/adminDisplay': 'WebController.adminDisplay',
