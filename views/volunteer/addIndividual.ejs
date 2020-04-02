@@ -20,7 +20,7 @@
     <br>
     <br>
 
-    <form action="/volunteer/individual" method="POST">
+    <form action="/volunteer/individual" method="POST" onsubmit="createForm(this);return false">
 
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">義工名稱</label>
@@ -86,68 +86,40 @@
     }
 </style>
 
-<!-- <script>
+<script>
 
-    //  let output = document.querySelector("p");
 
-    function getRandomNumber(min, max) {
-        let step1 = max - min + 1;
-        let step2 = Math.random() * step1;
-        let result = Math.floor(step2) + min;
-        console.log("pass");
-        if (qrNo.length > 0) {
-            compareBagNumber(qrNo, numbersArray, result);
-        }
+    async function createForm(oFormElement) {
 
-        return result;
-    }
+        // var existingGroupNames = <% - JSON.stringify(groups.map(group => group.vGroupName)) %>;
+        // var a = document.getElementById('inputGroupName').value;
+        // if (existingGroupNames.includes(a)) {
+        //     alert('輸入的團體名稱已存在，請重新輸入！');
+        //     return;
+        // }
 
-    function compareBagNumber(qrNo, numbersArray, result) {
-        console.log("pass1");
-        if (qrNo.length > 0) {
-            console.log("pass2");
-            for (let i = 0; i < qrNo.length; i++) {
-                for (let j = 0; j < numbersArray.length; j++) {
-                    if (qrNo[i].bagNumber.localCompare(numbersArray[j].toString()) == 0) {
-                        const index = numbersArray.indexOf(numbersArray[j]);
-                        if (index > -1) {
-                            numbersArray.splice(index, 1);
-                            result = getRandomNumber(0, numbersArray.length - 1);
-                            return result;
-                        }
-                    }
-                }
-            }
+        var response = await fetch(oFormElement.action, {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+            //put into array            //map into input and encode                                                         //join it
+            body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+        });
+
+
+        if (response.ok) {
+            // validatePwd()
+            var data = await response.json();   // for res.ok() or res.json()
+            alert(data.message);
+            window.location = data.url;
+            //location.reload(true);
+        } else if (response.status == 401) {
+            var data = await response.text();   // for res.send()
+            alert(data);
         } else {
-            return result;
-        }
-    }
-
-    function createArrayOfNumbers(start, end) {
-        let myArray = [];
-
-        for (let i = start; i <= end; i++) {
-            myArray.push(i);
-        }
-        return myArray;
-    }
-
-    let numbersArray = createArrayOfNumbers(1, 20);
-
-    document.getElementById("generate").addEventListener('click', () => {
-
-        if (numbersArray.length == 0) {
-            document.querySelector("p").innerText = "No more Random number";
-            document.getElementById("generate").disabled = true;
-            return;
+            alert(response.statusText);
         }
 
-        let randomIndex = getRandomNumber(0, numbersArray.length - 1);
-        let randomNumber = numbersArray[randomIndex];
-        numbersArray.splice(randomIndex, 1);
+    };
 
-        document.querySelector("p").innerText = randomNumber;
-        document.getElementById("generate").disabled = true;
-    });
-
-</script> -->
+</script>

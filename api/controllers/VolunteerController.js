@@ -53,7 +53,7 @@ module.exports = {
     await Volunteer.addToCollection(group.id, 'within').members(stationid);   // Add volunteer to that particular station
 
     if (req.wantsJSON) {
-      return res.json({ message: '已加入團體！', url: '/group/' + req.session.eventid });
+      return res.json({ message: '已新增團體！', url: '/group/' + req.session.eventid });
     }
     else {
       return res.redirect('/group/' + req.session.eventid);
@@ -221,7 +221,12 @@ module.exports = {
 
     await Volunteer.addToCollection(individual.id, 'within').members(stationid);   // 2. add volunteer to that particular station
 
-    return res.redirect('/individual/' + req.session.eventid);
+    if (req.wantsJSON) {
+      return res.json({ message: '已新增個人義工！', url: '/individual/' + req.session.eventid });
+    }
+    else {
+      return res.redirect('/individual/' + req.session.eventid);
+    }
 
   },
 
