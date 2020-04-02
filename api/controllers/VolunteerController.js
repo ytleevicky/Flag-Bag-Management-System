@@ -304,7 +304,7 @@ module.exports = {
     qr.addData(`${vol.vContact}`);    // tmp (store the flag bag no. later )
     qr.make();
 
-    return res.view('volunteer/print', { volunteer: vol, 'qrsrc':qr.createDataURL(), station: stat });
+    return res.view('volunteer/print', { volunteer: vol, 'qrsrc': qr.createDataURL(), station: stat });
 
   },
 
@@ -323,6 +323,17 @@ module.exports = {
   populate_vw: async function (req, res) {
 
     var model = await Volunteer.findOne(req.params.id).populate('in');
+
+    if (!model) { return res.notFound(); }
+
+    return res.json(model);
+
+  },
+
+  //action - populate(for volunteer and flagbag)
+  populate_vf: async function (req, res) {
+
+    var model = await Volunteer.findOne(req.params.id).populate('assignTo');
 
     if (!model) { return res.notFound(); }
 

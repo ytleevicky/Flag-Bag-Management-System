@@ -20,6 +20,17 @@ module.exports = {
 
     },
 
+    //action - populate(for flagbag and volunteer)
+    populate_fv: async function (req, res) {
+
+        var model = await Volunteer.findOne(req.params.id).populate('belongTo');
+
+        if (!model) { return res.notFound(); }
+
+        return res.json(model);
+
+    },
+
 
 };
 
