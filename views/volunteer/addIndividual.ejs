@@ -137,6 +137,7 @@
 
         if(numbersArray.length == 0){
             document.querySelector("p").innerText = "No more Random number";
+            document.getElementById("generate").disabled = true;
             return;
         }
 
@@ -145,12 +146,5 @@
         numbersArray.splice(randomIndex, 1);
         document.querySelector("p").innerText = randomNumber;
     });
-
-
-
-
-    // function random() {
-    //     document.getElementById("flagbagno").innerHTML = Math.floor(Math.random()*100);
-    // }
-
+    
 </script>
