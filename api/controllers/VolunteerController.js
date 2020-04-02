@@ -89,7 +89,7 @@ module.exports = {
 
       var store = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.vGroupName } });
 
-      // Update all the GroupName in Individual Volunteer 
+      // Update all the GroupName in Individual Volunteer
       // (change the groupName from old to new)
       await Volunteer.update(store.contain.map(s => s.id)).set({
         vGroupName: req.body.Volunteer.vGroupName
@@ -101,7 +101,7 @@ module.exports = {
         vGroupAddress: req.body.Volunteer.vGroupAddress,
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact
-      }).fetch()
+      }).fetch();
 
       await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
       var stat = await Station.find({ where: { sName: req.body.Station.sName } });
@@ -122,49 +122,46 @@ module.exports = {
     }
   },
 
-  // Remove : For both group volunteer && individual volunteer 
+  // Remove : For both group volunteer && individual volunteer
   removeVolunteer: async function (req, res) {
     if (req.method == 'GET') { return res.forbidden(); }
 
     var volunteer = await Volunteer.findOne(req.params.id);
+    var models = await Volunteer.destroy(req.params.id).fetch();
 
     if (volunteer.isContacter == true) {
-      // Remove Group Volunteer 
+      // Remove Group Volunteer
 
       var find = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volunteer.vGroupName } });
 
-      // Update the volunteers that belongs to this particular Group 
+      // Update the volunteers that belongs to this particular Group
       await Volunteer.update(find.contain.map(s => s.id)).set({
         vGroupName: '',
         vType: 'individual'         // Not sure whether it is '' / group / individual
       }).fetch();
 
-      var models = await Volunteer.destroy(req.params.id).fetch();
-
       if (models.length == 0) { return res.notFound(); }
 
-    if (req.wantsJSON) {
+      if (req.wantsJSON) {
 
-      return res.json({ message: '已刪除團體義工！', url: '/group/' + req.session.eventid });    // for ajax request
+        return res.json({ message: '已刪除團體義工！', url: '/group/' + req.session.eventid });    // for ajax request
 
-    }
+      }
 
     } else {
       // Remove Individual Volunteer
 
-      var models = await Volunteer.destroy(req.params.id).fetch();
-
       if (models.length == 0) { return res.notFound(); }
 
-    if (req.wantsJSON) {
+      if (req.wantsJSON) {
 
-      return res.json({ message: '已刪除個人義工！', url: '/individual/' + req.session.eventid });    // for ajax request
+        return res.json({ message: '已刪除個人義工！', url: '/individual/' + req.session.eventid });    // for ajax request
+
+      }
 
     }
 
-    }
 
-    
 
   },
 
@@ -262,9 +259,9 @@ module.exports = {
 
       var groupName = req.body.Volunteer.vGroupName;
 
-      if (groupName == "---") {
+      if (groupName == '---') {
         var type = 'individual';
-        var groupname = "";
+        var groupname = '';
       } else {
         var type = 'group';
         var groupname = req.body.Volunteer.vGroupName;

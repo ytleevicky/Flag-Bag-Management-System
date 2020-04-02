@@ -16,17 +16,17 @@ module.exports = {
     // 是否後備旗袋
     isSpareBag: {
       type: 'boolean'
-    }, 
+    },
 
     // 是否已刪除
     isDeleted: {
       type: 'boolean'
-    }, 
+    },
 
     // 旗袋號碼
     bagNumber: {
       type: 'string'
-    }, 
+    },
 
     // 旗袋狀態  （e.g. is the flag bag returned? ）
     bagStatus: {
@@ -56,11 +56,16 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    
+
     under: {
       collection: 'Web',
       via: 'comprise'
-    }
+    },
+
+    belongTo: {
+      collection: 'Volunteer',
+      via: 'assignTo'
+    },
 
   },
 

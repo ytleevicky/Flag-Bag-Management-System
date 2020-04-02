@@ -55,8 +55,13 @@ module.exports = {
     in: {
       collection: 'Web',
       via: 'contain'
-    }
-    
+    },
+
+    assignTo: {
+      collection: 'Flagbag',
+      via: 'belongTo'
+    },
+
   },
 
 };
