@@ -544,5 +544,17 @@ module.exports = {
     return res.json(model);
 
   },
+
+    //action - populate(for web and flagbag)
+    populate_wf: async function (req, res) {
+
+      var model = await Web.findOne(req.params.id).populate('comprise');
+  
+      if (!model) { return res.notFound(); }
+  
+      return res.json(model);
+  
+    },
+
 };
 

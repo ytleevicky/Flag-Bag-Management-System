@@ -122,6 +122,11 @@ module.exports = {
       via: 'in'
     },
 
+    comprise: {
+      collection: 'Flagbag',
+      via: 'under'
+    }
+
   },
 
 };

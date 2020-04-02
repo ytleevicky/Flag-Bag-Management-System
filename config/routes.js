@@ -119,6 +119,10 @@ module.exports.routes = {
   'GET /web/contain': 'WebController.populate_wv',
   'GET /volunteer/:fk/in': 'VolunteerController.populate_vw',
 
+  // Flagbag & web
+  'GET /web/comprise': 'WebController.populate_wf',
+  'GET /flagbag/:fk/under': 'FlagbagController.populate_fw',
+
 
   /***************************************************************************
    *                                                                          *
