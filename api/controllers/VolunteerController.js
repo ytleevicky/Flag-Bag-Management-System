@@ -242,12 +242,9 @@ module.exports = {
 
     var tmp = await Volunteer.findOne(abc.id).populate('within');
 
-    // var json1 = JSON.parse(JSON.stringify(station.within));
-    // var tmp = json1[0];
-
     var bag = await Volunteer.findOne(abc.id).populate('assignTo');
 
-    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp, flagbag: bag.assignTo });
+    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp, flagbag: bag.assignTo});
 
   },
 
@@ -284,12 +281,12 @@ module.exports = {
         var groupname = req.body.Volunteer.vGroupName;
       }
 
-
       var models = await Volunteer.update(req.params.id).set({
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact,
         vGroupName: groupname,
-        vType: type
+        vType: type,
+   
       }).fetch();
 
       await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
@@ -319,7 +316,7 @@ module.exports = {
 
     var bag = await Volunteer.findOne(vol.id).populate('assignTo');
 
-    await Flagbag.update(bag.assignTo[0].id).set({
+    var flagbag = await Flagbag.update(bag.assignTo[0].id).set({
 
       bagStatus: '未派發',
       bagNumber: bag.assignTo[0].id,
@@ -327,6 +324,8 @@ module.exports = {
       isCodePrinted: true,
 
     }).fetch();
+
+    console.log(flagbag);
 
     let qr = qrcode(4, 'H');
     qr.addData(`${bag.assignTo[0].id}`);
