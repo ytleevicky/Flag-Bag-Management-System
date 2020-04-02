@@ -69,6 +69,8 @@
                                     <option value="<%= individuals.vGroupName %>"><%= individuals.vGroupName %></option>
                                     <% } %>
 
+                                    <% } else if (individualList.contain.length > 0) { %>
+                                    <option value="---">個人</option>
                                     <% } else { %>
                                     <option value="">請選擇所屬團體：</option>
                                     <% } %>

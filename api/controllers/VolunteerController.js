@@ -264,7 +264,9 @@ module.exports = {
 
       var findGroup = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      return res.view('volunteer/updateIndividual', { individuals: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, grouplist: findGroup });
+      var findIndividual =  await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false', id: req.params.id } });
+
+      return res.view('volunteer/updateIndividual', { individuals: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, grouplist: findGroup, individualList: findIndividual });
 
     }
 
