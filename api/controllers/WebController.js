@@ -184,6 +184,10 @@ module.exports = {
     }
   },
 
+  updateEvent: async function (req, res) {
+
+  },
+
   //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 

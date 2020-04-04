@@ -66,6 +66,9 @@ module.exports.routes = {
   '/adminDisplay': 'WebController.adminDisplay',
   'DELETE /user/:id': 'WebController.removeUser',
 
+  'GET /updateEvent/:id': 'WebController.updateEvent',
+  'PATCH /web/:id': 'WebController.updateEvent',
+
 
   //export
   '/export_admin': 'WebController.export_admin',

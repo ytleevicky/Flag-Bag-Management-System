@@ -1,0 +1,117 @@
+<body>
+
+    <!-- <h2><a href="/management">活動管理</a></h2> -->
+    <div class="bordered2">
+        <h1>建立活動</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item"><a href="">建立活動</a></li>
+                <li class="breadcrumb-item active" aria-current="page">建立活動</li>
+            </ol>
+        </nav>
+    </div>
+    <br>
+
+    <form action="/web/" method="POST" onsubmit="createForm(this);return false">
+
+        <div class="form-group row">
+            <label for="inputUsername" class="col-sm-2 col-form-label">活動名稱</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="Web[eventName]" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputdateOfEvent" class="col-sm-2 col-form-label">活動日期</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" name="Web[dateOfEvent]">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputeventLocation" class="col-sm-2 col-form-label">賣旗地區</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="Web[eventLocation]" required>
+                    <option value="">請選擇所屬地區</option>
+                    <option value="hk">全港</option>
+                    <option value="hkIsland">港島</option>
+                    <option value="kwl">九龍</option>
+                    <option value="nt">新界</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputnumOfStation" class="col-sm-2 col-form-label">旗站數目</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="Web[numOfStation]">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputnumOfEBag" class="col-sm-2 col-form-label">旗袋總數</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="Web[numOfEBag]">
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+            <label class="col-sm-2">站長人數</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="Web[numOfStation]">
+            </div>
+        </div> -->
+
+        <div class="form-group row">
+            <label class="col-sm-2">義工人數</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="Web[numOfV]">
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
+
+        <a href="/management" class="btn btn-danger" style="float:right;">取消</a>
+
+    </form>
+
+</body>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+    async function createForm(oFormElement) {
+
+        var response = await fetch("/web/", {
+            method: "PATCH",
+            credentials: 'same-origin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+            //put into array            //map into input and encode                                                         //join it
+            body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+        });
+
+
+        if (response.ok) {
+            // validatePwd()
+            var data = await response.json();   // for res.ok() or res.json()
+            alert(data.message);
+            window.location = data.url;
+            //location.reload(true);
+        } else if (response.status == 401) {
+            var data = await response.text();   // for res.send()
+            alert(data);
+        } else {
+            alert(response.statusText);
+        }
+
+    };
+</script>
