@@ -149,11 +149,21 @@ module.exports = {
 
     // eslint-disable-next-line block-scoped-var
     if (!models) {
-      return res.redirect('/adminDisplay');
-    } else {
+      if (req.wantsJSON) {
+        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay/'});
+      }
+      else{ return res.redirect('/adminDisplay'); }
+    } 
+    
+    else {
       await User.addToCollection(user.id, 'edit').members(req.session.eventid);
-      return res.redirect('/stationmgrDisplay/' + req.session.eventid);
-    }
+      if (req.wantsJSON) {
+        return res.json({ message: '已新增旗站管理員！', url: '/stationmgrDisplay/' + req.session.eventid});
+      }
+      else{ return res.redirect('/stationmgrDisplay' + req.session.eventid); }
+    } 
+
+
 
 
   },

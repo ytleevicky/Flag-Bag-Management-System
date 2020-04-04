@@ -27,7 +27,7 @@
   <br>
 
 
-  <form action="/event/adduser" method="POST">
+  <form action="/event/adduser" method="POST" onsubmit="createForm(this);return false">
 
     <div class="form-group row">
       <label for="inputUsername" class="col-sm-2 col-form-label">使用者名稱</label>
@@ -67,7 +67,6 @@
       </div>
     </div>
 
-    <!-- Request by Kenny -->
     <div class="form-group row">
       <label for="inputPassword" class="col-sm-2 col-form-label">確認密碼</label>
       <div class="col-sm-10">
@@ -117,45 +116,31 @@
   pwdValue.onchange = validatePwd;
   confirmPwdValue.onkeyup = validatePwd;
 
-</script>
-
-<!-- <script>
   async function createForm(oFormElement) {
 
-    // Later to be solved
-    // function validatePwd() {
-    //   var pwd = $("#inputPassword").val
-    //   var cpw = $("#confirmPwd").val
 
-    //   if (pwd != cpw) {
-    //     alert("Password does not match.")
-    //     return false
-    //   }
-
-    //   else return true
-    // }
-
-    var response = await fetch("/event/adduser/" + eventid, {
-      method: "POST",
-      credentials: 'same-origin',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
-      //put into array            //map into input and encode                                                         //join it
-      body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
-    });
+var response = await fetch(oFormElement.action, {
+    method: "POST",
+    credentials: 'same-origin',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+    //put into array            //map into input and encode                                                         //join it
+    body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+});
 
 
-    if (response.ok) {
-      // validatePwd()
-      var data = await response.json();   // for res.ok() or res.json()
-      alert(data.message);
-      window.location = data.url;
-      //location.reload(true);
-    } else if (response.status == 401) {
-      var data = await response.text();   // for res.send()
-      alert(data);
-    } else {
-      alert(response.statusText);
-    }
+if (response.ok) {
+    // validatePwd()
+    var data = await response.json();   // for res.ok() or res.json()
+    alert(data.message);
+    window.location = data.url;
+    //location.reload(true);
+} else if (response.status == 401) {
+    var data = await response.text();   // for res.send()
+    alert(data);
+} else {
+    alert(response.statusText);
+}
 
-  };
-</script> -->
+};
+
+</script>
