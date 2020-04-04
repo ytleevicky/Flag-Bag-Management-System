@@ -96,12 +96,17 @@ module.exports = {
   //export individual volunteer information(for individual.ejs)
   export_vIndividual: async function (req, res) {
 
-    var models = await Station.find();
+    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'individual' } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+    for (var model in models.contain) {
+      var v = await Volunteer.find(model.id).populate('within');
+    }
+
+    var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
+
       return {
         vName: model.vName,
         vContact: model.vContact,
@@ -111,34 +116,12 @@ module.exports = {
         bagUpdate: model.bagUpdate,
         codePrintedTime: model.codePrintedTime
       };
+
     }));
     XLSX.utils.book_append_sheet(wb, ws, 'vIndividual_List');
 
     res.set('Content-disposition', 'attachment; filename=vIndividual_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  },
-
-  //upload individual volunteer information
-  import_vIndividual: async function (req, res) {
-
-    req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
-      if (err) { return res.serverError(err); }
-      if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); }
-
-      var XLSX = require('xlsx');
-      var workbook = XLSX.readFile(uploadedFiles[0].fd);
-      var ws = workbook.Sheets[workbook.SheetNames[0]];
-      var data = XLSX.utils.sheet_to_json(ws);
-      console.log(data);
-      var models = await Station.createEach(data).fetch();
-
-      if (models.length == 0) {
-        return res.badRequest('No data imported.');
-      }
-
-      return res.redirect('/individual');
-
-    });
   },
 
 
@@ -162,7 +145,7 @@ module.exports = {
     console.log(models.include);
 
     for (var model in models.contain) {
-      var v = await Volunteer.findOne(model.id).populate('within');
+      var v = await Volunteer.find(model.id).populate('within');
 
       // v.within[0]
     }
