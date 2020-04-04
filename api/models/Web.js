@@ -93,6 +93,10 @@ module.exports = {
       type: 'boolean'
     },
 
+    data_timestamp: {
+      type: 'string'
+    },
+
     //義工人數
     // numOfV:{      //use in eventdetail.ejs
     //   type: 'number'

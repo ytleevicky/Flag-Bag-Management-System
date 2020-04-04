@@ -13,6 +13,7 @@ module.exports = {
 
     var webs = await Web.find();
 
+    req.body.Web.data_timestamp = new Date().toISOString
     return res.json(webs);
   },
 
@@ -297,73 +298,6 @@ module.exports = {
     res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
-
-  // //upload event data
-  // //To be updated and debugged.
-  // import_event: async function (req, res) {
-  //   req.file('file').upload({ maxBytes: 10000000 }, async function whenDone(err, uploadedFiles) {
-  //     if (err) { return res.serverError(err); }
-  //     if (uploadedFiles.length === 0) { return res.badRequest('No file was uploaded'); } //In Here
-
-  //     var XLSX = require('xlsx');
-  //     var workbook = XLSX.readFile(uploadedFiles[0].fd);
-  //     var ws = workbook.Sheets[workbook.SheetNames[0]];
-  //     var data = XLSX.utils.sheet_to_json(ws);
-  //     console.log(data);
-  //     var models = await Web.createEach(data).fetch();
-  //     if (models.length == 0) {
-  //       return res.badRequest('No data imported.');
-  //     }
-  //     return res.ok('Excel file imported.');
-  //   });
-  // },
-
-  // //export event data into excel file(.xlsx format)(for individual.ejs)
-  // export_event: async function (req, res) {
-
-  //   var models = await Web.find();
-
-  //   var XLSX = require('xlsx');
-  //   var wb = XLSX.utils.book_new();
-
-  //   var ws = XLSX.utils.json_to_sheet(models.map(model => {
-  //     return {
-  //       vName: model.vName, //賣旗者姓名
-  //       vGroupName: model.vGroupName, //賣旗團體名
-  //       sLocation: model.sLocation, //旗站位置
-  //       bagNumber: model.bagNumber, //旗袋編號
-  //       bagStats: model.bagStats, //旗袋狀態
-  //       bagUpdate: model.bagUpdate, //旗袋最後更新時間
-  //       codePrinted: model.codePrinted, //最後列印標籤時間
-  //     };
-  //   }));
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Event_List');
-
-  //   res.set('Content-disposition', 'attachment; filename=Event_List.xlsx');
-  //   return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  // },
-
-  // //export event data into excel file(.xlsx format)(for group.ejs)
-  // export_group: async function (req, res) {
-
-  //   var models = await Web.find();
-
-  //   var XLSX = require('xlsx');
-  //   var wb = XLSX.utils.book_new();
-
-  //   var ws = XLSX.utils.json_to_sheet(models.map(model => {
-  //     return {
-  //       vGroupName: model.vGroupName, //賣旗團體名
-  //       sLocation: model.sLocation, //旗站位置
-  //       bagNumber: model.location, //賣旗地區
-  //       bagStats: model.numOfV, //義工人數
-  //     };
-  //   }));
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Group_List');
-
-  //   res.set('Content-disposition', 'attachment; filename=Group_List.xlsx');
-  //   return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  // },
 
   updateUser: async function (req, res) {
 
