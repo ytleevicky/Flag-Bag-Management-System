@@ -69,7 +69,7 @@ module.exports.models = {
   ***************************************************************************/
 
   attributes: {
-    createdAt: { type: 'number', autoCreatedAt: true, },
+    createdAt: { type: 'number', columnType: 'datetime', autoCreatedAt: true, },
     updatedAt: { type: 'number', columnType: 'datetime', autoUpdatedAt: true, },
     id: { type: 'number', autoIncrement: true, },
     //--------------------------------------------------------------------------
