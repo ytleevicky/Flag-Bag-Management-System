@@ -47,45 +47,45 @@
 
 <body>
   <div class="container">
+
     <nav class="navbar navbar-expand-sm navbar-dark bg-info">
+
       <%if (req.session.role == "admin") {%>
-        <a class="navbar-brand" href="/management">Flag selling system</a>
-        <% }%>
-      
-        <%if (req.session.role == "stationmgr") {%>
-          <a class="navbar-brand" href="/stationmanagement">Flag selling system</a>
-          <% }%>
+
+      <a class="navbar-brand" href="/management">
+        <img src="/images/logo123.jpeg" width="50" height="50" class="d-inline-block align-top" alt="">
+      </a>
+
+      <% }%>
+
+      <%if (req.session.role == "stationmgr") {%>
+
+      <a class="navbar-brand" href="/stationmanagement">
+        <img src="/images/logo123.jpeg" width="50" height="50" class="d-inline-block align-top" alt="">
+      </a>
+
+      <% }%>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="nav navbar-left">
-        <ul class="navbar-nav">
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav mr-auto">
           <%if (req.session.role == "admin") {%>
-          <li class="nav-item">
-            <a class="nav-item nav-link <%= req.path == "/management" ? "active" : "" %>" href="/management">活動管理</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-link <%= req.path == "/adminDisplay" ? "active" : "" %>" href="/adminDisplay">活動管理員</a>
-          </li>
-          
-          <!-- <li class="nav-item">
-              <a class="nav-link" href="/location">旗站管理</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">聯絡資料</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/setting">設定</a>
-            </li> -->
+
+          <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/management" ? "active" : "" %>"
+              href="/management">活動管理</a></li>
+
+          <li class="nav-item"><a class="nav-link nav-link <%= req.path == "/adminDisplay" ? "active" : "" %>"
+              href="/adminDisplay">活動管理員</a></li>
+
           <% }%>
 
           <%if (req.session.role == "stationmgr") {%>
-          <!-- <li class="nav-item active">
-              <a class="nav-link" href="/personalitem"
-                >個人參加<span class="sr-only">(current)</span></a
-              >
-            </li> -->
+
           <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/stationmanagement" ? "active" : "" %>"
               href="/stationmanagement">旗站統計</a></li>
           <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/collectBag" ? "active" : "" %>"
@@ -93,17 +93,15 @@
           <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/distributeBag" ? "active" : "" %>"
               href="/distributeBag">發旗袋</a></li>
 
-          <!-- <li class="nav-item">
-              <a class="nav-link" href="/stationmanagement">旗站統計</a>
-            </li> -->
           <% }%>
 
         </ul>
-      </div>
-      <div class="navbar-nav ml-auto">
+
+
         <ul class="navbar-nav">
+
           <%if (req.session.username) {%>
-          <li class="nav-item">
+          <li class="navbar-text">
             <a class="nav-link" href="/user/logout">你好, <%= req.session.username %> (登出) </a>
           </li>
           <% } else { %>
@@ -112,11 +110,14 @@
           </li>
           <% } %>
         </ul>
-      </div>
-    </nav>
-  </div>
 
-  <div class="container"><%- body %></div>
+      </div>
+
+    </nav>
+
+    <%- body %>
+
+  </div>
 
   <!--
         Client-side Templates
@@ -183,6 +184,18 @@
   <!--SCRIPTS-->
   <script src="/dependencies/sails.io.js"></script>
   <!--SCRIPTS END-->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>
