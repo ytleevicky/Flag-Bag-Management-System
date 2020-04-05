@@ -58,14 +58,6 @@ module.exports = {
 
   },
 
-  // eventdetail: async function (req, res) {
-
-  //   var models = await Web.findOne(req.params.id);s
-  //   if(!models) return res.notFound();
-  //   return res.view('web/eventdetail', { webs: models });
-
-  // },
-
   addflagstn: async function (req, res) {
 
     if (req.method == 'GET') {
@@ -185,6 +177,44 @@ module.exports = {
   },
 
   updateEvent: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+      var model = await Web.findOne(req.params.id);
+      var findeventLocation = await Web.findOne(req.session.eventid);
+
+      if (!model) { return res.notFound(); }
+
+      if (!req.session.eventid) {
+        if (req.method == 'GET') { return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: web.eventName, LocationList: findeventLocation }); }
+      } else {
+        var web = await Web.findOne(req.session.eventid);
+        if (req.method == 'GET') { return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: web.eventName, LocationList: findeventLocation }); }
+      }
+
+    } else {
+
+      if (!req.body.Web) { return res.badRequest('Form-data not received.'); }
+
+      var models = await Web.update(req.params.id).set({
+       
+      }).fetch();
+
+      if (models.length == 0) { return res.notFound(); }
+
+      if (req.wantsJSON) {
+        if (req.body.User.role == 'admin') {
+          return res.json({ message: '已更新活動管理員！', url: '/adminDisplay' });
+        }
+        else {
+          return res.json({ message: '已更新旗站站長！', url: '/stationmgrDisplay/' + req.session.eventid });    // for ajax request
+        }
+      } else {
+        return res.redirect('/adminDisplay');           // for normal request
+      }
+
+
+    }
 
   },
 

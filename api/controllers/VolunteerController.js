@@ -71,12 +71,6 @@ module.exports = {
       // var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group'}});
 
       var models = await Volunteer.findOne(req.params.id).populate('within');
-      // var json = JSON.parse(JSON.stringify(models.within));
-      // if(models.within.legth >0){
-      //   var a = json[0].sName;
-      // }else{
-      //   a = "";
-      // }
 
       if (!models) { return res.notFound(); }
 

@@ -6,8 +6,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
-                <li class="breadcrumb-item"><a href="">建立活動</a></li>
-                <li class="breadcrumb-item active" aria-current="page">建立活動</li>
+                <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>                
+                <li class="breadcrumb-item active" aria-current="page">編輯活動</li>
             </ol>
         </nav>
     </div>
@@ -18,14 +18,14 @@
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">活動名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="Web[eventName]" required>
+                <input type="text" class="form-control" name="Web[eventName]" value="<%= web.eventName %>" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputdateOfEvent" class="col-sm-2 col-form-label">活動日期</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" name="Web[dateOfEvent]">
+                <input type="date" class="form-control" name="Web[dateOfEvent]" value="<%= web.dateOfEvent %>" required>
             </div>
         </div>
 
@@ -33,11 +33,29 @@
             <label for="inputeventLocation" class="col-sm-2 col-form-label">賣旗地區</label>
             <div class="col-sm-10">
                 <select class="form-control" name="Web[eventLocation]" required>
-                    <option value="">請選擇所屬地區</option>
+                    <!-- <option value="">請選擇所屬地區</option>
                     <option value="hk">全港</option>
                     <option value="hkIsland">港島</option>
                     <option value="kwl">九龍</option>
-                    <option value="nt">新界</option>
+                    <option value="nt">新界</option> -->
+
+                    <% if(LocationList.within.length > 0) { %>
+
+                        <option><%= LocationList.within[0].sName %></option>
+                        <% } else { %>
+                        <option value="">請選擇所屬旗站：</option>
+                        <% } %>
+
+                        <% stations.forEach( function(model) { %>
+
+                        <% if(model.sName == (LocationList.within.length > 0 ? LocationList.within[0].eventLocation : "")){ %>
+
+                        <% } else { %>
+                        <option value="<%= model.eventLocation %>"> <%= model.eventLocation %> </option>
+                        <% }%>
+
+                        <% }); %>
+
                 </select>
             </div>
         </div>
