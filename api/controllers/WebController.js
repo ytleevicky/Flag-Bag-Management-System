@@ -121,12 +121,27 @@ module.exports = {
 
   adduser: async function (req, res) {
 
-    if (!req.session.eventid) {
-      if (req.method == 'GET') { return res.view('web/adduser', { eventid: '' }); }  // for add admin
-    } else {
-      var models = await Web.findOne(req.session.eventid);
-      if (req.method == 'GET') { return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models }); } // for add event user
+    if (req.method == 'GET') {
+
+      if (!req.session.eventid) {
+
+        var adminList = await User.find({
+          where: { role: 'admin' }
+        });
+
+        return res.view('web/adduser', { eventid: '', users: adminList });   
+      
+
+      } else {
+        var models = await Web.findOne(req.session.eventid);
+
+        var stationmgrList = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+
+        return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models, users: stationmgrList.superviseBy });
+
+      }
     }
+    
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
@@ -140,8 +155,8 @@ module.exports = {
     var user = await User.create(req.body.User).fetch();
     console.log(JSON.stringify(user));
 
-    // eslint-disable-next-line block-scoped-var
-    if (!models) {
+
+    if (req.session.eventid == "") {
       if (req.wantsJSON) {
         return res.json({ message: '已新增活動管理員！', url: '/adminDisplay/' });
       }
@@ -189,7 +204,7 @@ module.exports = {
 
     } else {
 
-   
+
       if (!req.body.Web) { return res.badRequest('Form-data not received.'); }
 
 
