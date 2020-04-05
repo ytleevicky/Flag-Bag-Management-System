@@ -184,9 +184,7 @@ module.exports = {
 
       if (!model) { return res.notFound(); }
 
-      var findeventLocation = await Web.findOne(req.session.eventid);
-
-      return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: model.eventName, LocationList: findeventLocation });
+      return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: model.eventName });
 
 
     } else {
@@ -199,6 +197,7 @@ module.exports = {
 
         eventName: req.body.Web.eventName,
         dateOfEvent: req.body.Web.dateOfEvent,
+        eventLocation: req.body.Web.eventLocation,
         numOfStation: req.body.Web.numOfStation,
         numOfEBag: req.body.Web.numOfEBag,
         numOfV: req.body.Web.numOfV,
@@ -208,7 +207,7 @@ module.exports = {
       if (models.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
-        return res.json({ message: '已更新個人義工！', url: '/viewitem/' + req.params.id });
+        return res.json({ message: '已更新活動摘要！', url: '/viewitem/' + req.params.id });
       } else {
         return res.redirect('/viewitem/' + req.params.id);
       }

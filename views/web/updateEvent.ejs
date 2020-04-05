@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
-                <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>                
+                <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
                 <li class="breadcrumb-item active" aria-current="page">編輯活動</li>
             </ol>
         </nav>
@@ -32,23 +32,22 @@
         <div class="form-group row">
             <label for="inputeventLocation" class="col-sm-2 col-form-label">賣旗地點</label>
             <div class="col-sm-10">
-                <select class="form-control" name="Web[eventLocation]" >
-                    <!-- <option value="">請選擇所屬地區</option>
-                    <option value="hk">全港</option>
-                    <option value="hkIsland">港島</option>
-                    <option value="kwl">九龍</option>
-                    <option value="nt">新界</option> -->
 
-                    
-
+                <select class="form-control" name="Web[eventLocation]" required>
+                    <option value="全港">全港</option>
+                    <option value="港島">港島</option>
+                    <option value="九龍">九龍</option>
+                    <option value="新界">新界</option>
                 </select>
+
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputnumOfStation" class="col-sm-2 col-form-label">旗站數目</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" name="Web[numOfStation]" value="<%= web.numOfStation %>" required>
+                <input type="number" class="form-control" name="Web[numOfStation]" value="<%= web.numOfStation %>"
+                    required>
             </div>
         </div>
 
@@ -92,6 +91,9 @@
 </style>
 
 <script>
+
+    document.querySelector('option[value = "<%= web.eventLocation %>"]').selected = "selected";
+
     async function createForm(oFormElement) {
 
         var response = await fetch("/web/<%= web.id %>", {
