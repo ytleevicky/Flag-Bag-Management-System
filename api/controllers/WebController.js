@@ -197,20 +197,21 @@ module.exports = {
       if (!req.body.Web) { return res.badRequest('Form-data not received.'); }
 
       var models = await Web.update(req.params.id).set({
-       
+
+        eventName: req.body.Web.eventName,
+        dateOfEvent: req.body.Web.dateOfEvent,
+        numOfStation: req.body.Web.numOfStation,
+        numOfEBag: req.body.Web.numOfEBag,
+        numOfV: req.body.Web.numOfV,
+
       }).fetch();
 
       if (models.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
-        if (req.body.User.role == 'admin') {
-          return res.json({ message: '已更新活動管理員！', url: '/adminDisplay' });
-        }
-        else {
-          return res.json({ message: '已更新旗站站長！', url: '/stationmgrDisplay/' + req.session.eventid });    // for ajax request
-        }
+        return res.json({ message: '已更新個人義工！', url: '/viewitem/' + req.params.id });
       } else {
-        return res.redirect('/adminDisplay');           // for normal request
+        return res.redirect('/viewitem/' + req.params.id);
       }
 
 
