@@ -13,7 +13,7 @@ module.exports = {
 
     var webs = await Web.find();
 
-    req.body.Web.data_timestamp = new Date().toISOString
+    req.body.Web.data_timestamp = new Date().toISOString()
     return res.json(webs);
   },
 
