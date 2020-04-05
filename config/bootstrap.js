@@ -87,26 +87,26 @@ module.exports.bootstrap = async function () {
 
   }
 
-  if (await Volunteer.count() == 0) {
+  // if (await Volunteer.count() == 0) {
 
-    await Volunteer.createEach([
+  //   await Volunteer.createEach([
 
-      {
-        vName: 'Mr Tang PK', vGroupName: 'HKBU', vGroupAddress: 'Hong Kong Baptist Road', vType: 'group', vContact: '94328888', isContacter: 'true' 
-      },
+  //     {
+  //       vName: 'Mr Tang PK', vGroupName: 'HKBU', vGroupAddress: 'Hong Kong Baptist Road', vType: 'group', vContact: '94328888', isContacter: 'true' 
+  //     },
 
-      {
-        vName: 'Ms Hailey Wood', vGroupName: 'HKUST', vGroupAddress: 'UST 1311 Road, TKO', vType: 'group', vContact: '66239964', isContacter: 'true' 
-      },
+  //     {
+  //       vName: 'Ms Hailey Wood', vGroupName: 'HKUST', vGroupAddress: 'UST 1311 Road, TKO', vType: 'group', vContact: '66239964', isContacter: 'true' 
+  //     },
 
-      {
-        vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vGroupAddress: '', vContact: '51114553', isContacter: 'false' 
-      },
+  //     {
+  //       vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vGroupAddress: '', vContact: '51114553', isContacter: 'false' 
+  //     },
 
      
-    ]);
+  //   ]);
 
-  }
+  // }
 
 
   // //Add association between volunteer && event 
