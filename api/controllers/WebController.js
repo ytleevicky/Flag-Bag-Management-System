@@ -101,7 +101,23 @@ module.exports = {
 
     var model = await Station.find();
 
-    return res.view('web/viewitem', { webs: models, stations: model, eventid: req.session.eventid });
+    var station = await Web.findOne(req.session.eventid).populate('include');
+    var nStation = station.include.length;
+
+    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
+    var nVol = vol.contain.length;
+
+    var stationUser = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+    var nUser = stationUser.superviseBy.length;
+
+    // Later add the spare bag no. 
+    var bag = await Web.findOne(req.session.eventid).populate('comprise');
+    var nBag = bag.comprise.length;
+
+    var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } }); 
+    var nGroup = group.contain.length;
+
+    return res.view('web/viewitem', { webs: models, eventid: req.session.eventid, numOfStation: nStation, numOfVol: nVol, numOfStationmgr: nUser, numOfBag: nBag, numOfGroup: nGroup  });
 
   },
 
@@ -213,9 +229,9 @@ module.exports = {
         eventName: req.body.Web.eventName,
         dateOfEvent: req.body.Web.dateOfEvent,
         eventLocation: req.body.Web.eventLocation,
-        numOfStation: req.body.Web.numOfStation,
-        numOfEBag: req.body.Web.numOfEBag,
-        numOfV: req.body.Web.numOfV,
+        // numOfStation: req.body.Web.numOfStation,
+        // numOfEBag: req.body.Web.numOfEBag,
+        // numOfV: req.body.Web.numOfV,
 
       }).fetch();
 
