@@ -96,7 +96,7 @@ module.exports = {
   //export individual volunteer information(for individual.ejs)
   export_vIndividual: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'individual' } });
+    var models = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
