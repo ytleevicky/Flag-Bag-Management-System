@@ -42,38 +42,11 @@
         </th> -->
         <td><%= models.eventName %></td>
         <td><%= models.dateOfEvent %></td>
-        <td><a href="/viewitem/<%= models.id %>" class="btn btn-info">更多</a></td>
+        <td>
+          <a href="/viewitem/<%= models.id %>" class="btn btn-info">更多</a>
+          <button type="submit" class="btn btn-danger" onclick="deleteUser('<%= models.id %>')">刪除</button>
+        </td>
       </tr>
-      <!-- <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="exampleCheck1"
-            />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td><a href="/eventdetail">Second Event</a></td>
-        <td>2-8-2020</td>
-        <td><a href="/viewitem" class="btn btn-info">編輯</a></td>
-      </tr>
-      <tr>
-        <th scope="row">
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="exampleCheck1"
-            />
-            <label class="form-check-label" for="exampleCheck1"></label>
-          </div>
-        </th>
-        <td><a href="/eventdetail">Third Event</a></td>
-        <td>10-9-2020</td>
-        <td><a href="/eventdetail" class="btn btn-info">編輯</a></td>
-      </tr> -->
       <% }); %>
     </tbody>
   </table>
@@ -87,4 +60,32 @@
     border: 1px solid gainsboro;
     border-radius: 5px;
   }
+
 </style>
+
+<script>
+  async function deleteUser(id) {
+
+    var r = confirm("確認刪除活動?");
+
+    if (r) {
+
+      var response = await fetch("/web/" + id, {
+        method: "DELETE",
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        var data = await response.json();
+        alert(data.message);
+        window.location = data.url;
+      } else {
+        alert(response.status + ": " + response.statusText);
+      }
+
+    } else {
+      alert("cancelled");
+    }
+
+  };
+</script>

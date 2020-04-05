@@ -219,6 +219,22 @@ module.exports = {
 
   },
 
+  removeEvent: async function (req, res) {
+    if (req.method == 'GET') { return res.forbidden(); }
+
+    var models = await Web.destroy(req.params.id).fetch();
+
+    if (models.length == 0) { return res.notFound(); }
+
+    if (req.wantsJSON) {
+      return res.json({ message: '已刪除活動！', url: '/management'});    // for ajax request
+    }
+      else {
+        return res.redirect('/management');
+      }
+
+  },
+
   //for stationmgrDisplay.ejs
   stationmgrDisplay: async function (req, res) {
 

@@ -61,13 +61,15 @@ module.exports.routes = {
   '/addflagstn': 'WebController.addflagstn',
   'POST /addflagstn': 'WebController.addflagstn',
 
-   'DELETE /station/:id': 'WebController.removeStation',
+  'DELETE /station/:id': 'WebController.removeStation',
 
   '/adminDisplay': 'WebController.adminDisplay',
   'DELETE /user/:id': 'WebController.removeUser',
 
   'GET /updateEvent/:id': 'WebController.updateEvent',
   'PATCH /web/:id': 'WebController.updateEvent',
+
+  'DELETE /web/:id': 'WebController.removeEvent',
 
 
   //export
