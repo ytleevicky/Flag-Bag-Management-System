@@ -36,10 +36,6 @@ module.exports = {
       // unique: true
     },
 
-    flagstn: {
-      type: 'string',
-    },
-
     createdby:{
       type: 'string',
       // required: true

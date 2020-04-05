@@ -9,7 +9,7 @@
 
 module.exports = {
   login: async function (req, res) {
-    // eslint-disable-next-line eqeqeq
+ 
     if (req.method == 'GET') { return res.view('user/login'); }
 
     if (!req.body.username || !req.body.password) { return res.badRequest(); }
@@ -18,10 +18,6 @@ module.exports = {
 
     if (!user) { return res.status(401).send('使用者名稱或密碼不正確'); }
 
-
-    // eslint-disable-next-line eqeqeq
-    // if (user.password != req.body.password)
-    // {return res.status(401).send('Wrong Password');}
     const match = await sails.bcrypt.compare(req.body.password, user.password);
     if (!match) { return res.status(401).send('使用者名稱或密碼不正確'); }
 
@@ -36,7 +32,6 @@ module.exports = {
       sails.log('[Session] ', req.session.username, req.session.password);
       sails.log('[Session1]', req.session.role);
 
-      // eslint-disable-next-line eqeqeq
       if (req.session.role == 'admin') {
         if (req.wantsJSON) {
           return res.redirect('/management');
