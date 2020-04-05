@@ -75,11 +75,11 @@ module.exports = {
     var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
     var station = await Station.create(req.body.Station).fetch();
-   
+
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
 
     await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
-   
+
 
     if (req.wantsJSON) {
       return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
@@ -143,18 +143,18 @@ module.exports = {
     // eslint-disable-next-line block-scoped-var
     if (!models) {
       if (req.wantsJSON) {
-        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay/'});
+        return res.json({ message: '已新增活動管理員！', url: '/adminDisplay/' });
       }
-      else{ return res.redirect('/adminDisplay'); }
-    } 
-    
+      else { return res.redirect('/adminDisplay'); }
+    }
+
     else {
       await User.addToCollection(user.id, 'edit').members(req.session.eventid);
       if (req.wantsJSON) {
-        return res.json({ message: '已新增旗站管理員！', url: '/stationmgrDisplay/' + req.session.eventid});
+        return res.json({ message: '已新增旗站管理員！', url: '/stationmgrDisplay/' + req.session.eventid });
       }
-      else{ return res.redirect('/stationmgrDisplay' + req.session.eventid); }
-    } 
+      else { return res.redirect('/stationmgrDisplay' + req.session.eventid); }
+    }
 
 
 
@@ -180,21 +180,20 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      var model = await Web.findOne(req.params.id);
-      var findeventLocation = await Web.findOne(req.session.eventid);
+      var model = await Web.findOne(req.session.eventid);
 
       if (!model) { return res.notFound(); }
 
-      if (!req.session.eventid) {
-        if (req.method == 'GET') { return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: web.eventName, LocationList: findeventLocation }); }
-      } else {
-        var web = await Web.findOne(req.session.eventid);
-        if (req.method == 'GET') { return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: web.eventName, LocationList: findeventLocation }); }
-      }
+      var findeventLocation = await Web.findOne(req.session.eventid);
+
+      return res.view('web/updateEvent', { web: model, eventid: req.session.eventid, name: model.eventName, LocationList: findeventLocation });
+
 
     } else {
 
+   
       if (!req.body.Web) { return res.badRequest('Form-data not received.'); }
+
 
       var models = await Web.update(req.params.id).set({
 
@@ -227,11 +226,11 @@ module.exports = {
     if (models.length == 0) { return res.notFound(); }
 
     if (req.wantsJSON) {
-      return res.json({ message: '已刪除活動！', url: '/management'});    // for ajax request
+      return res.json({ message: '已刪除活動！', url: '/management' });    // for ajax request
     }
-      else {
-        return res.redirect('/management');
-      }
+    else {
+      return res.redirect('/management');
+    }
 
   },
 
@@ -287,7 +286,7 @@ module.exports = {
 
     var models = await Web.findOne(req.session.eventid);
 
-    return res.view('web/generateLabel', { user : models, 'qrsrc':qr.createDataURL() });
+    return res.view('web/generateLabel', { user: models, 'qrsrc': qr.createDataURL() });
 
   },
 
@@ -492,7 +491,7 @@ module.exports = {
 
   removeStation: async function (req, res) {
     if (req.method == 'GET') { return res.forbidden(); }
-    
+
     var models = await Station.destroy(req.params.id).fetch();
 
 
@@ -539,16 +538,16 @@ module.exports = {
 
   },
 
-    //action - populate(for web and flagbag)
-    populate_wf: async function (req, res) {
+  //action - populate(for web and flagbag)
+  populate_wf: async function (req, res) {
 
-      var model = await Web.findOne(req.params.id).populate('comprise');
-  
-      if (!model) { return res.notFound(); }
-  
-      return res.json(model);
-  
-    },
+    var model = await Web.findOne(req.params.id).populate('comprise');
+
+    if (!model) { return res.notFound(); }
+
+    return res.json(model);
+
+  },
 
 };
 
