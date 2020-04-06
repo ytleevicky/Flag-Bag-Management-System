@@ -455,19 +455,9 @@ module.exports = {
 
       if (!model) { return res.notFound(); }
 
-      // var stationManagers = model.monitorBy.map(manager => manager.username).join(', ')
-
-      //var user1 = await User.find(req.session.eventid).populate('superviseBy', { where: {role: 'stationmgr'} });
-      // var users = await User.find({role:'stationmgr', });
-
-      // var user = await Station.findOne(req.params.id).populate('monitorBy');
-
-
       var web = await Web.findOne(req.session.eventid);
 
-
       return res.view('web/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, users: users });
-
 
     } else {
 
@@ -477,10 +467,6 @@ module.exports = {
       const saltRounds = 10;
 
       var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
-
-
-
-      // users.map()
 
       var models = await Station.update(req.params.id).set({
         sName: req.body.Station.sName,
@@ -493,6 +479,33 @@ module.exports = {
         if (model.monitorBy.length > 0) { await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id)); }
         await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
       } else { return res.notFound(); }
+
+      // Get all the spareBag within this event
+      var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });
+
+      // Remove association between Event && spareFlagBag 
+      await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.comprise.map(bag => bag.id));
+      // Remove association between Station && spareFlagBag
+      await Station.removeFromCollection(req.params.id, 'stationHas').members(existingSpareBag.comprise.map(bag => bag.id));
+
+
+      // No. of spare bag this station has (the updated no.)
+      var numToCreate = req.body.Station.numOfSpareBag;
+
+      for (i = 0; i < numToCreate; i++) {
+        // create flag bag 
+        var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+
+        // Update the flag bag: isSpareBag to true
+        await Flagbag.update(flagbag.id).set({
+          isSpareBag: true
+        }).fetch();
+
+        // Add association 
+        await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
+        await Station.addToCollection(req.params.id, 'stationHas').members(flagbag.id);
+      }
+
 
       if (req.wantsJSON) {
 
