@@ -55,6 +55,11 @@ module.exports = {
     has: {
       collection: 'Volunteer',
       via: 'within'
+    },
+
+    stationHas: {
+      collection: 'Flagbag',
+      via: 'bagFor'
     }
 
   },

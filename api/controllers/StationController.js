@@ -136,7 +136,7 @@ module.exports = {
 
   //export group information(for group.ejs)
   export_group: async function (req, res) {
-    
+
     var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
     var XLSX = require('xlsx');
@@ -213,6 +213,16 @@ module.exports = {
   populate_sv: async function (req, res) {
 
     var model = await Station.findOne(req.params.id).populate('has');
+
+    if (!model) { return res.notFound(); }
+
+    return res.json(model);
+
+  },
+
+  populate_sf: async function (req, res) {
+
+    var model = await Station.findOne(req.params.id).populate('stationHas');
 
     if (!model) { return res.notFound(); }
 

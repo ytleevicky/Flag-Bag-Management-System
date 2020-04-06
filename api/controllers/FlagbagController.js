@@ -31,6 +31,17 @@ module.exports = {
 
     },
 
+    //action - populate(for flagbag and station)
+    populate_fs: async function (req, res) {
+
+        var model = await Volunteer.findOne(req.params.id).populate('bagFor');
+
+        if (!model) { return res.notFound(); }
+
+        return res.json(model);
+
+    },
+
 
 };
 

@@ -134,6 +134,10 @@ module.exports.routes = {
   'GET /flagbag/belongTo': 'FlagbagController.populate_fv',
   'GET /volunteer/:fk/assignTo': 'VolunteerController.populate_vf',
 
+   // Station & Flagbag
+   'GET /flagbag/bagFor': 'FlagbagController.populate_fs',
+   'GET /station/:fk/stationHas': 'StationController.populate_sf',
+
 
   /***************************************************************************
    *                                                                          *

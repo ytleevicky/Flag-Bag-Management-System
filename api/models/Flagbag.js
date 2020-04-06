@@ -67,6 +67,11 @@ module.exports = {
       via: 'assignTo'
     },
 
+    bagFor: {
+      collection: 'Station',
+      via: 'stationHas'
+    },
+
   },
 
 };

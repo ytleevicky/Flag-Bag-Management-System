@@ -76,6 +76,23 @@ module.exports = {
 
     var station = await Station.create(req.body.Station).fetch();
 
+    // No. of spare bag this station has 
+    var numToCreate = req.body.Station.numOfSpareBag;
+
+    for (i = 0; i < numToCreate; i++) {
+      // create flag bag 
+      var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+
+      // Update the flag bag: isSpareBag to true
+      await Flagbag.update(flagbag.id).set({
+        isSpareBag: true
+      }).fetch();
+
+      // Add association 
+      await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
+      await Station.addToCollection(station.id, 'stationHas').members(flagbag.id);
+    }
+
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
 
     await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
@@ -114,10 +131,10 @@ module.exports = {
     var bag = await Web.findOne(req.session.eventid).populate('comprise');
     var nBag = bag.comprise.length;
 
-    var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } }); 
+    var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
     var nGroup = group.contain.length;
 
-    return res.view('web/viewitem', { webs: models, eventid: req.session.eventid, numOfStation: nStation, numOfVol: nVol, numOfStationmgr: nUser, numOfBag: nBag, numOfGroup: nGroup  });
+    return res.view('web/viewitem', { webs: models, eventid: req.session.eventid, numOfStation: nStation, numOfVol: nVol, numOfStationmgr: nUser, numOfBag: nBag, numOfGroup: nGroup });
 
   },
 
@@ -145,8 +162,8 @@ module.exports = {
           where: { role: 'admin' }
         });
 
-        return res.view('web/adduser', { eventid: '', users: adminList });   
-      
+        return res.view('web/adduser', { eventid: '', users: adminList });
+
 
       } else {
         var models = await Web.findOne(req.session.eventid);
@@ -157,7 +174,7 @@ module.exports = {
 
       }
     }
-    
+
 
     if (!req.body.User) { return res.badRequest('Form-data not received.'); }
 
