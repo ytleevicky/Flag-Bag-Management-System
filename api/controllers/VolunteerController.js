@@ -15,14 +15,6 @@ module.exports = {
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
 
-    // console.log(group.contain[0].id);
-
-    // var abc = await Volunteer.findOne(66).populate('within')
-
-    // var json = JSON.parse(JSON.stringify(abc.within));
-    // var show = json[0].sName;
-    // console.log(show);
-
     return res.view('volunteer/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
@@ -97,7 +89,7 @@ module.exports = {
       }).fetch();
 
       // Update the information of that particular Group Volunteer
-      var models = await Volunteer.update(req.params.id).set({
+      var groupModels = await Volunteer.update(req.params.id).set({
         vGroupName: req.body.Volunteer.vGroupName,
         vGroupAddress: req.body.Volunteer.vGroupAddress,
         vName: req.body.Volunteer.vName,
@@ -112,7 +104,7 @@ module.exports = {
       await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
 
 
-      if (models.length == 0) { return res.notFound(); }
+      if (groupModels.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
         return res.json({ message: '已更新團體！', url: '/group/' + req.session.eventid });
@@ -275,19 +267,20 @@ module.exports = {
       var groupName = req.body.Volunteer.vGroupName;
 
       if (groupName == '---') {
-        var type = 'individual';
-        var groupname = '';
+        type = 'individual';
+        groupname = '';
       } else {
-        var type = 'group';
-        var groupname = req.body.Volunteer.vGroupName;
+        type = 'group';
+        groupname = req.body.Volunteer.vGroupName;
       }
 
-      var models = await Volunteer.update(req.params.id).set({
+      var updateModels = await Volunteer.update(req.params.id).set({
+
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact,
         vGroupName: groupname,
         vType: type,
-   
+
       }).fetch();
 
       await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
@@ -297,7 +290,7 @@ module.exports = {
 
       await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
 
-      if (models.length == 0) { return res.notFound(); }
+      if (updateModels.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
         return res.json({ message: '已更新個人義工！', url: '/viewIndividual/' + req.params.id });
