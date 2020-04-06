@@ -85,7 +85,8 @@ module.exports = {
 
       // Update the flag bag: isSpareBag to true
       await Flagbag.update(flagbag.id).set({
-        isSpareBag: true
+        isSpareBag: true,
+        bagStatus:'未派發'
       }).fetch();
 
       // Add association 

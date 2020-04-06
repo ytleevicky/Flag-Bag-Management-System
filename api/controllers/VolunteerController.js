@@ -203,6 +203,11 @@ module.exports = {
     }
 
     var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+
+    await Flagbag.update(flagbag.id).set({
+      bagStatus: '未派發'
+    }).fetch();
+
     await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
     await Volunteer.addToCollection(individual.id, 'assignTo').members(flagbag.id);
     await Volunteer.addToCollection(individual.id, 'in').members(req.session.eventid);  // 1. Add a Volunteer to that particular event
@@ -314,7 +319,7 @@ module.exports = {
 
     var flagbag = await Flagbag.update(bag.assignTo[0].id).set({
 
-      bagStatus: '未派發',
+      bagStatus: '已派發',
       bagNumber: bag.assignTo[0].id,
       codePrintedTime: bag.assignTo[0].updatedAt,
       isCodePrinted: true,
