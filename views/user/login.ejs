@@ -1,59 +1,108 @@
-<title>系統登入</title>
+<div class="board">
+  <form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
 
-<form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
-    <img src="/images/logo123.jpeg" style="width:150px;height:200px;">
+    <div class="center">
+      <img src="/images/logo123.jpeg" style="width:150px;height:200px;" class="center">
+      <br>
+      <h3><b>請先登入以使用此系統</b></h3>
+    </div>
     <br>
-    <h2><b>請先登入以使用此系統</b></h2>
-    <br>
 
-  <div class="form-group">
-    <label for="exampleInputEmail1">登入名稱</label>
-    <input
-      type="text"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-      placeholder="輸入登入名稱"
-      name="username"
-    />
-  </div>
+    <div class="login-sec">
 
-  <div class="form-group">
-    <label for="exampleInputPassword1">密碼</label>
-    <input
-      type="password"
-      class="form-control"
-      id="exampleInputPassword1"
-      placeholder="輸入登入密碼"
-      name="password"
-    />
-  </div>
+      <div class="form-group">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm col-sm-3">
+              <label for="exampleInputEmail1">登入名稱</label>
+            </div>
+            <div class="col-sm col-sm-9">
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="輸入登入名稱" name="username" />
+            </div>
+          </div>
+        </div>
+        <br>
 
-  <button type="submit" class="btn btn-primary">登入</button>
-</form>
+        <div class="form-group">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm col-sm-3">
+                <label for="exampleInputPassword1">密碼</label>
+              </div>
+              <div class="col-sm col-sm-9">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="輸入登入密碼"
+                  name="password" />
+              </div>
+            </div>
+          </div>
 
+          <br>
+
+          <div class="wrapper">
+            <button type="submit" class="btn btn-primary">登入</button>
+          </div>
+        </div>
+
+  </form>
+</div>
+
+<style>
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  .login-sec {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+
+    width: 50%;
+
+  }
+
+  .wrapper {
+    text-align: center;
+  }
+
+  .button {
+    position: absolute;
+    top: 50%;
+  }
+
+  
+</style>
 
 <script>
   async function submitForm(oFormElement) {
 
-      var response = await fetch(oFormElement.action, {
-          method: oFormElement.method,
-          credentials: 'same-origin',
-          body: new FormData(oFormElement),
-      });
+    var response = await fetch(oFormElement.action, {
+      method: oFormElement.method,
+      credentials: 'same-origin',
+      body: new FormData(oFormElement),
+    });
 
-      if (response.redirected) {
-          window.location = response.url;
-      } else if (response.status == 200) {
-          var data = await response.json();
-          alert(data);
-          location.reload(true);
-      } else if (response.status == 401) {
-          var data = await response.text();
-          alert(data);
-      } else {
-          alert(response.statusText);
-      }
+    if (response.redirected) {
+      window.location = response.url;
+    } else if (response.status == 200) {
+      var data = await response.json();
+      alert(data);
+      location.reload(true);
+    } else if (response.status == 401) {
+      var data = await response.text();
+      alert(data);
+    } else {
+      alert(response.statusText);
+    }
 
   };
 
