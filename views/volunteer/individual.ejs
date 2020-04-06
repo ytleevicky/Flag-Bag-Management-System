@@ -58,24 +58,23 @@
 
         </div>
 
-
       </div>
 
       <br>
       <h3>個人義工列表</h3>
       <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
-      <a href="#" class="btn btn-success">列印選擇項目</a>
+      <a href="#" class="btn btn-success" arget="_blank" onclick="getValue();return false;">列印選擇項目</a>
       <br>
       <table class="table table-bordered">
         <br>
         <thead>
           <tr>
             <th scope="col">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
+              <div class="form-check">
+                <input type="checkbox">
+                <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
+              </div>
+            </th>
             <th scope="col">姓名</th>
             <!-- <th scope="col">聯絡電話</th> -->
             <th scope="col">旗站名稱</th>
@@ -93,11 +92,11 @@
           <% stations.forEach( function(model) { %>
           <tr>
             <th scope="row">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1"></label>
-            </div>
-          </th>
+              <div class="form-check">
+                <input type="checkbox" class="checks" value="<%= model.vName %>">
+                <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
+              </div>
+            </th>
             <td><%= model.vName %></td>
             <!-- <td><%= model.vContact %></td> -->
             <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
@@ -141,6 +140,26 @@
 </style>
 
 <script>
+
+  var totalNum = <%- stations.length %>;   // Don't auto-format on this line 
+
+  function getValue() {
+
+    var checks = document.getElementsByClassName('checks');
+    var str = '';
+
+    for (i = 0; i < totalNum; i++) {
+
+      if (checks[i].checked === true) {
+        str += checks[i].value + " ";    
+      }
+
+    }
+
+    alert(str);
+
+  }
+
 
   async function deleteVolunteer(id) {
 
