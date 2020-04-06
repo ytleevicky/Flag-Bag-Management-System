@@ -162,7 +162,7 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });  // for eventName
 
-    var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
+    var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within').populate('assignTo');
 
     return res.view('volunteer/individual', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 

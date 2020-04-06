@@ -101,8 +101,8 @@
             <!-- <td><%= model.vContact %></td> -->
             <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
             <!-- <td><%= model.sLocation %></td> -->
-            <td><%= model.bagNumber %></td>
-            <td><%= model.bagStatus %></td>
+            <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+            <td><%= model.assignTo[0].bagStatus %></td>
             <!-- <td><%= model.bagUpdate %></td>
           <td><%= model.codePrintedTime %></td> -->
             <td>
