@@ -98,7 +98,8 @@
             <!-- <td><%= model.sLocation %></td> -->
             <!-- <td><%= model.vGroupNumber %></td> -->
             <td>
-              <a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a>
+              <!-- <a href='/updateGroup/<%= model.id %>' class="btn btn-primary">編輯</a> -->
+              <a href='/viewGroup/<%= model.id %>' class="btn btn-info">詳情</a>
               <button type="submit" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
             </td>
             <% }); %>

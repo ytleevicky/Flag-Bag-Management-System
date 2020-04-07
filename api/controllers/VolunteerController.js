@@ -15,6 +15,8 @@ module.exports = {
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within');
 
+
+
     return res.view('volunteer/group', { name: model.eventName, stations: models, webs: model, eventid: req.session.eventid });
 
   },
@@ -50,6 +52,20 @@ module.exports = {
     else {
       return res.redirect('/group/' + req.session.eventid);
     }
+
+  },
+
+  viewGroup: async function (req, res){
+
+    var web = await Web.findOne(req.session.eventid);
+
+    var groupVolunteer = await Volunteer.findOne(req.params.id);
+
+    var stationInfo = await Volunteer.findOne(req.params.id).populate('within');
+
+    console.log(groupVolunteer);
+
+    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, group: groupVolunteer, station: stationInfo });
 
   },
 

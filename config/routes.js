@@ -87,6 +87,8 @@ module.exports.routes = {
   '/group/:id': 'VolunteerController.group',
   '/addGroup': 'VolunteerController.addGroup',
 
+  '/viewGroup/:id': 'VolunteerController.viewGroup',
+
   'POST /volunteer/group': 'VolunteerController.addGroup',
   'GET /updateGroup/:id': 'VolunteerController.updateGroup',
 

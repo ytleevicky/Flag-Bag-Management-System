@@ -1,0 +1,84 @@
+<title><%= name %> - 團體義工詳細資料</title>
+
+<body>
+
+    <div class="bordered2">
+        <h1>團體義工</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item active"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+                <li class="breadcrumb-item active"><a href="/group/<%= eventid %>">團體義工</a></li>
+                <li class="breadcrumb-item active" aria-current="page">團體義工詳細資料</li>
+            </ol>
+        </nav>
+    </div>
+
+    <br>
+
+    <div>
+        <div class="row">
+            <div class="col col-sm-2 col-md-2">
+
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
+                    <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
+                    <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
+                    <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+                </div>
+
+            </div>
+            <div class="col col-sm-10 col-md-10">
+                <table class="table table-bordered">
+
+                    <div class="row">
+                        <div class="col-sm-10 col-md-10">
+                            <h2>團體義工詳細資料</h2>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            <a href="/updateGroup/<%= group.id %>" class="btn btn-primary" style="float: right;">編輯</a>
+                        </div>
+                    </div>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">團體名稱</th>
+                            <td><%= group.vGroupName %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">團體地址
+                            </th>
+                            <td><%= group.vGroupAddress %></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">所屬旗站</th>
+                            <td><%= station.within[0].sName %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">負責人名稱 </th>
+                            <td><%= group.vName %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">聯絡電話</h>
+                            <td><%= group.vContact %></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>
