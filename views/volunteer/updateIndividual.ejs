@@ -124,18 +124,11 @@
 
                         <tr>
                             <th scope="row">旗袋編號</th>
-
+                            <td> <%= bag.assignTo[0].bagNumber == "" ? '---' : bag.assignTo[0].bagNumber %> </td>
                         </tr>
                         <tr>
                             <th scope="row">旗袋狀態</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">QR Code</th>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Bag Last Update</th>
-
+                            <td> <%= bag.assignTo[0].bagStatus %> </td>
                         </tr>
 
                     </tbody>
