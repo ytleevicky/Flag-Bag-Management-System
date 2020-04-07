@@ -347,6 +347,18 @@ module.exports = {
 
   },
 
+  printLabels: async function (req, res) {
+
+    console.log('hi');
+    var abcs = abc[req.body.c.length - 1];
+
+    console.log(abcs);
+
+    console.log(abcs[0]);
+
+
+  },
+
   //action - populate(for volunteer and station)
   populate_vs: async function (req, res) {
 

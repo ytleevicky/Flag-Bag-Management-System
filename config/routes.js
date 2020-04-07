@@ -107,6 +107,8 @@ module.exports.routes = {
 
   '/printQRcode/:id':'VolunteerController.print',
 
+  '/printLabels':'VolunteerController.printLabels',
+
   //For populate
   //user and web
   'GET /user/edit': 'UserController.populate_uw',
