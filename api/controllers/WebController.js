@@ -247,9 +247,6 @@ module.exports = {
         eventName: req.body.Web.eventName,
         dateOfEvent: req.body.Web.dateOfEvent,
         eventLocation: req.body.Web.eventLocation,
-        // numOfStation: req.body.Web.numOfStation,
-        // numOfEBag: req.body.Web.numOfEBag,
-        // numOfV: req.body.Web.numOfV,
 
       }).fetch();
 

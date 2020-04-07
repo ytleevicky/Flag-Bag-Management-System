@@ -52,15 +52,15 @@ module.exports.bootstrap = async function () {
 
     await Web.createEach([
       {
-        numOfBagBackUp: '5', eventName: '齊抗武漢肺炎賣旗活動', dateOfEvent: '2020-06-20',
+        eventName: '齊抗武漢肺炎賣旗活動', dateOfEvent: '2020-06-20',
         eventLocation: '全港'
       },
       {
-        numOfBagBackUp: '6', eventName: '賣得旗所', dateOfEvent: '2020-08-01',
+        eventName: '賣得旗所', dateOfEvent: '2020-08-01',
         eventLocation: '港島'
       },
       {
-        numOfBagBackUp: '7', eventName: '結伴賣旗日', dateOfEvent: '2020-09-17',
+        eventName: '結伴賣旗日', dateOfEvent: '2020-09-17',
         eventLocation: '九龍'
       },
     ]);
@@ -72,15 +72,15 @@ module.exports.bootstrap = async function () {
     await Station.createEach([
 
       {
-        sName: 'TSW-S1', sLocation: '天水圍', numOfSpareBag: '5', createdby: 'admin1', 
+        sName: 'TSW-S1', sLocation: '天水圍', createdby: 'admin1',
       },
 
       {
-        sName: 'KLT-S1', sLocation: '九龍堂', numOfSpareBag: '7', createdby: 'admin1', 
+        sName: 'KLT-S1', sLocation: '九龍堂', createdby: 'admin1',
       },
 
       {
-        sName: 'TKO-S1', sLocation: '將軍澳', numOfSpareBag: '6', createdby: 'admin1', 
+        sName: 'TKO-S1', sLocation: '將軍澳', createdby: 'admin1',
       },
 
     ]);
@@ -103,7 +103,7 @@ module.exports.bootstrap = async function () {
   //       vName: 'Leo Cruz', vGroupName: '', vType: 'individual', vGroupAddress: '', vContact: '51114553', isContacter: 'false' 
   //     },
 
-     
+
   //   ]);
 
   // }
@@ -181,7 +181,7 @@ module.exports.bootstrap = async function () {
   const event3 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   await User.addToCollection(user3.id, 'edit').members(event3.id);
 
- 
+
 
   return;
 };
