@@ -338,47 +338,33 @@ module.exports = {
 
     }).fetch();
 
-    console.log(flagbag);
 
-    let qr = qrcode(4, 'H');
-    qr.addData(`${bag.assignTo[0].id}`);
-    qr.make();
-
-    return res.view('volunteer/print', { volunteer: vol, 'qrsrc': qr.createDataURL(), station: stat });
+    return res.view('volunteer/print', { volunteer: vol, 'qrcode': qrcode, station: stat , f: flagbag.bagNumber});
 
   },
 
   printLabels: async function (req, res) {
 
-    console.log(req.body.c);
-
     const qrcode = require('qrcode-generator');
     
     var data = req.body.c;
 
-    for(i = 0; i < data.length; i++){
+    var vol = await Web.findOne(req.session.eventid).populate('contain', {where: {id : req.body.c.map(v => parseInt(v))}});
 
-      var abc = await Volunteer.findOne(data[i]).populate('within');
+    var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 
-      console.log(abc.within);
-      console.log(abc.within[0]);
+    for(i = 0; i < volu.length; i++){
+      var flagbag = await Flagbag.update(volu[i].assignTo[0].id).set({
 
+            bagStatus: '已派發',
+            bagNumber: printf('%06d' ,volu[i].assignTo[0].id),
+            codePrintedTime: volu[i].assignTo[0].updatedAt,
+            isCodePrinted: true,
+      
+          }).fetch();
     }
-
-    var models = await Volunteer.find(data.map(v => v.id)).populate('within');
-
-    console.log(models.within);
-
-
-    // return res.view('volunteer/printLabels', {'persons': persons.map(person => {
-    //     let qr = qrcode(4, 'H');        // 4: type no. , H: error correction level 
-    //     qr.addData(`${person.id}`);
-    //     qr.make();
-    //     person.imgqrcode = qr.createDataURL();
-    //     return person;
-    // }) });
-
-
+      
+    return res.view('volunteer/printLabels', {volunteer: vol, 'qrcode': qrcode, station: volu , f: flagbag.bagNumber});
   },
 
   //action - populate(for volunteer and station)
