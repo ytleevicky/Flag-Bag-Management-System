@@ -117,8 +117,6 @@ module.exports = {
 
     req.session.eventid = models.id;
 
-    var model = await Station.find();
-
     var station = await Web.findOne(req.session.eventid).populate('include');
     var nStation = station.include.length;
 

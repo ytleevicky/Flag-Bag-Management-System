@@ -63,9 +63,9 @@ module.exports = {
 
     var stationInfo = await Volunteer.findOne(req.params.id).populate('within');
 
-    console.log(groupVolunteer);
+    var volunteers = await Volunteer.find({ where: { vGroupName: groupVolunteer.vGroupName, isContacter: false }}).populate('within');
 
-    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, group: groupVolunteer, station: stationInfo });
+    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, group: groupVolunteer, station: stationInfo, volunteerList: volunteers });
 
   },
 
@@ -123,10 +123,10 @@ module.exports = {
       if (groupModels.length == 0) { return res.notFound(); }
 
       if (req.wantsJSON) {
-        return res.json({ message: '已更新團體！', url: '/group/' + req.session.eventid });
+        return res.json({ message: '已更新團體！', url: '/viewGroup/' + req.params.id });
       }
       else {
-        return res.redirect('/group/' + req.session.eventid);
+        return res.redirect('/viewGroup/' + req.params.id);
       }
     }
   },

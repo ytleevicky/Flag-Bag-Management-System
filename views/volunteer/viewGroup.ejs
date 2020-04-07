@@ -34,10 +34,11 @@
 
                     <div class="row">
                         <div class="col-sm-10 col-md-10">
-                            <h2>團體義工詳細資料</h2>
+                            <h2>團體詳細資料</h2>
                         </div>
                         <div class="col-sm-2 col-md-2">
-                            <a href="/updateGroup/<%= group.id %>" class="btn btn-primary" style="float: right;">編輯</a>
+                            <a href="/updateGroup/<%= group.id %>" class="btn btn-primary"
+                                style="float: right;">編輯團體</a>
                         </div>
                     </div>
 
@@ -67,6 +68,46 @@
 
                     </tbody>
                 </table>
+
+                <br>
+                <!-- Another Table -->
+
+                <% if (volunteerList.length > 0 ) { %>
+
+                <h2>義工列表</h2>
+
+                <table class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">義工姓名</th>
+                            <th scope="col">聯絡電話</th>
+                            <th scope="col">旗站名稱</th>
+                            <th scope="col">編輯</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% volunteerList.forEach( function(model) { %>
+                        <tr>
+                            <td><%= model.vName %></td>
+                            <td><%= model.vContact %></td>
+                            <td><%= model.within[0].sName %></td>
+                            <td>
+                                <a href='/updateIndividual/<%= model.id %>' class="btn btn-primary">編輯</a>
+                            </td>
+                            <% }); %>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <% } else { %>
+
+                    <h2>義工列表</h2>
+                    <p>---</p>
+
+                <% } %>
 
             </div>
         </div>
