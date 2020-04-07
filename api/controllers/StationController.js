@@ -96,25 +96,21 @@ module.exports = {
   //export individual volunteer information(for individual.ejs)
   export_vIndividual: async function (req, res) {
 
-    var models = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });
+    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { isContacter: 'false' } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    for (var model in models.contain) {
-      var v = await Volunteer.find(model.id).populate('within');
-    }
+    var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within').populate('assignTo');
 
-    var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
+    var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
 
       return {
         vName: model.vName,
         vContact: model.vContact,
-        sName: model.sName,
-        bagNumber: model.bagNumber,
-        bagStatus: model.bagStatus,
-        bagUpdate: model.bagUpdate,
-        codePrintedTime: model.codePrintedTime
+        sName: model.within[0].sName,
+        bagNumber: model.assignTo[0].bagNumber,
+        bagStatus: model.assignTo[0].bagStatus,
       };
 
     }));
@@ -141,25 +137,17 @@ module.exports = {
   var XLSX = require('xlsx');
   var wb = XLSX.utils.book_new();
 
-  var s = await Volunteer.findOne(models.contain[0].id).populate('within');
-
-  for(var i = 0; i < models.contain.length; i++){
-    var v = await Volunteer.findOne(models.contain[i].id).populate('within');
-    console.log(v.within[0].sName);
-  }
-  // for (var model in models.contain) {
-  //   var v = await Volunteer.find(model.id).populate('within');
-  // }
+  var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within');
 
 
-  var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
+  var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
 
     return {
       vGroupName: model.vGroupName,
       vGroupAddress: model.vGroupAddress,
       vName: model.vName,
       vContact: model.vContact,
-      sName: v.within[0].sName,
+      sName: model.within[0].sName,
     };
   }));
   XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
