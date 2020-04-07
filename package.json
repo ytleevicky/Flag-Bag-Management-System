@@ -13,6 +13,7 @@
     "bootstrap": "^4.4.1",
     "google-maps": "^4.2.3",
     "grunt": "1.0.4",
+    "printf": "^0.5.3",
     "qrcode-generator": "^1.4.4",
     "sails": "^1.2.3",
     "sails-hook-grunt": "^4.0.0",

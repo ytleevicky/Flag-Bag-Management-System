@@ -74,5 +74,9 @@ module.exports = {
 
   },
 
+  afterCreated() {
+    
+  }
+
 };
 

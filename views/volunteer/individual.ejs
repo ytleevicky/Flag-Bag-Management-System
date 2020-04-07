@@ -62,63 +62,63 @@
 
       <br>
       <form action="/printLabels" method="POST">
-      <h3>個人義工列表</h3>
-      <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
-      <a href="#" class="btn btn-success" arget="_blank" onclick="getValue();return false;">列印選擇項目</a>
-      <br>
-      <table class="table table-bordered">
+        <h3>個人義工列表</h3>
+        <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
+        <button type="submit" class="btn btn-success">列印選擇項目</button>
         <br>
-        <thead>
-          <tr>
-            <th scope="col">
-              <div class="form-check">
-                <input type="checkbox" name="all" onclick="check_all(this,'c')">
-                <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
-              </div>
-            </th>
-            <th scope="col">姓名</th>
-            <!-- <th scope="col">聯絡電話</th> -->
-            <th scope="col">旗站名稱</th>
-            <!-- <th scope="col">旗站地區</th> -->
-            <th scope="col">旗袋編號</th>
-            <th scope="col">旗袋狀態</th>
-            <!-- <th scope="col">旗袋最後更新時間</th>
+        <table class="table table-bordered">
+          <br>
+          <thead>
+            <tr>
+              <th scope="col">
+                <div class="form-check">
+                  <input type="checkbox" onclick="check_all(this,'c')">
+                  <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
+                </div>
+              </th>
+              <th scope="col">姓名</th>
+              <!-- <th scope="col">聯絡電話</th> -->
+              <th scope="col">旗站名稱</th>
+              <!-- <th scope="col">旗站地區</th> -->
+              <th scope="col">旗袋編號</th>
+              <th scope="col">旗袋狀態</th>
+              <!-- <th scope="col">旗袋最後更新時間</th>
           <th scope="col">最後列印標籤時間</th> -->
-            <th scope="col">更多</th>
-          </tr>
-        </thead>
+              <th scope="col">更多</th>
+            </tr>
+          </thead>
 
-        <tbody>
+          <tbody>
 
-          <% stations.forEach( function(model) { %>
-          <tr>
-            <th scope="row">
-              <div class="form-check">
-                <input type="checkbox" class="checks" name="c" value="<%= model.vName %>">
-                <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
-              </div>
-            </th>
-            <td><%= model.vName %></td>
-            <!-- <td><%= model.vContact %></td> -->
-            <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
-            <!-- <td><%= model.sLocation %></td> -->
-            <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
-            <td><%= model.assignTo[0].bagStatus %></td>
-            <!-- <td><%= model.bagUpdate %></td>
+            <% stations.forEach( function(model) { %>
+            <tr>
+              <th scope="row">
+                <div class="form-check">
+                  <input type="checkbox" class="checks" name="c" value="<%= model.id %>">
+                  <!-- <label class="form-check-label" for="exampleCheck1"></label> -->
+                </div>
+              </th>
+              <td><%= model.vName %></td>
+              <!-- <td><%= model.vContact %></td> -->
+              <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
+              <!-- <td><%= model.sLocation %></td> -->
+              <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+              <td><%= model.assignTo[0].bagStatus %></td>
+              <!-- <td><%= model.bagUpdate %></td>
           <td><%= model.codePrintedTime %></td> -->
-            <td>
-              <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
-              <button type="submit" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
-              <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success">列印</a>
-            </td>
-            <% }); %>
-          </tr>
+              <td>
+                <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
+                <button type="submit" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
+                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success">列印</a>
+              </td>
+              <% }); %>
+            </tr>
 
-          <input type="hidden" id="inputCreatedBy" name="Volunteer[isContacter]" value="false">
+            <input type="hidden" id="inputCreatedBy" name="Volunteer[isContacter]" value="false">
 
-        </tbody>
-      </table>
-</form>
+          </tbody>
+        </table>
+      </form>
     </div>
 
 </body>
@@ -142,30 +142,29 @@
 
 <script>
 
-function check_all(obj,cName)
-{
+  function check_all(obj, cName) {
     var checkboxs = document.getElementsByName(cName);
-    for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
-}
-
-  var totalNum = <%- stations.length %>;   // Don't auto-format on this line 
-
-  function getValue() {
-
-    var checks = document.getElementsByClassName('checks');
-    var str = '';
-
-    for (i = 0; i < totalNum; i++) {
-
-      if (checks[i].checked === true) {
-        str += checks[i].value + " ";    
-      }
-
-    }
-
-    alert(str);
-
+    for (var i = 0; i < checkboxs.length; i++) { checkboxs[i].checked = obj.checked; }
   }
+
+  // var totalNum = <%- stations.length %>;   // Don't auto-format on this line 
+
+  // function getValue() {
+
+  //   var checks = document.getElementsByClassName('checks');
+  //   var str = '';
+
+  //   for (i = 0; i < totalNum; i++) {
+
+  //     if (checks[i].checked === true) {
+  //       str += checks[i].value + " ";
+  //     }
+
+  //   }
+
+  //   alert(str);
+
+  // }
 
 
   async function deleteVolunteer(id) {

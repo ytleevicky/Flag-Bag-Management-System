@@ -6,6 +6,7 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+var printf = require('printf');
 
 module.exports = {
 
@@ -331,7 +332,7 @@ module.exports = {
     var flagbag = await Flagbag.update(bag.assignTo[0].id).set({
 
       bagStatus: '已派發',
-      bagNumber: bag.assignTo[0].id,
+      bagNumber: printf('%06d' ,bag.assignTo[0].id),
       codePrintedTime: bag.assignTo[0].updatedAt,
       isCodePrinted: true,
 
@@ -349,12 +350,33 @@ module.exports = {
 
   printLabels: async function (req, res) {
 
-    console.log('hi');
-    var abcs = abc[req.body.c.length - 1];
+    console.log(req.body.c);
 
-    console.log(abcs);
+    const qrcode = require('qrcode-generator');
+    
+    var data = req.body.c;
 
-    console.log(abcs[0]);
+    for(i = 0; i < data.length; i++){
+
+      var abc = await Volunteer.findOne(data[i]).populate('within');
+
+      console.log(abc.within);
+      console.log(abc.within[0]);
+
+    }
+
+    var models = await Volunteer.find(data.map(v => v.id)).populate('within');
+
+    console.log(models.within);
+
+
+    // return res.view('volunteer/printLabels', {'persons': persons.map(person => {
+    //     let qr = qrcode(4, 'H');        // 4: type no. , H: error correction level 
+    //     qr.addData(`${person.id}`);
+    //     qr.make();
+    //     person.imgqrcode = qr.createDataURL();
+    //     return person;
+    // }) });
 
 
   },
