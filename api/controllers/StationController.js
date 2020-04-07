@@ -133,38 +133,40 @@ module.exports = {
 
   },
 
+ //export group information(for group.ejs)
+ export_group: async function (req, res) {
 
-  //export group information(for group.ejs)
-  export_group: async function (req, res) {
+  var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
+  var XLSX = require('xlsx');
+  var wb = XLSX.utils.book_new();
 
-    var XLSX = require('xlsx');
-    var wb = XLSX.utils.book_new();
+  var s = await Volunteer.findOne(models.contain[0].id).populate('within');
 
-    console.log(models.include);
+  for(var i = 0; i < models.contain.length; i++){
+    var v = await Volunteer.findOne(models.contain[i].id).populate('within');
+    console.log(v.within[0].sName);
+  }
+  // for (var model in models.contain) {
+  //   var v = await Volunteer.find(model.id).populate('within');
+  // }
 
-    for (var model in models.contain) {
-      var v = await Volunteer.find(model.id).populate('within');
 
-      // v.within[0]
-    }
+  var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
 
-    var ws = XLSX.utils.json_to_sheet(models.contain.map(model => {
+    return {
+      vGroupName: model.vGroupName,
+      vGroupAddress: model.vGroupAddress,
+      vName: model.vName,
+      vContact: model.vContact,
+      sName: v.within[0].sName,
+    };
+  }));
+  XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
 
-      return {
-        vGroupName: model.vGroupName,
-        vGroupAddress: model.vGroupAddress,
-        vName: model.vName,
-        vContact: model.vContact,
-        // sName: model.sName,
-      };
-    }));
-    XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
-
-    res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
-    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  },
+  res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
+  return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+},
 
   //upload group information
   import_group: async function (req, res) {
