@@ -70,8 +70,9 @@ module.exports.routes = {
 
   'DELETE /web/:id': 'WebController.removeEvent',
 
+  '/viewStation/:id': 'WebController.viewStation',
+
   '/stationmanagement': 'StationController.stationmanagement',
-  '/viewStation': 'StationController.viewStation',
 
 
   //export

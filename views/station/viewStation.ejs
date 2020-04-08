@@ -1,0 +1,119 @@
+<title><%= name %> - 旗站詳細資料</title>
+
+<body>
+
+    <div class="bordered2">
+        <h1>旗站</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+                <li class="breadcrumb-item active"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+                <li class="breadcrumb-item active"><a href="/station/<%= eventid %>">旗站</a></li>
+                <li class="breadcrumb-item active" aria-current="page">旗站詳細資料</li>
+            </ol>
+        </nav>
+    </div>
+
+    <br>
+
+    <div>
+        <div class="row">
+            <div class="col col-sm-2 col-md-2">
+
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
+                    <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
+                    <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
+                    <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+                </div>
+
+            </div>
+            <div class="col col-sm-10 col-md-10">
+                <table class="table table-bordered">
+
+                    <div class="row">
+                        <div class="col-sm-10 col-md-10">
+                            <h2>旗站詳細資料</h2>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            <a href="/updateStation/<%= stationInfo.id %>" class="btn btn-primary"
+                                style="float: right;">編輯旗站</a>
+                        </div>
+                    </div>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">旗站名稱</th>
+                            <td><%= stationInfo.sName %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">地區
+                            </th>
+                            <td><%= stationInfo.sLocation %></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">後備旗袋數目</th>
+                            <td><%= stationInfo.numOfSpareBag %></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+                <br>
+
+                <% if (volunteerList.length > 0 ) { %>
+
+                <h2>義工列表</h2>
+
+                <table class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">義工姓名</th>
+                            <th scope="col">聯絡電話</th>
+                            <th scope="col">旗站名稱</th>
+                            <th scope="col">編輯</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% volunteerList.forEach( function(model) { %>
+                        <tr>
+                            <td><%= model.vName %></td>
+                            <td><%= model.vContact %></td>
+                            <td><%= model.within[0].sName %></td>
+                            <td>
+                                <a href='/updateIndividual/<%= model.id %>' class="btn btn-primary">編輯</a>
+                            </td>
+                            <% }); %>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <% } else { %>
+
+                <h2>義工列表</h2>
+                <p>---</p>
+
+                <% } %>
+
+                <br>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>

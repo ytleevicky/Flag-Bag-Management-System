@@ -8,8 +8,13 @@
 
 module.exports = {
 
-  //need to add sum of station bag function
-  //for station.ejs
+  //manage station information(for stationmanagement.ejs)
+  stationmanagement: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('station/stationmanagement', { webs: models });
+
+  },
 
 
   //export event data into excel file(.xlsx format)(for station.ejs)
@@ -120,41 +125,32 @@ module.exports = {
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
+  //export group information(for group.ejs)
+  export_group: async function (req, res) {
 
-  //manage station information(for stationmanagement.ejs)
-  stationmanagement: async function (req, res) {
+    var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-    var models = await Web.find();
-    return res.view('station/stationmanagement', { webs: models });
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
 
+    var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within');
+
+
+    var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
+
+      return {
+        vGroupName: model.vGroupName,
+        vGroupAddress: model.vGroupAddress,
+        vName: model.vName,
+        vContact: model.vContact,
+        sName: model.within[0].sName,
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
+
+    res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
-
- //export group information(for group.ejs)
- export_group: async function (req, res) {
-
-  var models = await Web.findOne(req.session.eventid).populate('include').populate('contain', { where: { vType: 'group', isContacter: 'true' } });
-
-  var XLSX = require('xlsx');
-  var wb = XLSX.utils.book_new();
-
-  var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within');
-
-
-  var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
-
-    return {
-      vGroupName: model.vGroupName,
-      vGroupAddress: model.vGroupAddress,
-      vName: model.vName,
-      vContact: model.vContact,
-      sName: model.within[0].sName,
-    };
-  }));
-  XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
-
-  res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
-  return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-},
 
   //upload group information
   import_group: async function (req, res) {

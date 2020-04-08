@@ -86,7 +86,7 @@ module.exports = {
       // Update the flag bag: isSpareBag to true
       await Flagbag.update(flagbag.id).set({
         isSpareBag: true,
-        bagStatus:'未派發'
+        bagStatus: '未派發'
       }).fetch();
 
       // Add association 
@@ -106,6 +106,30 @@ module.exports = {
       return res.redirect('/station/' + req.session.eventid);
     }
 
+
+  },
+
+  viewStation: async function (req, res) {
+
+    var web = await Web.findOne(req.session.eventid);
+
+    var model = await Station.findOne(req.params.id);
+
+    var volunteer = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
+    
+    var stationMgrList = await Station.findOne(req.params.id).populate('monitorBy');
+
+    console.log('web: ' + req.session.eventid);
+
+    console.log('model: ' + req.params.id);
+    
+    console.log('Vol: ' + volunteer);
+
+    console.log('Vol1: ' + volunteer.has[0]);
+
+    console.log('stationMgrList: ' + stationMgrList);
+
+    return res.view('station/viewStation', { stationInfo: model, volunteerList: volunteer, name: web.eventName, eventid: req.session.eventid, stationMgr: stationMgrList });
 
   },
 
