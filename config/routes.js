@@ -20,7 +20,7 @@ module.exports.routes = {
 
   //Use in UserController
   //login and logout
-  '/': 'UserController.login',       
+  '/': 'UserController.login',
   'GET /user/login': 'UserController.login',
   'POST /user/login': 'UserController.login',
   'GET /user/logout': 'UserController.logout',
@@ -34,7 +34,7 @@ module.exports.routes = {
   '/viewitem/:id': 'WebController.viewitem',
   '/distributeBag': 'WebController.distributeBag',
   '/collectBag': 'WebController.collectBag',
-  
+
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
 
@@ -43,7 +43,6 @@ module.exports.routes = {
 
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
-  '/stationmanagement': 'StationController.stationmanagement',
 
   //Adding, deleting and updating WebController info
   '/event/adduser ': 'WebController.adduser',
@@ -71,10 +70,13 @@ module.exports.routes = {
 
   'DELETE /web/:id': 'WebController.removeEvent',
 
+  '/stationmanagement': 'StationController.stationmanagement',
+  '/viewStation': 'StationController.viewStation',
+
 
   //export
   '/export_admin': 'WebController.export_admin',
-  
+
   //USE in StationController
   //export in StationController
   '/export_station': 'StationController.export_station',
@@ -138,9 +140,9 @@ module.exports.routes = {
   'GET /flagbag/belongTo': 'FlagbagController.populate_fv',
   'GET /volunteer/:fk/assignTo': 'VolunteerController.populate_vf',
 
-   // Station & Flagbag
-   'GET /flagbag/bagFor': 'FlagbagController.populate_fs',
-   'GET /station/:fk/stationHas': 'StationController.populate_sf',
+  // Station & Flagbag
+  'GET /flagbag/bagFor': 'FlagbagController.populate_fs',
+  'GET /station/:fk/stationHas': 'StationController.populate_sf',
 
 
   /***************************************************************************

@@ -72,7 +72,7 @@
             <th scope="col">旗站地區</th>
             <!-- <th scope="col">旗袋總數</th> -->
             <th scope="col">後備旗袋</th>
-            <th scope="col">編輯</th>
+            <th scope="col">更多</th>
           </tr>
         </thead>
 
@@ -91,8 +91,7 @@
             <!-- <td><%= model.sName %></td> -->
             <td><%= model.numOfSpareBag %></td>
             <td>
-              <a href='/updateStation/<%= model.id %>' class="btn btn-primary">編輯</a>
-              <!-- <a href='/removeStation/<%= model.id %>' class="btn btn-danger">删除</a> -->
+              <a href='/viewStation/<%= model.id %>' class="btn btn-info">詳細</a>              
               <button type="submit" class="btn btn-danger" onclick="deleteUser('<%= model.id %>')">刪除</button>
             </td>
             <% }); %>
