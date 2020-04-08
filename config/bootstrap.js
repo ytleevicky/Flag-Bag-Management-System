@@ -59,10 +59,7 @@ module.exports.bootstrap = async function () {
         eventName: '賣得旗所', dateOfEvent: '2020-08-01',
         eventLocation: '港島'
       },
-      {
-        eventName: '結伴賣旗日', dateOfEvent: '2020-09-17',
-        eventLocation: '九龍'
-      },
+  
     ]);
 
   }
