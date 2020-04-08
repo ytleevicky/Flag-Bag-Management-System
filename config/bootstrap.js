@@ -141,22 +141,6 @@ module.exports.bootstrap = async function () {
 
   }
 
-
-  // //Add association between volunteer && event 
-  // const vol = await Volunteer.findOne({ vGroupName: 'HKBU' });
-  // const event7 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
-  // await Volunteer.addToCollection(vol.id, 'in').members(event7.id);
-
-  // const vol2 = await Volunteer.findOne({ vGroupName: 'HKUST' });
-  // const event8 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
-  // await Volunteer.addToCollection(vol2.id, 'in').members(event8.id);
-
-  // const vol3 = await Volunteer.findOne({ vName: 'Leo Cruz' });
-  // const event9 = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
-  // await Volunteer.addToCollection(vol3.id, 'in').members(event9.id);
-
-  // Adding association between event & eventUser
-
   // Bootstrap data for the First Event '齊抗武漢肺炎賣旗活動'
   const e = await Web.findOne({ eventName: '齊抗武漢肺炎賣旗活動' });
   const user = await User.findOne({ username: 'stationmgr1' });
@@ -210,38 +194,6 @@ module.exports.bootstrap = async function () {
   await Web.addToCollection(e.id, 'comprise').members(f5.id);
   await Web.addToCollection(e.id, 'comprise').members(f6.id);
 
-
-
-
-
-  // // Add association between station && stationmgr 
-  // const a = await Station.findOne({ sName: 'TSW-S1' });
-  // const u1 = await User.findOne({ username: 'stationmgr1' });
-  // await Station.addToCollection(a.id, 'monitorBy').members(u1.id);
-
-  // const b = await Station.findOne({ sName: 'KLT-S1' });
-  // const u2 = await User.findOne({ username: 'stationmgr2' });
-  // await Station.addToCollection(b.id, 'monitorBy').members(u2.id);
-
-  // const c = await Station.findOne({ sName: 'TKO-S1' });
-  // const u3 = await User.findOne({ username: 'stationmgr3' });
-  // await Station.addToCollection(c.id, 'monitorBy').members(u3.id);
-
-
-  // // Add association between (group) volunteer && station 
-  // const y = await Volunteer.findOne({ vGroupName: 'HKBU' });
-  // const x = await Station.findOne({ sName: 'KLT-S1' });
-  // await Volunteer.addToCollection(y.id, 'within').members(x.id);
-
-  // const y2 = await Volunteer.findOne({ vGroupName: 'HKUST' });
-  // const x2 = await Station.findOne({ sName: 'TKO-S1' });
-  // await Volunteer.addToCollection(y2.id, 'within').members(x2.id);
-
-
-  // // Add association between (individual) volunteer && station
-  // const iName = await Volunteer.findOne({ vName: 'Leo Cruz' });
-  // const sta2 = await Station.findOne({ sName: 'TKO-S1' });
-  // await Volunteer.addToCollection(iName.id, 'within').members(sta2.id);
 
   return;
 };
