@@ -62,7 +62,7 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr', isSelected: false } });
 
       var web = await Web.findOne(req.session.eventid);
 
@@ -72,7 +72,11 @@ module.exports = {
 
     }
 
-    var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
+    var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } }})
+
+    //var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) }});
+
+    //var u = await Web.findOne(req.session.eventid).populate('superviseby')
 
     var station = await Station.create(req.body.Station).fetch();
 
@@ -94,9 +98,14 @@ module.exports = {
       await Station.addToCollection(station.id, 'stationHas').members(flagbag.id);
     }
 
+
+    await User.update(stationManagers.superviseBy.map(manager => manager.id)).set({
+      isSelected: true
+    }).fetch();
+
     await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
 
-    await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
+    await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.superviseBy.map(manager => manager.id));
 
 
     if (req.wantsJSON) {
@@ -115,11 +124,11 @@ module.exports = {
 
     var station = await Station.findOne(req.params.id);
 
-    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { sName : station.sName}});
+    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { sName: station.sName } });
 
     var volunteer = await Station.findOne(sta.include[0].id).populate('has', { where: { isContacter: false } });
 
-    var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr'}});
+    var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
 
     console.log(stationMgr.monitorBy);
 
@@ -465,7 +474,7 @@ module.exports = {
 
       var event = await Web.findOne(req.session.eventid).populate('superviseBy');
 
-      var users = event.superviseBy.filter(u => u.role == 'stationmgr');
+      var users = event.superviseBy.filter(u => u.role == 'stationmgr' & u.isSelected == false);
 
       if (!model) { return res.notFound(); }
 
@@ -480,7 +489,9 @@ module.exports = {
       sails.bcrypt = require('bcryptjs');
       const saltRounds = 10;
 
-      var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
+      var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } }})
+
+     // var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
       var models = await Station.update(req.params.id).set({
         sName: req.body.Station.sName,
@@ -490,9 +501,27 @@ module.exports = {
       }).fetch();
 
       if (models.length > 0) {
-        if (model.monitorBy.length > 0) { await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id)); }
-        await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.map(manager => manager.id));
-      } else { return res.notFound(); }
+        if (model.monitorBy.length > 0) {
+
+          var previousUser = await Station.findOne(req.params.id).populate('monitorBy');
+
+          await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));
+
+          await User.update(previousUser.monitorBy.map(u => u.id)).set({
+            isSelected: false
+          }).fetch();
+
+        }
+
+        await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.superviseBy.map(manager => manager.id));
+
+        await User.update(stationManagers.superviseBy.map(u => u.id)).set({
+          isSelected: true
+        }).fetch();
+
+      } else {
+        return res.notFound();
+      }
 
       // Get all the spareBag within this event
       var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });

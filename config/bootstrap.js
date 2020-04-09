@@ -39,11 +39,11 @@ module.exports.bootstrap = async function () {
     const hash = await sails.bcrypt.hash('123456', saltRounds);
 
     await User.createEach([
-      { username: 'admin1', password: hash, role: 'admin', mail: '123@gmail.com', createdby: 'Developer' },
-      { username: 'admin2', password: hash, role: 'admin', mail: 'loveyou@bu.com', createdby: 'Developer' },
-      { username: 'stationmgr1', password: hash, role: 'stationmgr', mail: 'mgr1@gmail.com', createdby: 'admin1' },
-      { username: 'stationmgr2', password: hash, role: 'stationmgr', mail: 'mgr2@gmail.com', createdby: 'admin2' },
-      { username: 'stationmgr3', password: hash, role: 'stationmgr', mail: 'mgr3@gmail.com', createdby: 'admin1' },
+      { username: 'admin1', password: hash, role: 'admin', mail: '123@gmail.com', createdby: 'Developer', isSelected: false },
+      { username: 'admin2', password: hash, role: 'admin', mail: 'loveyou@bu.com', createdby: 'Developer', isSelected: false },
+      { username: 'stationmgr1', password: hash, role: 'stationmgr', mail: 'mgr1@gmail.com', createdby: 'admin1', isSelected: true },
+      { username: 'stationmgr2', password: hash, role: 'stationmgr', mail: 'mgr2@gmail.com', createdby: 'admin2', isSelected: true },
+      { username: 'stationmgr3', password: hash, role: 'stationmgr', mail: 'mgr3@gmail.com', createdby: 'admin1', isSelected: true },
       // etc.
     ]);
   }

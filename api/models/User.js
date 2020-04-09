@@ -41,6 +41,9 @@ module.exports = {
       // required: true
     },
 
+    isSelected: {
+      type: 'boolean'
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
