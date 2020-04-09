@@ -56,7 +56,7 @@ module.exports = {
 
   },
 
-  viewGroup: async function (req, res){
+  viewGroup: async function (req, res) {
 
     var web = await Web.findOne(req.session.eventid);
 
@@ -64,7 +64,7 @@ module.exports = {
 
     var stationInfo = await Volunteer.findOne(req.params.id).populate('within');
 
-    var volunteers = await Volunteer.find({ where: { vGroupName: groupVolunteer.vGroupName, isContacter: false }}).populate('within');
+    var volunteers = await Volunteer.find({ where: { vGroupName: groupVolunteer.vGroupName, isContacter: false } }).populate('within');
 
     return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, group: groupVolunteer, station: stationInfo, volunteerList: volunteers });
 
@@ -195,7 +195,7 @@ module.exports = {
 
       var groupList = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include});
+      return res.view('volunteer/addIndividual', { eventid: req.session.eventid, name: web.eventName, groups: groupList.contain, stations: stationList.include });
 
     }
 
@@ -252,7 +252,7 @@ module.exports = {
 
     var bag = await Volunteer.findOne(abc.id).populate('assignTo');
 
-    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp, flagbag: bag.assignTo});
+    return res.view('volunteer/viewIndividual', { eventname: event.eventName, eventid: req.session.eventid, go: abc, station: tmp, flagbag: bag.assignTo });
 
   },
 
@@ -272,7 +272,7 @@ module.exports = {
 
       var findGroup = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      var findIndividual =  await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false', id: req.params.id } });
+      var findIndividual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false', id: req.params.id } });
 
       var stationbag = await Volunteer.findOne(req.params.id).populate('assignTo');
 
@@ -329,42 +329,47 @@ module.exports = {
 
     var bag = await Volunteer.findOne(vol.id).populate('assignTo');
 
-    var flagbag = await Flagbag.update(bag.assignTo[0].id).set({
+    let code = printf('%06d', bag.assignTo[0].id);
+
+    await Flagbag.update(bag.assignTo[0].id).set({
 
       bagStatus: '已派發',
-      bagNumber: printf('%06d' ,bag.assignTo[0].id),
+      bagNumber: code,
       codePrintedTime: bag.assignTo[0].updatedAt,
       isCodePrinted: true,
 
     }).fetch();
 
 
-    return res.view('volunteer/print', { volunteer: vol, 'qrcode': qrcode, station: stat , f: flagbag.bagNumber});
+    return res.view('volunteer/print', { volunteer: vol, 'qrcode': qrcode, station: stat, f: bag });
 
   },
 
   printLabels: async function (req, res) {
 
     const qrcode = require('qrcode-generator');
-    
-    var data = req.body.c;
 
-    var vol = await Web.findOne(req.session.eventid).populate('contain', {where: {id : req.body.c.map(v => parseInt(v))}});
+    var data = typeof req.body.c === "string" ? [req.body.c] : req.body.c;
+
+    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
     var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 
-    for(i = 0; i < volu.length; i++){
+    for (i = 0; i < volu.length; i++) {
+      let code = printf('%06d', volu[i].assignTo[0].id);
       var flagbag = await Flagbag.update(volu[i].assignTo[0].id).set({
 
-            bagStatus: '已派發',
-            bagNumber: printf('%06d' ,volu[i].assignTo[0].id),
-            codePrintedTime: volu[i].assignTo[0].updatedAt,
-            isCodePrinted: true,
-      
-          }).fetch();
+        bagStatus: '已派發',
+        bagNumber: code,
+        codePrintedTime: volu[i].assignTo[0].updatedAt,
+        isCodePrinted: true,
+
+      }).fetch();
+
     }
-      
-    return res.view('volunteer/printLabels', {volunteer: vol, 'qrcode': qrcode, station: volu , f: flagbag.bagNumber});
+
+
+    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: volu });
   },
 
   //action - populate(for volunteer and station)

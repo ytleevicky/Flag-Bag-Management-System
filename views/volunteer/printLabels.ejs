@@ -15,8 +15,8 @@
         <% station.forEach(function(model) { %>
 		<div style="margin-bottom:1em">
             <h5>姓名: <%= model.vName %></h5>
-            <h5>旗站: <%= model.within.length > 0 ? model.within[0].sName : "" %></h5>
-            <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${f}`); qrsrc.make();%>           
+			<h5>旗站: <%= model.within.length > 0 ? model.within[0].sName : "" %></h5>
+            <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.assignTo[0].bagNumber}`); qrsrc.make();%>           
 			<img src="<%- qrsrc.createDataURL() %>" />
         </div>
         <% }); %>
