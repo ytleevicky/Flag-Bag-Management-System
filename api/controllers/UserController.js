@@ -9,7 +9,7 @@
 
 module.exports = {
   login: async function (req, res) {
- 
+
     if (req.method == 'GET') { return res.view('user/login'); }
 
     if (!req.body.username || !req.body.password) { return res.badRequest(); }
@@ -32,16 +32,28 @@ module.exports = {
       sails.log('[Session] ', req.session.username, req.session.password);
       sails.log('[Session1]', req.session.role);
 
-      if (req.session.role == 'admin') {
-        if (req.wantsJSON) {
+      if (req.wantsJSON) {
+
+        if (req.session.role == 'admin') {
           return res.redirect('/management');
         }
-      }
 
-      else if (req.session.role == 'stationmgr') {
-        if (req.wantsJSON) {
+        else if (req.session.role == 'stationmgr') {
           return res.redirect('/stationmanagement');
         }
+
+      }
+
+      else {
+
+        if (req.session.role == 'admin') {
+          return res.status(200).send('Login successfully on admin');
+        }
+
+        else if (req.session.role == 'stationmgr') {
+          return res.status(200).send('Login successfully on station');
+        }
+
       }
 
     });
@@ -52,7 +64,7 @@ module.exports = {
 
       if (err) { return res.serverError(err); }
 
-      return res.redirect('/');
+      return res.status(200).send('Log out successfully').redirect('/');
 
     });
   },
@@ -62,7 +74,7 @@ module.exports = {
 
     var model = await User.findOne(req.params.id).populate('edit');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 
@@ -72,7 +84,7 @@ module.exports = {
 
     var model = await User.findOne(req.params.id).populate('monitor');
 
-    if (!model) {return res.notFound();}
+    if (!model) { return res.notFound(); }
 
     return res.json(model);
 
