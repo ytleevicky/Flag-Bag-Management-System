@@ -1,34 +1,46 @@
 <body>
-    <br />
-  
-    <table class="table table-bordered">
-      <h2>旗站統計</h2>
-      <tbody>
-        <tr>
-          <th scope="row">旗袋總數</th>
-          <td>20(20)</td>
-        </tr>
-        <tr>
-          <th scope="row">已收</th>
-          <td>0/20</td>
-        </tr>
-        <tr>
-          <th scope="row">未收</th>
-          <td>20/20</td>
-        </tr>
-        <tr>
-          <th scope="row">後備</th>
-          <td>5</td>
-        </tr>
-        <tr>
-          <th scope="row">多收</th>
-          <td>0</td>
-        </tr>
-        <tr>
-          <th scope="row">少收</th>
-          <td>0</td>
-        </tr>
-      </tbody>
-    </table>
-    </body>
-  
+  <div class="bordered2">
+    <h5>賣旗日：<%= date %></h5>
+    <h5>旗站名稱：<%= stationName %></h5>
+  </div>
+
+  <table class="table table-bordered">
+    <br>
+    <h3>旗站統計</h3>
+    <tbody>
+      <tr>
+        <th scope="row">旗袋總數</th>
+        <td><%= totalBag %></td>
+      </tr>
+      <tr>
+        <th scope="row">已收</th>
+        <td>0 / <%= totalBag %> </td>
+      </tr>
+      <tr>
+        <th scope="row">未收</th>
+        <td><%= totalBag %></td>
+      </tr>
+      <tr>
+        <th scope="row">後備</th>
+        <td><%= spareBag %></td>
+      </tr>
+      <tr>
+        <th scope="row">多收</th>
+        <td>0</td>
+      </tr>
+      <tr>
+        <th scope="row">少收</th>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+<style>
+  .bordered2 {
+    padding: 15px;
+    padding-bottom: 1px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+  }
+</style>

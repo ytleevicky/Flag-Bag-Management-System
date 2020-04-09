@@ -12,16 +12,23 @@ module.exports = {
   stationmanagement: async function (req, res) {
 
     var web = await User.findOne(req.session.userid).populate('edit').populate('monitor');
+  
+    var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id} });
 
-    console.log(web);
+    console.log(station.include);
+    console.log(station.include[0].id);
 
-    var station = await Web.find(web.edit.id).populate('include', { where: { sName: web.monitor.sName, id: web.edit.id} });
+    var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false}});
 
-    console.log(station);
-  //  console.log("station: " + station.include[0]);
-   //console.log("station: " + station.include);
+    console.log(volunteers.has);
 
-    return res.view('station/stationmanagement', { webs: station });
+    var bag = await Volunteer.find(volunteers.has.map(v => v.id)).populate('assignTo');
+
+    console.log(bag.length);  // Total num of flag bag in this station
+
+    console.log(station.include[0].numOfSpareBag);  // Total num of spare bag in this station
+
+    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName });
 
   },
 
