@@ -11,8 +11,17 @@ module.exports = {
   //manage station information(for stationmanagement.ejs)
   stationmanagement: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('station/stationmanagement', { webs: models });
+    var web = await User.findOne(req.session.userid).populate('edit').populate('monitor');
+
+    console.log(web);
+
+    var station = await Web.find(web.edit.id).populate('include', { where: { sName: web.monitor.sName, id: web.edit.id} });
+
+    console.log(station);
+  //  console.log("station: " + station.include[0]);
+   //console.log("station: " + station.include);
+
+    return res.view('station/stationmanagement', { webs: station });
 
   },
 
@@ -106,7 +115,7 @@ module.exports = {
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within').populate('assignTo');
+    var volunteers = await Volunteer.find(models.contain.map(w => w.id)).populate('within').populate('assignTo');
 
     var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
 
@@ -133,7 +142,7 @@ module.exports = {
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    var volunteers =  await Volunteer.find(models.contain.map(w => w.id)).populate('within');
+    var volunteers = await Volunteer.find(models.contain.map(w => w.id)).populate('within');
 
 
     var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
