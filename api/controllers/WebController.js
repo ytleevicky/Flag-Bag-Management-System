@@ -119,9 +119,11 @@ module.exports = {
 
     var volunteer = await Station.findOne(sta.include[0].id).populate('has', { where: { isContacter: false } });
 
-    var stationMgrList = await Station.findOne(req.params.id).populate('monitorBy');
+    var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr'}});
 
-    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationMgr: stationMgrList });
+    console.log(stationMgr.monitorBy);
+
+    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy });
 
   },
 

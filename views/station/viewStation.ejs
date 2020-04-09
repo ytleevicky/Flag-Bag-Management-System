@@ -64,6 +64,44 @@
 
                 <br>
 
+                <% if (stationmgrList.length > 0 ) { %>
+
+                <h2>站長列表</h2>
+
+                <table class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">義工姓名</th>
+                            <th scope="col">聯絡電話</th>
+                            <th scope="col">編輯</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% stationmgrList.forEach( function(model) { %>
+                        <tr>
+                            <td><%= model.username %></td>
+                            <td><%= model.mail %></td>
+
+                            <td>
+                                <a href='/updateIndividual/<%= model.id %>' class="btn btn-primary">編輯</a>
+                            </td>
+                            <% }); %>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <% } else { %>
+
+                <h2>站長列表</h2>
+                <p>---</p>
+
+                <% } %>
+
+                <br>
+
                 <% if (volunteerList.length > 0 ) { %>
 
                 <h2>義工列表</h2>
@@ -83,7 +121,7 @@
                         <tr>
                             <td><%= model.vName %></td>
                             <td><%= model.vContact %></td>
-                        
+
                             <td>
                                 <a href='/updateIndividual/<%= model.id %>' class="btn btn-primary">編輯</a>
                             </td>
@@ -100,7 +138,7 @@
 
                 <% } %>
 
-                <br>
+
             </div>
 
         </div>
