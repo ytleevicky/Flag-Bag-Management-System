@@ -164,20 +164,6 @@ module.exports = {
 
   },
 
-  collectBag: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/collectBag', { webs: models });
-
-  },
-
-  distributeBag: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/distributeBag', { webs: models });
-
-  },
-
   adduser: async function (req, res) {
 
     if (req.method == 'GET') {

@@ -32,8 +32,8 @@ module.exports.routes = {
   '/management': 'WebController.management',
 
   '/viewitem/:id': 'WebController.viewitem',
-  '/distributeBag': 'WebController.distributeBag',
-  '/collectBag': 'WebController.collectBag',
+  '/distributeBag': 'StationController.distributeBag',
+  '/collectBag': 'StationController.collectBag',
 
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',

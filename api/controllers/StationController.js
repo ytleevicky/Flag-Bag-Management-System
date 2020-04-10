@@ -43,6 +43,23 @@ module.exports = {
     return res.view('station/viewAllBags', { stations: models, date: event.inside[0].dateOfEvent, stationName: station.sName });
   },
 
+  collectBag: async function (req, res) {
+
+    if(req.method == 'GET'){
+      return res.view('station/collectBag');
+    }
+  
+
+
+  },
+
+  distributeBag: async function (req, res) {
+
+    var models = await Web.find();
+    return res.view('station/distributeBag', { webs: models });
+
+  },
+
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
 

@@ -28,8 +28,6 @@ module.exports.policies = {
     adduser: 'isAdmin',
     eventreport: 'isAdmin',
     qrCode: 'isAdmin',
-    collectBag: 'isStationmgr',
-    distributeBag: 'isStationmgr',
     stationmgrDisplay: 'isAdmin',
     addflagstn: 'isAdmin',
     station: 'isAdmin',
@@ -47,6 +45,8 @@ module.exports.policies = {
     addGroup: 'isAdmin',
     individual: 'isAdmin',
     addIndividual: 'isAdmin',
+    collectBag: 'isStationmgr',
+    distributeBag: 'isStationmgr',
 
   }
 
