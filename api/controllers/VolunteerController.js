@@ -340,8 +340,9 @@ module.exports = {
 
     }).fetch();
 
+    var updatedBag = await Volunteer.findOne(vol.id).populate('assignTo');
 
-    return res.view('volunteer/print', { volunteer: vol, 'qrcode': qrcode, station: stat, f: bag });
+    return res.view('volunteer/print', { volunteer: vol, 'qrcode': qrcode, station: stat, f: updatedBag });
 
   },
 
@@ -357,7 +358,7 @@ module.exports = {
 
     for (i = 0; i < volu.length; i++) {
       let code = printf('%06d', volu[i].assignTo[0].id);
-      var flagbag = await Flagbag.update(volu[i].assignTo[0].id).set({
+      await Flagbag.update(volu[i].assignTo[0].id).set({
 
         bagStatus: '已派發',
         bagNumber: code,
@@ -368,8 +369,9 @@ module.exports = {
 
     }
 
+    var updatedVolu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 
-    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: volu });
+    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu });
   },
 
   //action - populate(for volunteer and station)
