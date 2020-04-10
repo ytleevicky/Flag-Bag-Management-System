@@ -1,0 +1,39 @@
+<div class="bordered2">
+    <h5>賣旗日：<%= date %></h5>
+    <h5>旗站名稱：<%= stationName %></h5>
+</div>
+
+<table class="table table-bordered">
+    <br>
+    <thead>
+        <tr>
+            <th scope="col">旗袋編號</th>
+            <th scope="col">義工名稱</th>
+            <th scope="col">旗袋狀態</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <% stations.forEach( function(model) { %>
+        <tr>
+
+            <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+            <td><%= model.vName %></td>
+            <td><%= model.assignTo[0].bagStatus %></td>
+
+            <% }); %>
+        </tr>
+
+    </tbody>
+</table>
+
+
+<style>
+    .bordered2 {
+      padding: 15px;
+      padding-bottom: 1px;
+      border: 1px solid gainsboro;
+      border-radius: 5px;
+    }
+  </style>

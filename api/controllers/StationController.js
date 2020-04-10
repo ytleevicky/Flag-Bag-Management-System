@@ -12,13 +12,13 @@ module.exports = {
   stationmanagement: async function (req, res) {
 
     var web = await User.findOne(req.session.userid).populate('edit').populate('monitor');
-  
-    var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id} });
+
+    var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id } });
 
     console.log(station.include);
     console.log(station.include[0].id);
 
-    var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false}});
+    var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false } });
 
     console.log(volunteers.has);
 
@@ -28,10 +28,24 @@ module.exports = {
 
     console.log(station.include[0].numOfSpareBag);  // Total num of spare bag in this station
 
-    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName });
+    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id });
 
   },
 
+  viewAllBags: async function (req, res) {
+
+    var volunteers = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
+
+    var models = await Volunteer.find(volunteers.has.map(v => v.id)).populate('within').populate('assignTo');
+
+    var station = await Station.findOne(req.params.id);
+
+    var event = await Station.findOne(req.params.id).populate('inside');
+
+
+    return res.view('station/viewAllBags', { stations: models, date: event.inside[0].dateOfEvent, stationName: station.sName });
+
+  },
 
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {

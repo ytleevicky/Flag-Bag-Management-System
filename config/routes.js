@@ -73,6 +73,8 @@ module.exports.routes = {
   '/viewStation/:id': 'WebController.viewStation',
 
   '/stationmanagement': 'StationController.stationmanagement',
+  '/viewAllBags/:id': 'StationController.viewAllBags',
+  
 
 
   //export
