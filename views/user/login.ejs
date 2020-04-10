@@ -1,86 +1,28 @@
-<div class="board">
-  <form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
+<title>CUBC - 登入</title>
+<body>
 
-    <div class="center">
-      <img src="/images/logo123.jpeg" style="width:150px;height:200px;" class="center">
-      <br>
-      <h3><b>請先登入以使用此系統</b></h3>
-    </div>
-    <br>
+  <div class="d-flex justify-content-center align-items-center login-container">
+      <form class="login-form text-center" action="/user/login" method="POST" onsubmit="submitForm(this);return false">
 
-    <div class="login-sec">
-
-      <div class="form-group">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm col-sm-3">
-              <label for="exampleInputEmail1">登入名稱</label>
-            </div>
-            <div class="col-sm col-sm-9">
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="輸入登入名稱" name="username" />
-            </div>
-          </div>
-        </div>
-        <br>
-
-        <div class="form-group">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm col-sm-3">
-                <label for="exampleInputPassword1">密碼</label>
-              </div>
-              <div class="col-sm col-sm-9">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="輸入登入密碼"
-                  name="password" />
-              </div>
-            </div>
-          </div>
-
+        <div class="center">
+          <img src="/images/logo123.jpeg" style="width:150px;height:200px;" class="center">
           <br>
-
-          <div class="wrapper">
-            <button type="submit" class="btn btn-primary">登入</button>
-          </div>
         </div>
 
-  </form>
-</div>
+          <h5 class="mb-5 font-weight-light text-uppercase">請先登入以使用此系統</h5>
+          <div class="form-group">
+              <input type="text" class="form-control rounded-pill form-control-lg" name="username" placeholder="登入名稱">
+          </div>
+          <div class="form-group">
+              <input type="password" class="form-control rounded-pill form-control-lg" name="password" placeholder="密碼">
+          </div>
+          
+          <button type="submit" class="btn mt-5 rounded-pill btn-lg btn-custom btn-block text-uppercase">登入</button>
 
-<style>
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
+      </form>
+  </div>
 
-  h3 {
-    text-align: center;
-  }
-
-  .login-sec {
-
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-
-    width: 50%;
-
-  }
-
-  .wrapper {
-    text-align: center;
-  }
-
-  .button {
-    position: absolute;
-    top: 50%;
-  }
-
-  
-</style>
+</body>
 
 <script>
   async function submitForm(oFormElement) {
@@ -107,3 +49,72 @@
   };
 
 </script>
+
+
+<style>
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+body{
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  background: white;
+  color:#666;
+}
+.login-container{
+  height: 100vh;
+  width: 100%;
+}
+.login-form{
+  margin: auto;
+  width: 370px;
+  padding: 15px;
+  max-width: 100%;
+}
+.login-form .form-control{
+  font-size: 15px;
+  min-height: 48px;
+  font-weight: 500;
+}
+.login-form a{
+  text-decoration: none;
+  color:#666;
+}
+.login-form a:hover{
+  color:rgb(23, 162, 184);
+}
+.forgot-link{
+  font-size: 13px;
+}
+
+.form-control:focus{
+  border-color: rgb(23, 162, 184);
+  box-shadow: 0 0 0 0.2rem rgba(23,162,184,.25);
+}
+.btn-custom{
+  background: #17a2b8;
+  border-color: #17a2b8;
+
+  color:#fff;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 48px;
+}
+.btn-custom:focus,
+.btn-custom:hover,
+.btn-custom:active,
+.btn-custom:active:focus{
+  background: rgb(72, 196, 214);
+  border-color: rgb(72, 196, 214); 
+  color:#fff;
+}
+.btn-custom:focus{
+  box-shadow: 0 0 0 0.2rem rgba(23,162,184,.25);
+}
+
+</style>
