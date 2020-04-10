@@ -59,12 +59,16 @@ module.exports = {
 
     var thisBag = await Flagbag.findOne({ where: { bagNumber: scannedData } });
 
+    if (!thisBag) {
+      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
+    }
+
     // Modified the flagbag status
     await Flagbag.update(thisBag.id).set({
       bagStatus: '已收'
     }).fetch();
 
-    return res.redirect('/printRecipt/' + scannedData );
+    return res.redirect('/printRecipt/' + scannedData);
   },
 
   printRecipt: async function (req, res) {
@@ -73,7 +77,7 @@ module.exports = {
 
     var event = await Station.findOne(req.session.stationid).populate('inside');
 
-    return res.view('station/printRecipt', { bagNumber: scannedData, date: event.inside[0].dateOfEvent  });
+    return res.view('station/printRecipt', { bagNumber: scannedData, date: event.inside[0].dateOfEvent });
 
   },
 
