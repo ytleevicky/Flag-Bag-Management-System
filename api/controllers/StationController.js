@@ -13,23 +13,21 @@ module.exports = {
 
     var web = await User.findOne(req.session.userid).populate('edit').populate('monitor');
 
+    if(web.monitor.length == 0){
+      return res.status(401).send('登入失敗！此旗長尚未分配到任何旗站');
+    }
+    
     var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id } });
-
-    console.log(station.include);
-    console.log(station.include[0].id);
 
     var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false } });
 
-    console.log(volunteers.has);
-
     var bag = await Volunteer.find(volunteers.has.map(v => v.id)).populate('assignTo');
 
-    console.log(bag.length);  // Total num of flag bag in this station
+    // console.log(bag.length);  // Total num of flag bag in this station
 
-    console.log(station.include[0].numOfSpareBag);  // Total num of spare bag in this station
+    // console.log(station.include[0].numOfSpareBag);  // Total num of spare bag in this station
 
     return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id });
-
   },
 
   viewAllBags: async function (req, res) {
@@ -42,9 +40,7 @@ module.exports = {
 
     var event = await Station.findOne(req.params.id).populate('inside');
 
-
     return res.view('station/viewAllBags', { stations: models, date: event.inside[0].dateOfEvent, stationName: station.sName });
-
   },
 
   //export event data into excel file(.xlsx format)(for station.ejs)
