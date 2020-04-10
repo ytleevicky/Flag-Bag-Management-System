@@ -19,6 +19,8 @@ module.exports = {
 
     var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id } });
 
+    req.session.stationid = station.include[0].id;
+
     var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false } });
 
     var bag = await Volunteer.find(volunteers.has.map(v => v.id)).populate('assignTo');
@@ -48,14 +50,30 @@ module.exports = {
     if (req.method == 'GET') {
       return res.view('station/collectBag');
     }
-    console.log("HI");
-    var data = req.body.qrcode;
 
-    console.log(data);
+    var scannedData = req.body.qrcode;
 
-    console.log("Here");
+    var event = await Station.findOne(req.session.stationid).populate('inside');
 
+    await Web.findOne(event.inside[0].id).populate('comprise');
 
+    var thisBag = await Flagbag.findOne({ where: { bagNumber: scannedData } });
+
+    // Modified the flagbag status
+    await Flagbag.update(thisBag.id).set({
+      bagStatus: '已收'
+    }).fetch();
+
+    return res.redirect('/printRecipt/' + scannedData );
+  },
+
+  printRecipt: async function (req, res) {
+
+    var scannedData = req.params.id;
+
+    var event = await Station.findOne(req.session.stationid).populate('inside');
+
+    return res.view('station/printRecipt', { bagNumber: scannedData, date: event.inside[0].dateOfEvent  });
 
   },
 

@@ -33,7 +33,9 @@ module.exports.routes = {
 
   '/viewitem/:id': 'WebController.viewitem',
   '/distributeBag': 'StationController.distributeBag',
-  '/collectBag': 'StationController.collectBag',
+  'GET /collectBag': 'StationController.collectBag',
+  'POST /station/collectBag': 'StationController.collectBag',
+  '/printRecipt/:id': 'StationController.printRecipt',
 
   '/eventreport': 'WebController.eventreport',
   '/groupandindividual': 'WebController.groupandindividual',
@@ -74,7 +76,7 @@ module.exports.routes = {
 
   '/stationmanagement': 'StationController.stationmanagement',
   '/viewAllBags/:id': 'StationController.viewAllBags',
-  
+
 
 
   //export
@@ -110,9 +112,9 @@ module.exports.routes = {
   'GET /updateIndividual/:id': 'VolunteerController.updateIndividual',
   'PATCH /volunteer/individual/:id': 'VolunteerController.updateIndividual',
 
-  '/printQRcode/:id':'VolunteerController.print',
+  '/printQRcode/:id': 'VolunteerController.print',
 
-  'POST /printLabels':'VolunteerController.printLabels',
+  'POST /printLabels': 'VolunteerController.printLabels',
 
   //For populate
   //user and web
