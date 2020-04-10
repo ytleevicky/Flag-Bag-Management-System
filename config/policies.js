@@ -37,6 +37,8 @@ module.exports.policies = {
   StationController: {
     
     stationmanagement: 'isStationmgr',
+    collectBag: 'isStationmgr',
+    distributeBag: 'isStationmgr',
     
   },
 
@@ -45,9 +47,7 @@ module.exports.policies = {
     addGroup: 'isAdmin',
     individual: 'isAdmin',
     addIndividual: 'isAdmin',
-    collectBag: 'isStationmgr',
-    distributeBag: 'isStationmgr',
-
+  
   }
 
   

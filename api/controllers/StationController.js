@@ -13,10 +13,10 @@ module.exports = {
 
     var web = await User.findOne(req.session.userid).populate('edit').populate('monitor');
 
-    if(web.monitor.length == 0){
+    if (web.monitor.length == 0) {
       return res.status(401).send('登入失敗！此旗長尚未分配到任何旗站');
     }
-    
+
     var station = await Web.findOne(web.edit[0].id).populate('include', { where: { id: web.monitor[0].id } });
 
     var volunteers = await Station.findOne(station.include[0].id).populate('has', { where: { isContacter: false } });
@@ -45,10 +45,16 @@ module.exports = {
 
   collectBag: async function (req, res) {
 
-    if(req.method == 'GET'){
+    if (req.method == 'GET') {
       return res.view('station/collectBag');
     }
-  
+    console.log("HI");
+    var data = req.body.qrcode;
+
+    console.log(data);
+
+    console.log("Here");
+
 
 
   },
