@@ -25,11 +25,27 @@ module.exports = {
 
     var bag = await Volunteer.find(volunteers.has.map(v => v.id)).populate('assignTo');
 
-    // console.log(bag.length);  // Total num of flag bag in this station
+    var receivedBag = 0;    // number of flag bag collected
 
-    // console.log(station.include[0].numOfSpareBag);  // Total num of spare bag in this station
+    for (i = 0; i < bag.length; i++) {
 
-    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id });
+      if (bag[i].assignTo[0].bagStatus == '已收') {
+        receivedBag = receivedBag + 1;
+      }
+
+    }
+
+    var notReceivedBag = 0;   // number of flag not yet received
+
+    for (i = 0; i < bag.length; i++) {
+
+      if (bag[i].assignTo[0].bagStatus == '已派發' || bag[i].assignTo[0].bagStatus == '未派發' ) {
+        notReceivedBag = notReceivedBag + 1;
+      }
+
+    }
+
+    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id, totalReceived: receivedBag, totalNotReceived: notReceivedBag });
   },
 
   viewAllBags: async function (req, res) {
