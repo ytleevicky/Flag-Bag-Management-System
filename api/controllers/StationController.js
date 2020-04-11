@@ -84,16 +84,16 @@ module.exports = {
       bagStatus: '已收'
     }).fetch();
 
-    return res.redirect('/printRecipt/' + scannedData);
+    return res.redirect('/printReceipt/' + scannedData);
   },
 
-  printRecipt: async function (req, res) {
+  printReceipt: async function (req, res) {
 
     var scannedData = req.params.id;
 
     var event = await Station.findOne(req.session.stationid).populate('inside');
 
-    return res.view('station/printRecipt', { bagNumber: scannedData, date: event.inside[0].dateOfEvent });
+    return res.view('station/printReceipt', { bagNumber: scannedData, date: event.inside[0].dateOfEvent });
 
   },
 

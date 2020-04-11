@@ -1,100 +1,56 @@
+<title>收旗袋</title>
+
 <body>
-	<div class="bordered2">
-		<h5>收旗袋</h5>
-	</div>
-    
-    <br>
-    
-    <!-- <h2>Read the QR code Label:</h2>
-
-    <p>example1: https://api.qrserver.com/v1/create-qr-code/?data=coffee&amp;size=100x100</p>
-    <p>The message should be coffee</p>
-    <br>
-    <p>example2: https://api.qrserver.com/v1/create-qr-code/?data=avengers&amp;size=100x100 </p>
-    <p>The message should be avengers</p>
-
-    <br>
-
-    <h3>Input the QR code URL & press ENTER: </h3>
-    <form onsubmit="read();return false;">
-        <input type="text" id="qr" name="">
-    </form>
-
-    <div>
-        <p>Message: </p>
-        <p class="qr2"></p>
+    <div class="bordered2">
+        <h5>收旗袋</h5>
     </div>
 
     <br>
-    <br>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-    <script>
-        function read() {
-            var message = document.getElementById('qr');
-
-            var qr1 = message.value;     // A QR code 
-
-            var abc = "http://api.qrserver.com/v1/read-qr-code/?fileurl=" + qr1;
-
-            // console.log(abc);
-
-            $.get(abc, function (data) {
-
-                console.log(data);
-
-                var qrRead = data[0].symbol[0].data;
-                $(".qr2").append(qrRead);
-
-            });
-        }
-    </script> -->
 
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.js"></script>
 <form action="/station/collectBag" method="POST">
-<input id="qrinput" name="qrcode" autofocus/>
-<input type="submit" />
+    <input id="qrinput" name="qrcode" autofocus />
+    <input type="submit" />
 </form>
 <canvas id="canvas"></canvas>
 <script>
-	var video = document.createElement("video");    // connect to the camera
-	var canvasElement = document.getElementById("canvas");  // able us to show some graphics
-	var canvas = canvasElement.getContext("2d");
-	var qrinput = document.getElementById('qrinput');
-	function drawLine(begin, end, color) {      // help the draw a square box 
-		canvas.beginPath();
-		canvas.moveTo(begin.x, begin.y);
-		canvas.lineTo(end.x, end.y);
-		canvas.lineWidth = 4;
-		canvas.strokeStyle = color;
-		canvas.stroke();
-	}
-	function onVideoFrame() {
-		if (video.readyState === video.HAVE_ENOUGH_DATA) {
-			canvasElement.height = video.videoHeight;
-			canvasElement.width = video.videoWidth;
-			canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-			var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-			var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
-			if (code) {
-				drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-				drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-				drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-				drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-				qrinput.value = code.data;
-			}
-		}
-		requestAnimationFrame(onVideoFrame);
-	} 
-	(async function() {
-		video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }});
-		video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-		video.play();
-		requestAnimationFrame(onVideoFrame);
-	})();
+    var video = document.createElement("video");    // connect to the camera
+    var canvasElement = document.getElementById("canvas");  // able us to show some graphics
+    var canvas = canvasElement.getContext("2d");
+    var qrinput = document.getElementById('qrinput');
+    function drawLine(begin, end, color) {      // help the draw a square box 
+        canvas.beginPath();
+        canvas.moveTo(begin.x, begin.y);
+        canvas.lineTo(end.x, end.y);
+        canvas.lineWidth = 4;
+        canvas.strokeStyle = color;
+        canvas.stroke();
+    }
+    function onVideoFrame() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvasElement.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+            var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
+            if (code) {
+                drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+                drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+                drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+                drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+                qrinput.value = code.data;
+            }
+        }
+        requestAnimationFrame(onVideoFrame);
+    }
+    (async function () {
+        video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+        video.play();
+        requestAnimationFrame(onVideoFrame);
+    })();
 </script>
 
 
