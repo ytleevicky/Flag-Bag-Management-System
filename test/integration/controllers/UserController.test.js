@@ -22,7 +22,7 @@ describe('UserController', () => {
                 .set('Accept', 'text/html,application/xhtml+xml,application/xml')
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .send('username=stationmgr3&password=123456')
-                .expect(200, done);
+                .expect(200, 'Login successfully on station', done);
     });
   });
 
@@ -38,8 +38,13 @@ describe('UserController', () => {
   describe('#logout()', () => {
     it('should return status 200 in body', (done) => {
       supertest(sails.hooks.http.app)
+                .post('/user/login')
+                .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .send('username=admin1&password=123456')
+                .expect(200, 'Login successfully on admin', done)
                 .get('/user/logout')
-                .expect(200, '"Log out successfully"', done);
+                .expect(200, done);
     });
   });
 
