@@ -13,7 +13,7 @@ module.exports = {
 
     var webs = await Web.find();
 
-    req.body.Web.data_timestamp = new Date().toISOString()
+    req.body.Web.data_timestamp = new Date().toISOString();
     return res.json(webs);
   },
 
@@ -72,7 +72,7 @@ module.exports = {
 
     }
 
-    var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } }})
+    var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } } });
 
     //var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) }});
 
@@ -80,11 +80,11 @@ module.exports = {
 
     var station = await Station.create(req.body.Station).fetch();
 
-    // No. of spare bag this station has 
+    // No. of spare bag this station has
     var numToCreate = req.body.Station.numOfSpareBag;
 
     for (i = 0; i < numToCreate; i++) {
-      // create flag bag 
+      // create flag bag
       var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
 
       // Update the flag bag: isSpareBag to true
@@ -93,7 +93,7 @@ module.exports = {
         bagStatus: '未派發'
       }).fetch();
 
-      // Add association 
+      // Add association
       await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
       await Station.addToCollection(station.id, 'stationHas').members(flagbag.id);
     }
@@ -153,7 +153,7 @@ module.exports = {
     var stationUser = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
     var nUser = stationUser.superviseBy.length;
 
-    // Later add the spare bag no. 
+    // Later add the spare bag no.
     var bag = await Web.findOne(req.session.eventid).populate('comprise');
     var nBag = bag.comprise.length;
 
@@ -167,6 +167,12 @@ module.exports = {
   adduser: async function (req, res) {
 
     if (req.method == 'GET') {
+
+      if (!req.session.username) {
+
+        return res.status(403);
+
+      }
 
       if (!req.session.eventid) {
 
@@ -201,11 +207,11 @@ module.exports = {
     console.log(JSON.stringify(user));
 
 
-    if (req.session.eventid == "") {
+    if (req.session.eventid == '') {
       if (req.wantsJSON) {
         return res.json({ message: '已新增活動管理員！', url: '/adminDisplay/' });
       }
-      else { return res.redirect('/adminDisplay'); }
+      else { return res.status(200).redirect('/adminDisplay'); }
     }
 
     else {
@@ -213,11 +219,8 @@ module.exports = {
       if (req.wantsJSON) {
         return res.json({ message: '已新增旗站管理員！', url: '/stationmgrDisplay/' + req.session.eventid });
       }
-      else { return res.redirect('/stationmgrDisplay' + req.session.eventid); }
+      else { return res.status(200).redirect('/stationmgrDisplay' + req.session.eventid); }
     }
-
-
-
 
   },
 
@@ -232,7 +235,7 @@ module.exports = {
     if (req.wantsJSON) {
       return res.json({ message: '已新增活動', url: '/management' });    // for ajax request
     } else {
-      return res.redirect('/management');// for normal request
+      return res.status(200).redirect('/management');// for normal request
     }
   },
 
@@ -475,9 +478,9 @@ module.exports = {
       sails.bcrypt = require('bcryptjs');
       const saltRounds = 10;
 
-      var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } }})
+      var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } } });
 
-     // var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
+      // var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
 
       var models = await Station.update(req.params.id).set({
         sName: req.body.Station.sName,
@@ -512,7 +515,7 @@ module.exports = {
       // Get all the spareBag within this event
       var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });
 
-      // Remove association between Event && spareFlagBag 
+      // Remove association between Event && spareFlagBag
       await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.comprise.map(bag => bag.id));
       // Remove association between Station && spareFlagBag
       await Station.removeFromCollection(req.params.id, 'stationHas').members(existingSpareBag.comprise.map(bag => bag.id));
@@ -522,7 +525,7 @@ module.exports = {
       var numToCreate = req.body.Station.numOfSpareBag;
 
       for (i = 0; i < numToCreate; i++) {
-        // create flag bag 
+        // create flag bag
         var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
 
         // Update the flag bag: isSpareBag to true
@@ -530,7 +533,7 @@ module.exports = {
           isSpareBag: true
         }).fetch();
 
-        // Add association 
+        // Add association
         await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
         await Station.addToCollection(req.params.id, 'stationHas').members(flagbag.id);
       }

@@ -23,7 +23,6 @@ module.exports.policies = {
     management: 'isAdmin',
     viewitem: 'isAdmin',
     adminDisplay: 'isAdmin',
-    viewitem: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
     eventreport: 'isAdmin',
@@ -31,6 +30,7 @@ module.exports.policies = {
     stationmgrDisplay: 'isAdmin',
     addflagstn: 'isAdmin',
     station: 'isAdmin',
+    addevent: 'isAdmin',
 
   },
 
