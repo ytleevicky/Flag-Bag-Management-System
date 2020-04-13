@@ -36,10 +36,10 @@ describe('UserController', () => {
   });
 
   describe('#logout()', () => {
-    it('should return status 200 in body', (done) => {
+    it('should return status 302 in body', (done) => {
       supertest(sails.hooks.http.app)
         .get('/user/logout')
-        .expect(200, done);
+        .expect(302, done);
     });
   });
 
