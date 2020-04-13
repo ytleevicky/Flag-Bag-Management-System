@@ -36,6 +36,7 @@ describe('UserController', () => {
   });
 
   describe('#logout()', () => {
+    // We dont expect return 302 since this is an error also. 
     it('should return status 302 in body', (done) => {
       supertest(sails.hooks.http.app)
         .get('/user/logout')
