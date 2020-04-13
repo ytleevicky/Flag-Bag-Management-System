@@ -293,7 +293,7 @@ module.exports = {
       return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
     }
     else {
-      return res.redirect('/station/' + req.session.eventid);
+      return res.status(200).redirect('/station/' + req.session.eventid);
     }
 
 
