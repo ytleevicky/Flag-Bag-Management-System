@@ -9,8 +9,8 @@ module.exports = {
 
   attributes: {
 
-     //旗站名稱
-     sName: {
+    //旗站名稱
+    sName: {
       type: 'String'
     },
 

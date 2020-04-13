@@ -6,7 +6,7 @@ describe('WebController', () => {
   let cookie;
 
 
-  describe(`Policy: #createEvent() Web[dateOfEvent]=2020-09-01, Web[eventLocation]=全港 and Web[eventName]=123456 without login`, () => {
+  describe(`Policy Check: #createEvent() Web[dateOfEvent]=2020-09-01, Web[eventLocation]=全港 and Web[eventName]=123456 without login`, () => {
     it('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
       .post('/web/')
@@ -39,4 +39,5 @@ describe('WebController', () => {
       ], done);
     });
   });
+
 });

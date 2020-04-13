@@ -350,7 +350,7 @@ module.exports = {
 
     const qrcode = require('qrcode-generator');
 
-    var data = typeof req.body.c === "string" ? [req.body.c] : req.body.c;
+    var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
