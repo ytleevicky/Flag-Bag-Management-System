@@ -25,31 +25,44 @@ module.exports.policies = {
     adminDisplay: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
-    eventreport: 'isAdmin',
-    qrCode: 'isAdmin',
     stationmgrDisplay: 'isAdmin',
     addflagstn: 'isAdmin',
     station: 'isAdmin',
     addevent: 'isAdmin',
+    viewStation: 'isAdmin',
+    updateEvent: 'isAdmin',
+    removeEvent: 'isAdmin',
+    updateStation: 'isAdmin',
+    removeUser: 'isAdmin', 
+    removeStation: 'isAdmin',
 
   },
 
   StationController: {
-    
+
     stationmanagement: 'isStationmgr',
     collectBag: 'isStationmgr',
     distributeBag: 'isStationmgr',
-    
+    viewAllBags: 'isStationmgr',
+    printReceipt: 'isStationmgr',
+
   },
 
   VolunteerController: {
     group: 'isAdmin',
     addGroup: 'isAdmin',
+    viewGroup: 'isAdmin',
+    updateGroup: 'isAdmin',
+    removeVolunteer: 'isAdmin',
     individual: 'isAdmin',
     addIndividual: 'isAdmin',
-  
+    viewIndividual: 'isAdmin',
+    updateIndividual: 'isAdmin',
+    print: 'isAdmin',
+    printLabels: 'isAdmin',
+
   }
 
-  
+
 
 };

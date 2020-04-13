@@ -17,27 +17,6 @@ module.exports = {
     return res.json(webs);
   },
 
-  index: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/index', { webs: models });
-
-  },
-
-  location: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/location', { webs: models });
-
-  },
-
-  setting: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/setting', { webs: models });
-
-  },
-
   adminDisplay: async function (req, res) {
 
     req.session.eventid = '';
@@ -302,50 +281,6 @@ module.exports = {
     var web = await Web.findOne(req.session.eventid);
 
     return res.view('station/stationmgrDisplay', { name: web.eventName, go: models.superviseBy, eventid: req.session.eventid });
-
-  },
-
-
-  eventreport: async function (req, res) {
-
-    var models = await Web.find();
-    return res.view('web/eventreport', { webs: models });
-
-  },
-
-  groupandindividual: async function (req, res) {
-
-    var models = await Web.findOne(req.session.eventid);
-    return res.view('web/groupandindividual', { webs: models, name: models.eventName, eventid: req.session.eventid });
-
-  },
-
-  qrCode: async function (req, res) {
-
-    var models = await Web.find();
-
-    var web = await Web.findOne(req.session.eventid);
-    return res.view('web/qrCode', { webs: models, name: web.eventName, eventid: req.session.eventid });
-
-  },
-
-  edituser: async function (req, res) {
-
-    var models = await User.find();
-    return res.view('web/edituser', { user: models });
-
-  },
-
-  generateLabel: async function (req, res) {
-
-    var qrcode = require('qrcode-generator');
-    var qr = qrcode(4, 'L');
-    qr.addData('https//sailsjs.com/');    // data that stored inside the QR code
-    qr.make();
-
-    var models = await Web.findOne(req.session.eventid);
-
-    return res.view('web/generateLabel', { user: models, 'qrsrc': qr.createDataURL() });
 
   },
 

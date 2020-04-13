@@ -27,8 +27,7 @@ module.exports.routes = {
 
   //Use in WebController
   //View information only
-  '/location': 'WebController.location',
-  '/setting': 'WebController.setting',
+
   '/management': 'WebController.management',
 
   '/viewitem/:id': 'WebController.viewitem',
@@ -36,12 +35,6 @@ module.exports.routes = {
   'GET /collectBag': 'StationController.collectBag',
   'POST /station/collectBag': 'StationController.collectBag',
   '/printReceipt/:id': 'StationController.printReceipt',
-
-  '/eventreport': 'WebController.eventreport',
-  '/groupandindividual': 'WebController.groupandindividual',
-
-  '/qrCode': 'WebController.qrCode',
-  '/generateLabel': 'WebController.generateLabel',
 
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
   '/station/:id': 'WebController.station',
