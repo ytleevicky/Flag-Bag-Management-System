@@ -118,6 +118,205 @@ module.exports = {
 
   },
 
+
+  station: async function (req, res) {
+
+    var models = await Web.findOne(req.session.eventid).populate('include', { where: { numOfSpareBag: { '!=': 0 } } });
+    if (!models) { return res.notFound(); }
+
+    var web = await Web.findOne(req.session.eventid);
+
+    return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
+
+  },
+
+
+  updateStation: async function (req, res) {
+
+    var model = await Station.findOne(req.params.id).populate('monitorBy');
+    if (req.method == 'GET') {
+
+      var event = await Web.findOne(req.session.eventid).populate('superviseBy');
+
+      var users = event.superviseBy.filter(u => u.role == 'stationmgr' & u.isSelected == false);
+
+      if (!model) { return res.notFound(); }
+
+      var web = await Web.findOne(req.session.eventid);
+
+      return res.view('station/updateStation', { station: model, eventid: req.session.eventid, name: web.eventName, users: users });
+
+    } else {
+
+      if (!req.body.User || !req.body.Station) { return res.badRequest('Form-data not received.'); }
+
+      sails.bcrypt = require('bcryptjs');
+      const saltRounds = 10;
+
+      var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } } });
+
+      // var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) } });
+
+      var models = await Station.update(req.params.id).set({
+        sName: req.body.Station.sName,
+        sLocation: req.body.Station.sLocation,
+        numOfSpareBag: req.body.Station.numOfSpareBag,
+        // username: req.body.User.username,
+      }).fetch();
+
+      if (models.length > 0) {
+        if (model.monitorBy.length > 0) {
+
+          var previousUser = await Station.findOne(req.params.id).populate('monitorBy');
+
+          await Station.removeFromCollection(req.params.id, 'monitorBy').members(model.monitorBy.map(u => u.id));
+
+          await User.update(previousUser.monitorBy.map(u => u.id)).set({
+            isSelected: false
+          }).fetch();
+
+        }
+
+        await Station.addToCollection(req.params.id, 'monitorBy').members(stationManagers.superviseBy.map(manager => manager.id));
+
+        await User.update(stationManagers.superviseBy.map(u => u.id)).set({
+          isSelected: true
+        }).fetch();
+
+      } else {
+        return res.notFound();
+      }
+
+      // Get all the spareBag within this event
+      var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });
+
+      // Remove association between Event && spareFlagBag
+      await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.comprise.map(bag => bag.id));
+      // Remove association between Station && spareFlagBag
+      await Station.removeFromCollection(req.params.id, 'stationHas').members(existingSpareBag.comprise.map(bag => bag.id));
+
+
+      // No. of spare bag this station has (the updated no.)
+      var numToCreate = req.body.Station.numOfSpareBag;
+
+      for (i = 0; i < numToCreate; i++) {
+        // create flag bag
+        var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+
+        // Update the flag bag: isSpareBag to true
+        await Flagbag.update(flagbag.id).set({
+          isSpareBag: true
+        }).fetch();
+
+        // Add association
+        await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
+        await Station.addToCollection(req.params.id, 'stationHas').members(flagbag.id);
+      }
+
+
+      if (req.wantsJSON) {
+
+        return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
+
+      }
+    }
+
+  },
+
+  removeStation: async function (req, res) {
+    if (req.method == 'GET') { return res.forbidden(); }
+
+    var models = await Station.destroy(req.params.id).fetch();
+
+
+    if (models.length == 0) { return res.notFound(); }
+
+    if (req.wantsJSON) {
+
+      return res.json({ message: '已刪除旗站！', url: '/station/' + req.session.eventid });    // for ajax request
+
+    }
+
+  },
+
+  addflagstn: async function (req, res) {
+
+    if (req.method == 'GET') {
+
+      var user = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr', isSelected: false } });
+
+      var web = await Web.findOne(req.session.eventid);
+
+      var stationList = await Web.findOne(req.session.eventid).populate('include');
+
+      return res.view('station/addflagstn', { go: user.superviseBy, name: web.eventName, eventid: req.session.eventid, adminName: req.session.username, stations: stationList.include });
+
+    }
+
+    var stationManagers = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { username: { in: req.body.User.username.split(',').map(s => s.trim()) } } });
+
+    //var stationManagers = await User.find({ username: { in: req.body.User.username.split(',').map(s => s.trim()) }});
+
+    //var u = await Web.findOne(req.session.eventid).populate('superviseby')
+
+    var station = await Station.create(req.body.Station).fetch();
+
+    // No. of spare bag this station has
+    var numToCreate = req.body.Station.numOfSpareBag;
+
+    for (i = 0; i < numToCreate; i++) {
+      // create flag bag
+      var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+
+      // Update the flag bag: isSpareBag to true
+      await Flagbag.update(flagbag.id).set({
+        isSpareBag: true,
+        bagStatus: '未派發'
+      }).fetch();
+
+      // Add association
+      await Web.addToCollection(req.session.eventid, 'comprise').members(flagbag.id);
+      await Station.addToCollection(station.id, 'stationHas').members(flagbag.id);
+    }
+
+
+    await User.update(stationManagers.superviseBy.map(manager => manager.id)).set({
+      isSelected: true
+    }).fetch();
+
+    await Station.addToCollection(station.id, 'inside').members(req.session.eventid); // add station to the event
+
+    await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.superviseBy.map(manager => manager.id));
+
+
+    if (req.wantsJSON) {
+      return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
+    }
+    else {
+      return res.redirect('/station/' + req.session.eventid);
+    }
+
+
+  },
+
+  viewStation: async function (req, res) {
+
+    var web = await Web.findOne(req.session.eventid);
+
+    var station = await Station.findOne(req.params.id);
+
+    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { sName: station.sName } });
+
+    var volunteer = await Station.findOne(sta.include[0].id).populate('has', { where: { isContacter: false } });
+
+    var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
+
+    console.log(stationMgr.monitorBy);
+
+    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy });
+
+  },
+
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
 

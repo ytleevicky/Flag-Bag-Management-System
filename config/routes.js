@@ -37,7 +37,7 @@ module.exports.routes = {
   '/printReceipt/:id': 'StationController.printReceipt',
 
   '/stationmgrDisplay/:id': 'WebController.stationmgrDisplay',
-  '/station/:id': 'WebController.station',
+  '/station/:id': 'StationController.station',
 
   //Adding, deleting and updating WebController info
   '/event/adduser ': 'WebController.adduser',
@@ -46,16 +46,16 @@ module.exports.routes = {
   '/addevent': 'WebController.addevent',
   'POST /web/': 'WebController.addevent',
 
-  'GET /updateStation/:id': 'WebController.updateStation',
-  'PATCH /station/:id': 'WebController.updateStation',
+  'GET /updateStation/:id': 'StationController.updateStation',
+  'PATCH /station/:id': 'StationController.updateStation',
 
   'GET /updateUser/:id': 'WebController.updateUser',
   'PATCH /user/:id': 'WebController.updateUser',
 
-  '/addflagstn': 'WebController.addflagstn',
-  'POST /addflagstn': 'WebController.addflagstn',
+  '/addflagstn': 'StationController.addflagstn',
+  'POST /addflagstn': 'StationController.addflagstn',
 
-  'DELETE /station/:id': 'WebController.removeStation',
+  'DELETE /station/:id': 'StationController.removeStation',
 
   '/adminDisplay': 'WebController.adminDisplay',
   'DELETE /user/:id': 'WebController.removeUser',
@@ -65,7 +65,7 @@ module.exports.routes = {
 
   'DELETE /web/:id': 'WebController.removeEvent',
 
-  '/viewStation/:id': 'WebController.viewStation',
+  '/viewStation/:id': 'StationController.viewStation',
 
   '/stationmanagement': 'StationController.stationmanagement',
   '/viewAllBags/:id': 'StationController.viewAllBags',

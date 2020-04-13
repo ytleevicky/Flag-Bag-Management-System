@@ -23,18 +23,13 @@ module.exports.policies = {
     management: 'isAdmin',
     viewitem: 'isAdmin',
     adminDisplay: 'isAdmin',
+    stationmgrDisplay: 'isAdmin',
     updateUser: 'isAdmin',
     adduser: 'isAdmin',
-    stationmgrDisplay: 'isAdmin',
-    addflagstn: 'isAdmin',
-    station: 'isAdmin',
+    removeUser: 'isAdmin', 
     addevent: 'isAdmin',
-    viewStation: 'isAdmin',
     updateEvent: 'isAdmin',
     removeEvent: 'isAdmin',
-    updateStation: 'isAdmin',
-    removeUser: 'isAdmin', 
-    removeStation: 'isAdmin',
 
   },
 
@@ -45,6 +40,12 @@ module.exports.policies = {
     distributeBag: 'isStationmgr',
     viewAllBags: 'isStationmgr',
     printReceipt: 'isStationmgr',
+
+    station: 'isAdmin',
+    addflagstn: 'isAdmin',
+    viewStation: 'isAdmin',
+    updateStation: 'isAdmin',
+    removeStation: 'isAdmin',
 
   },
 
