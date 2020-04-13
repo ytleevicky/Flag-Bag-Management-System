@@ -39,7 +39,7 @@ module.exports = {
 
     for (i = 0; i < bag.length; i++) {
 
-      if (bag[i].assignTo[0].bagStatus == '已派發' || bag[i].assignTo[0].bagStatus == '未派發' ) {
+      if (bag[i].assignTo[0].bagStatus == '已派發' || bag[i].assignTo[0].bagStatus == '未派發') {
         notReceivedBag = notReceivedBag + 1;
       }
 
@@ -73,16 +73,30 @@ module.exports = {
 
     await Web.findOne(event.inside[0].id).populate('comprise');
 
-    var thisBag = await Flagbag.findOne({ where: { bagNumber: scannedData } });
+    var volunteers = await Station.findOne(req.session.stationid).populate('has', { where: { isContacter: false } });
 
-    if (!thisBag) {
-      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
+    var bag = await Volunteer.find(volunteers.has.map(v => v.id)).populate('assignTo');
+
+    var bagInThisStation = [];
+
+    for (i = 0; i < bag.length; i++) {
+      bagInThisStation.push(bag[i].assignTo[0].bagNumber);
     }
 
-    // Modified the flagbag status
-    await Flagbag.update(thisBag.id).set({
-      bagStatus: '已收'
-    }).fetch();
+    if (bagInThisStation.includes(scannedData)) {
+
+      var web = await User.findOne(req.session.userid).populate('edit');
+
+      var thisBag = await Web.findOne(web.edit[0].id).populate('comprise', { where: { bagNumber: scannedData } });
+
+      // Modified the flagbag status
+      await Flagbag.update(thisBag.comprise[0].id).set({
+        bagStatus: '已收'
+      }).fetch();
+
+    } else {
+      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
+    }
 
     return res.redirect('/printReceipt/' + scannedData);
   },
