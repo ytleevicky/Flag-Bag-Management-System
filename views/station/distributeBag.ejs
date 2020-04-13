@@ -1,10 +1,63 @@
+<title>發旗袋</title>
+
 <body>
+    <div class="bordered2">
+        <h5>發旗袋</h5>
+    </div>
 
     <br>
-    <h2>發旗袋</h2>
-    <br>
-    <br>
 
-       
-  
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.js"></script>
+<form action="/station/collectBag" target="_blank" method="POST">
+    <input id="qrinput" name="qrcode" autofocus />
+    <input type="submit" target="_blank" />
+</form>
+<canvas id="canvas"></canvas>
+<script>
+    var video = document.createElement("video");    // connect to the camera
+    var canvasElement = document.getElementById("canvas");  // able us to show some graphics
+    var canvas = canvasElement.getContext("2d");
+    var qrinput = document.getElementById('qrinput');
+    function drawLine(begin, end, color) {      // help the draw a square box 
+        canvas.beginPath();
+        canvas.moveTo(begin.x, begin.y);
+        canvas.lineTo(end.x, end.y);
+        canvas.lineWidth = 4;
+        canvas.strokeStyle = color;
+        canvas.stroke();
+    }
+    function onVideoFrame() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvasElement.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+            var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
+            if (code) {
+                drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+                drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+                drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+                drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+                qrinput.value = code.data;
+            }
+        }
+        requestAnimationFrame(onVideoFrame);
+    }
+    (async function () {
+        video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+        video.play();
+        requestAnimationFrame(onVideoFrame);
+    })();
+</script>
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>

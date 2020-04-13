@@ -95,7 +95,9 @@ module.exports = {
       }).fetch();
 
     } else {
-      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
+      res.write('<script>alert(\'Error message\');</script>').status(404);
+      // alert('輸入了無效的旗袋號碼！請再次嘗試');
+      // return res.status(401);
     }
 
     return res.redirect('/printReceipt/' + scannedData);
