@@ -77,7 +77,20 @@ module.exports = {
 
   printSpareQR: async function (req, res) {
 
+    const qrcode = require('qrcode-generator');
 
+    console.log("hi");
+    console.log(req.params.id);
+
+    var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true} });
+ 
+    console.log(station.stationHas);
+
+    console.log(station.sName);
+
+    console.log(station);
+
+    return res.view('station/printSpareQR', { StationSpareBag: station.stationHas, 'qrcode': qrcode });
 
   },
 
