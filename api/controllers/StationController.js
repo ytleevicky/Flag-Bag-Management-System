@@ -355,14 +355,7 @@ module.exports = {
 
     await Station.addToCollection(station.id, 'monitorBy').members(stationManagers.superviseBy.map(manager => manager.id));
 
-
-    if (req.wantsJSON) {
-      return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
-    }
-    else {
-      return res.status(200).redirect('/station/' + req.session.eventid);
-    }
-
+    return res.json({ message: '已新增旗站！', url: '/station/' + req.session.eventid });
 
   },
 

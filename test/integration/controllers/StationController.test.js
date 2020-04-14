@@ -75,7 +75,7 @@ describe('StationController', () => {
             .set('Accept', 'text/html,application/xhtml+xml,application/xml')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send('Station[sName]=TSW-S3&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
-            .expect(302).then(() => {
+            .expect(200).then(() => {
               Station.findOne({ where: { sName: 'TSW-S3' } }).then(model => {
                 if (model) {
                   stationID = model.id;
