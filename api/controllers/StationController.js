@@ -90,7 +90,7 @@ module.exports = {
 
     console.log(station);
 
-    return res.view('station/printSpareQR', { StationSpareBag: station.stationHas, 'qrcode': qrcode });
+    return res.view('station/printSpareQR', { StationSpareBag: station.stationHas, 'qrcode': qrcode, stationName: station.sName });
 
   },
 

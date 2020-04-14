@@ -19,6 +19,7 @@
     <% StationSpareBag.forEach(function(model) { %>
     <div style="margin-bottom:1em">
         <h5>後備旗袋號碼: <%= model.bagNumber %></h5>
+        <h5>旗站: <%= stationName %></h5>
 
 
         <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.bagNumber}`); qrsrc.make();%>
