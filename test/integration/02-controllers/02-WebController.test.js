@@ -123,6 +123,54 @@ describe('WebController', () => {
     });
   });
 
+  // deleteEvent
+  describe(`#deleteEvent() delete Web[eventName]=HappyEvent admin1 login`, () => {
+    step('should return 200 "Successfully deleted!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: 'HappyEvent' } }).then(model => {
+            if (!model) {
+              cb(new Error(` { eventName: 'HappyEvent' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Web.findOne({ where: { eventName: 'HappyEvent' } }).then(model => {
+            if (!model) {
+              cb(new Error(` Event { eventName: 'HappyEvent' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .delete('/web/' + eventId)
+            .set('Cookie', cookie)
+            .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200).then(() => {
+              Web.findOne({ where: { eventName: 'HappyEvent' } }).then(model => {
+                if (!model) {
+                  cb();
+                } else {
+                  cb(new Error('Can\'t delete HappyEvent'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
 
 
 });

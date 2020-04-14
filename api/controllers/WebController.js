@@ -167,9 +167,9 @@ module.exports = {
 
       if (models.length == 0) { return res.notFound(); }
 
-    
-        return res.json({ message: '已更新活動摘要！', url: '/viewitem/' + req.params.id });
-      
+
+      return res.json({ message: '已更新活動摘要！', url: '/viewitem/' + req.params.id });
+
     }
 
   },
@@ -181,12 +181,8 @@ module.exports = {
 
     if (models.length == 0) { return res.notFound(); }
 
-    if (req.wantsJSON) {
-      return res.json({ message: '已刪除活動！', url: '/management' });    // for ajax request
-    }
-    else {
-      return res.redirect('/management');
-    }
+
+    return res.json({ message: '已刪除活動！', url: '/management' });    // for ajax request
 
   },
 

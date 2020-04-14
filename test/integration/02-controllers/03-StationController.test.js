@@ -174,7 +174,6 @@ describe('StationController', () => {
             .set('Cookie', cookie)
             .set('Accept', 'text/html,application/xhtml+xml,application/xml')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send('Station[sName]=TSW-S4&Station[numOfSpareBag]=3&Station[sLocation]=HKL&User[username]=stationmgr2')
             .expect(200).then(() => {
               Station.findOne({ where: { sName: 'TSW-S4' } }).then(model => {
                 if (!model) {
