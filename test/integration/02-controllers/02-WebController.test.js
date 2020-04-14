@@ -111,7 +111,7 @@ describe('WebController', () => {
   });
 
   // viewEvent (/management)
-  describe(`#viewEvent() view a particular event with admin1 login`, () => {
+  describe(`#viewEvent() view a all the events with admin1 login`, () => {
     step('should return 200 "Successfully viewed!"', (done) => {
       Async.series([
         function (cb) {

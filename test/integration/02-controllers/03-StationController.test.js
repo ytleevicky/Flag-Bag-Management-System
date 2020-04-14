@@ -196,7 +196,7 @@ describe('StationController', () => {
     });
   });
 
-  // viewStation
+  // viewStation (/station/:id)
   describe(`#viewStation() view all the station in this event with admin1 login`, () => {
     step('should return 200 "Successfully viewed!"', (done) => {
       Async.series([
@@ -219,9 +219,6 @@ describe('StationController', () => {
           supertest(sails.hooks.http.app)
             .get('/station/' + eventId)
             .set('Cookie', cookie)
-            // .set('Accept', 'text/html,application/xhtml+xml,application/xml')
-            // .set('Content-Type', 'application/x-www-form-urlencoded')
-            // .send('Station[sName]=TSW-S3&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
             .expect(200).then(() => {
               Station.find().then(model => {
                 if (model) {
