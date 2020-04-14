@@ -63,6 +63,18 @@ module.exports = {
     return res.view('station/viewAllBags', { stations: models, date: event.inside[0].dateOfEvent, stationName: station.sName });
   },
 
+  viewSpareBags: async function (req, res) {
+
+    var models = await Station.findOne(req.session.stationid).populate('stationHas', {where: { isSpareBag: true }});
+
+    var station = await Station.findOne(req.session.stationid);
+
+    var event = await Station.findOne(req.session.stationid).populate('inside');
+
+    return res.view('station/viewSpareBags', { stations: models.stationHas, date: event.inside[0].dateOfEvent, stationName: station.sName });
+
+  },
+
   collectBag: async function (req, res) {
 
     if (req.method == 'GET') {
@@ -130,7 +142,7 @@ module.exports = {
 
     var spareBags = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
 
-    console.log("Here: ");
+    console.log('Here: ');
     console.log(spareBags.stationHas);
 
 
@@ -159,7 +171,7 @@ module.exports = {
       // res.write('<script>alert(\'Error message\');</script>').status(404);
       // alert('輸入了無效的旗袋號碼！請再次嘗試');
       // return res.status(401);
-      return res.status(401).send("輸入了無效的旗袋號碼！請再次嘗試");
+      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
     }
 
     return res.redirect('/distributeBag');

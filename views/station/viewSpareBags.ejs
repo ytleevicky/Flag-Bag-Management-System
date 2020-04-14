@@ -1,30 +1,26 @@
-<title>旗袋</title>
+<title>後備旗袋</title>
 <div class="bordered2">
     <h5>賣旗日：<%= date %></h5>
     <h5>旗站名稱：<%= stationName %></h5>
 </div>
-
 <br>
 
-<h3>旗袋列表</h3>
+<h3>後備旗袋列表</h3>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr class="table-info">
             <th scope="col">旗袋編號</th>
-            <th scope="col">義工名稱</th>
             <th scope="col">旗袋狀態</th>
         </tr>
     </thead>
 
     <tbody>
-
         <% stations.forEach( function(model) { %>
         <tr>
 
-            <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
-            <td><%= model.vName %></td>
-            <td><%= model.assignTo[0].bagStatus %></td>
+            <td><%= model.bagNumber == "" ? '---' : model.bagNumber %></td>
+            <td><%= model.bagStatus %></td>
 
             <% }); %>
         </tr>
