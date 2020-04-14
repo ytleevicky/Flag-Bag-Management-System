@@ -189,5 +189,47 @@ describe('StationController', () => {
     });
   });
 
+   // viewStation
+   describe(`#viewStation() view all the station in this event with admin1 login`, () => {
+    step('should return 200 "Successfully viewed!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (model) {
+              eventId = model.id;
+            }
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/station/' + eventId)
+            .set('Cookie', cookie)
+            // .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            // .set('Content-Type', 'application/x-www-form-urlencoded')
+            // .send('Station[sName]=TSW-S3&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
+            .expect(200).then(() => {
+              Station.find().then(model => {
+                if (model) {
+                  stationID = model.id;
+                  return cb();
+                }
+                else {
+                  cb(new Error('Can\'t view any station'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
 
 });
