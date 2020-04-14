@@ -84,12 +84,6 @@ module.exports = {
 
     var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true } });
 
-    console.log(station.stationHas);
-
-    console.log(station.sName);
-
-    console.log(station);
-
     return res.view('station/printSpareQR', { StationSpareBag: station.stationHas, 'qrcode': qrcode, stationName: station.sName });
 
   },
@@ -114,6 +108,12 @@ module.exports = {
 
     for (i = 0; i < bag.length; i++) {
       bagInThisStation.push(bag[i].assignTo[0].bagNumber);
+    }
+
+    var spareBags = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
+
+    for (i = 0; i < spareBags.stationHas.length; i++) {
+      bagInThisStation.push(spareBags.stationHas[i].bagNumber);
     }
 
     if (bagInThisStation.includes(scannedData)) {
@@ -156,13 +156,7 @@ module.exports = {
 
     var scannedData = req.body.qrcode;
 
-    console.log(scannedData);
-
     var spareBags = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
-
-    console.log('Here: ');
-    console.log(spareBags.stationHas);
-
 
     var bagInThisStation = [];
 
