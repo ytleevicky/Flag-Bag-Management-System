@@ -24,11 +24,11 @@
     </div>
 
     <script>
-        // self.
+        self.opener.location.reload();
         window.print();
         if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
             // iPad or iPhone
-            window.opener.location.reload();
+            self.opener.location.reload();
             // setInterval(() => {
             //     alert('test');
             //     window.opener.location.reload();
