@@ -37,6 +37,14 @@ describe('StationController', () => {
     });
   });
 
+  // viewSpecificStation
+  describe(`Policy Check: #viewSpecificStation() view Station[sName]=TSW-S1 without login`, () => {
+    step('should return 403 Forbidden', (done) => {
+      supertest(sails.hooks.http.app)
+        .delete('/viewStation/' + stationID)
+        .expect(403, done);
+    });
+  });
 
   // createStation
   describe(`#createStation() Station[sName]=TSW-S3, Station[numOfSpareBag]=6 and Station[sLocation]=HK, User[username]=stationmgr2 with admin1 login`, () => {
@@ -129,9 +137,9 @@ describe('StationController', () => {
               Station.findOne({ where: { sName: 'TSW-S4' } }).then(model => {
                 if (model) {
                   stationID = model.id;
-                  cb();
+                  return cb();
                 } else {
-                  cb(new Error('Can\'t find TSW-S4'));
+                  return cb(new Error('Can\'t find TSW-S4'));
                 }
               });
             });
@@ -177,7 +185,7 @@ describe('StationController', () => {
             .expect(200).then(() => {
               Station.findOne({ where: { sName: 'TSW-S4' } }).then(model => {
                 if (!model) {
-                  cb();
+                  return cb();
                 } else {
                   cb(new Error('Can\'t delete TSW-S4'));
                 }
@@ -216,6 +224,52 @@ describe('StationController', () => {
             // .send('Station[sName]=TSW-S3&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
             .expect(200).then(() => {
               Station.find().then(model => {
+                if (model) {
+                  stationID = model.id;
+                  return cb();
+                }
+                else {
+                  cb(new Error('Can\'t view any station'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
+  // viewSpecificStation (/viewStation/:id)
+  describe(`#viewSpecificStation() view a specific station in this event with admin1 login`, () => {
+    step('should return 200 "Successfully viewed!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (model) {
+              eventId = model.id;
+            }
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Station.findOne({ where: { sName: 'TSW-S1' } }).then(model => {
+            if (model) {
+              stationID = model.id;
+            }
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewStation/' + stationID)
+            .set('Cookie', cookie)
+            .expect(200).then(() => {
+              Station.findOne({ where: { sName: 'TSW-S1' } }).then(model => {
                 if (model) {
                   stationID = model.id;
                   return cb();

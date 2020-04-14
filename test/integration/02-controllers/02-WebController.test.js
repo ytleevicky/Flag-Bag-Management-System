@@ -99,9 +99,9 @@ describe('WebController', () => {
               Web.findOne({ where: { eventName: 'HappyEvent' } }).then(model => {
                 if (model) {
                   eventId = model.id;
-                  cb();
+                  return cb();
                 } else {
-                  cb(new Error('Can\'t find HappyEvent'));
+                  return cb(new Error('Can\'t find HappyEvent'));
                 }
               });
             });
@@ -124,7 +124,7 @@ describe('WebController', () => {
                   return cb();
                 }
                 else {
-                  cb(new Error('Can\'t view any event'));
+                  return cb(new Error('Can\'t view any event'));
                 }
               });
             });
@@ -170,9 +170,9 @@ describe('WebController', () => {
             .expect(200).then(() => {
               Web.findOne({ where: { eventName: 'HappyEvent' } }).then(model => {
                 if (!model) {
-                  cb();
+                  return cb();
                 } else {
-                  cb(new Error('Can\'t delete HappyEvent'));
+                  return cb(new Error('Can\'t delete HappyEvent'));
                 }
               });
             });

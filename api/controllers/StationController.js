@@ -371,7 +371,7 @@ module.exports = {
 
     var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
 
-    console.log(stationMgr.monitorBy);
+    //console.log(stationMgr.monitorBy);
 
     return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy });
 
