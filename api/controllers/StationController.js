@@ -126,20 +126,21 @@ module.exports = {
 
     var scannedData = req.body.qrcode;
 
-    //var event = await Station.findOne(req.session.stationid).populate('inside');
-
-    //await Web.findOne(event.inside[0].id).populate('comprise');
+    console.log(scannedData);
 
     var spareBags = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
-    console.log('Spare bags: '+ spareBags.stationHas[0].bagNumber);
+
+    console.log("Here: ");
+    console.log(spareBags.stationHas);
+
 
     var bagInThisStation = [];
 
-    for (i = 0; i < spareBags.length; i++) {
-      bagInThisStation.push(spareBags[i].stationHas[0].bagNumber);
-    }
+    var count = spareBags.stationHas.length;
 
-    console.log('Fuck 1: '+ bagInThisStation);
+    for (i = 0; i < count; i++) {
+      bagInThisStation.push(spareBags.stationHas[i].bagNumber);
+    }
 
     if (bagInThisStation.includes(scannedData)) {
 
@@ -152,14 +153,16 @@ module.exports = {
         bagStatus: '已派發'
       }).fetch();
 
+      // Alert message (Distribute successfully !!!)
+
     } else {
       // res.write('<script>alert(\'Error message\');</script>').status(404);
       // alert('輸入了無效的旗袋號碼！請再次嘗試');
       // return res.status(401);
-      return res.status(401).send("Sorry NO !!!");
+      return res.status(401).send("輸入了無效的旗袋號碼！請再次嘗試");
     }
 
-    return res.redirect('/printReceipt/' + scannedData);
+    return res.redirect('/distributeBag');
 
   },
 

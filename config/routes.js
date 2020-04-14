@@ -31,7 +31,9 @@ module.exports.routes = {
   '/management': 'WebController.management',
 
   '/viewitem/:id': 'WebController.viewitem',
-  '/distributeBag': 'StationController.distributeBag',
+  'GET /distributeBag': 'StationController.distributeBag',
+  'POST /station/distributeBag': 'StationController.distributeBag',
+
   'GET /collectBag': 'StationController.collectBag',
   'POST /station/collectBag': 'StationController.collectBag',
   '/printReceipt/:id': 'StationController.printReceipt',
