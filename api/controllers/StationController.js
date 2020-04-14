@@ -6,6 +6,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+var printf = require('printf');
+
 module.exports = {
 
   //manage station information(for stationmanagement.ejs)
@@ -95,9 +97,10 @@ module.exports = {
       }).fetch();
 
     } else {
-      res.write('<script>alert(\'Error message\');</script>').status(404);
-      // alert('輸入了無效的旗袋號碼！請再次嘗試');
-      // return res.status(401);
+      // res.write('<script>alert(\'Error message\');</script>').status(404);
+
+      return res.status(401);
+      // .alert('輸入了無效的旗袋號碼！請再次嘗試');
     }
 
     return res.redirect('/printReceipt/' + scannedData);
@@ -115,8 +118,48 @@ module.exports = {
 
   distributeBag: async function (req, res) {
 
-    var models = await Web.find();
-    return res.view('station/distributeBag', { webs: models });
+    if (req.method == 'GET') {
+
+      return res.view('station/distributeBag');
+
+    }
+
+    var scannedData = req.body.qrcode;
+
+    //var event = await Station.findOne(req.session.stationid).populate('inside');
+
+    //await Web.findOne(event.inside[0].id).populate('comprise');
+
+    var spareBags = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
+    console.log('Spare bags: '+ spareBags.stationHas[0].bagNumber);
+
+    var bagInThisStation = [];
+
+    for (i = 0; i < spareBags.length; i++) {
+      bagInThisStation.push(spareBags[i].stationHas[0].bagNumber);
+    }
+
+    console.log('Fuck 1: '+ bagInThisStation);
+
+    if (bagInThisStation.includes(scannedData)) {
+
+      var web = await User.findOne(req.session.userid).populate('edit');
+
+      var thisBag = await Web.findOne(web.edit[0].id).populate('comprise', { where: { bagNumber: scannedData } });
+
+      // Modified the flagbag status
+      await Flagbag.update(thisBag.comprise[0].id).set({
+        bagStatus: '已派發'
+      }).fetch();
+
+    } else {
+      // res.write('<script>alert(\'Error message\');</script>').status(404);
+      // alert('輸入了無效的旗袋號碼！請再次嘗試');
+      // return res.status(401);
+      return res.status(401).send("Sorry NO !!!");
+    }
+
+    return res.redirect('/printReceipt/' + scannedData);
 
   },
 
@@ -269,11 +312,14 @@ module.exports = {
     for (i = 0; i < numToCreate; i++) {
       // create flag bag
       var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
+      // const qrcode = require('qrcode-generator');
+      let code = printf('%06d', flagbag.id);
 
       // Update the flag bag: isSpareBag to true
       await Flagbag.update(flagbag.id).set({
         isSpareBag: true,
-        bagStatus: '未派發'
+        bagStatus: '未派發',
+        bagNumber: code,
       }).fetch();
 
       // Add association
