@@ -37,6 +37,16 @@ describe('WebController', () => {
     });
   });
 
+  // DeleteEvent
+  describe(`Policy Check: #deleteEvent() delete a particular event without login`, () => {
+    step('should return 403 Forbidden', (done) => {
+      supertest(sails.hooks.http.app)
+        .delete('/web/' + eventId)
+        .expect(403, done);
+    });
+  });
+
+
   // createEvent
   describe(`#createEvent() Web[dateOfEvent]=2020-09-01, Web[eventLocation]=全港, Web[eventName]=123456 with admin2 login`, () => {
     step('should return 200 "Successfully created!"', (done) => {
