@@ -73,6 +73,8 @@ module.exports.routes = {
   '/viewAllBags/:id': 'StationController.viewAllBags',
   '/viewSpareBags': 'StationController.viewSpareBags',
 
+  '/printSpareQR/:id': 'StationController.printSpareQR',
+
 
   //export
   '/export_admin': 'WebController.export_admin',

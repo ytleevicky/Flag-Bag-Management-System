@@ -75,6 +75,12 @@ module.exports = {
 
   },
 
+  printSpareQR: async function (req, res) {
+
+
+
+  },
+
   collectBag: async function (req, res) {
 
     if (req.method == 'GET') {
