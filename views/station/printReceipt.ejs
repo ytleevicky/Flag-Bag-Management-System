@@ -24,9 +24,30 @@
     </div>
 
     <script>
-        self.opener.location.reload();
+        // self.
         window.print();
-        window.onfocus = () => window.close();
+        if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
+            // iPad or iPhone
+            window.opener.location.reload();
+            // setInterval(() => {
+            //     alert('test');
+            //     window.opener.location.reload();
+            //     window.close();
+            // }, 500);
+            // setTimeout(() => {
+            //     window.onfocus = () => {
+            //         alert('test')
+            //         window.close();
+            //     }
+            // }, 500);
+        } else {
+            window.onfocus = () => {
+                window.opener.location.reload();
+                window.close();
+            }
+        }
+        
+        
     </script>
 </body>
 

@@ -128,10 +128,9 @@ module.exports = {
       }).fetch();
 
     } else {
-      // res.write('<script>alert(\'Error message\');</script>').status(404);
 
-      return res.status(401);
-      // .alert('輸入了無效的旗袋號碼！請再次嘗試');
+      res.status(401);
+      return res.view('alert',{message:'輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag'});
     }
 
     return res.redirect('/printReceipt/' + scannedData);
@@ -187,10 +186,10 @@ module.exports = {
       // Alert message (Distribute successfully !!!)
 
     } else {
-      // res.write('<script>alert(\'Error message\');</script>').status(404);
-      // alert('輸入了無效的旗袋號碼！請再次嘗試');
-      // return res.status(401);
-      return res.status(401).send('輸入了無效的旗袋號碼！請再次嘗試');
+      
+      res.status(401);
+      return res.view('alert',{message:'輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag'});
+      
     }
 
     return res.redirect('/distributeBag');
