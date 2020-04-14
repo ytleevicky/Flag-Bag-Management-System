@@ -305,11 +305,7 @@ module.exports = {
 
     if (models.length == 0) { return res.notFound(); }
 
-    if (req.wantsJSON) {
-
-      return res.json({ message: '已刪除旗站！', url: '/station/' + req.session.eventid });    // for ajax request
-
-    }
+    return res.json({ message: '已刪除旗站！', url: '/station/' + req.session.eventid });    // for ajax request
 
   },
 
