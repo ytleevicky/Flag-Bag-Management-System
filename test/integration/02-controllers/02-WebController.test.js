@@ -19,8 +19,8 @@ describe('WebController', () => {
     });
   });
 
-   // updateEvent 
-   describe(`Policy Check: #updateEvent() Web[dateOfEvent]=2020-01-18, Web[eventLocation]=全港, Web[eventName]=HappyEvent without login`, () => {
+  // updateEvent 
+  describe(`Policy Check: #updateEvent() Web[dateOfEvent]=2020-01-18, Web[eventLocation]=全港, Web[eventName]=HappyEvent without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .get('/updateEvent/' + eventId)
@@ -28,6 +28,16 @@ describe('WebController', () => {
     });
   });
 
+  // viewEvent 
+  describe(`Policy Check: #viewEvent() view all the events without login`, () => {
+    step('should return 403 Forbidden', (done) => {
+      supertest(sails.hooks.http.app)
+        .get('/management')
+        .expect(403, done);
+    });
+  });
+
+  // createEvent
   describe(`#createEvent() Web[dateOfEvent]=2020-09-01, Web[eventLocation]=全港, Web[eventName]=123456 with admin2 login`, () => {
     step('should return 200 "Successfully created!"', (done) => {
       Async.series([
@@ -82,6 +92,29 @@ describe('WebController', () => {
                   cb();
                 } else {
                   cb(new Error('Can\'t find HappyEvent'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
+  // viewEvent (/management)
+  describe(`#viewEvent() view a particular event with admin1 login`, () => {
+    step('should return 200 "Successfully viewed!"', (done) => {
+      Async.series([
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/management')
+            .set('Cookie', cookie)
+            .expect(200).then(() => {
+              Web.find().then(model => {
+                if (model) {
+                  return cb();
+                }
+                else {
+                  cb(new Error('Can\'t view any event'));
                 }
               });
             });
