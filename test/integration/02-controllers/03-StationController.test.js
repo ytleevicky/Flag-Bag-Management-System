@@ -37,11 +37,20 @@ describe('StationController', () => {
     });
   });
 
+  // viewStation
+  describe(`Policy Check: #viewStation() view all stations in an event without login`, () => {
+    step('should return 403 Forbidden', (done) => {
+      supertest(sails.hooks.http.app)
+        .get('/station/' + eventId)
+        .expect(403, done);
+    });
+  });
+
   // viewSpecificStation
   describe(`Policy Check: #viewSpecificStation() view Station[sName]=TSW-S1 without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
-        .delete('/viewStation/' + stationID)
+        .get('/viewStation/' + stationID)
         .expect(403, done);
     });
   });
