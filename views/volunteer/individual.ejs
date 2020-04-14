@@ -88,11 +88,30 @@
               <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
               <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
               <td><%= model.assignTo[0].bagStatus %></td>
+              
+              <% if (model.assignTo[0].bagStatus == "未派發") { %>
               <td>
                 <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
                 <button type="button" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
-                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success">列印</a>
+                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success" id="printButton">列印</a>
               </td>
+              <% } %>
+
+              <% if (model.assignTo[0].bagStatus == "已收") { %>
+              <td>
+                <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
+                <button type="button" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
+              </td>
+              <% } %>
+
+              <% if (model.assignTo[0].bagStatus == "已派發") { %>
+                <td>
+                <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
+                <button type="button" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
+                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success" id="printButton">再次列印</a>
+              </td>
+              <% }%>
+
               <% }); %>
             </tr>
 
@@ -128,26 +147,6 @@
     var checkboxs = document.getElementsByName(cName);
     for (var i = 0; i < checkboxs.length; i++) { checkboxs[i].checked = obj.checked; }
   }
-
-  // var totalNum = <%- stations.length %>;   // Don't auto-format on this line 
-
-  // function getValue() {
-
-  //   var checks = document.getElementsByClassName('checks');
-  //   var str = '';
-
-  //   for (i = 0; i < totalNum; i++) {
-
-  //     if (checks[i].checked === true) {
-  //       str += checks[i].value + " ";
-  //     }
-
-  //   }
-
-  //   alert(str);
-
-  // }
-
 
   async function deleteVolunteer(id) {
 
