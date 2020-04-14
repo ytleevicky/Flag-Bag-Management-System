@@ -167,13 +167,9 @@ module.exports = {
 
       if (models.length == 0) { return res.notFound(); }
 
-      if (req.wantsJSON) {
+    
         return res.json({ message: '已更新活動摘要！', url: '/viewitem/' + req.params.id });
-      } else {
-        return res.status(200).redirect('/viewitem/' + req.params.id);
-      }
-
-
+      
     }
 
   },

@@ -10,7 +10,7 @@ describe('StationController', () => {
   // Policy Check: 
 
   // createStation
-  describe(`Policy Check: #createStation() Station[sName]=TSW-S2, Station[numOfSpareBag]=6 and Station[sLocation]=HK && User[username]=stationmgr2 without login`, () => {
+  describe(`Policy Check: #createStation() Station[sName]=TSW-S2, Station[numOfSpareBag]=6, Station[sLocation]=HK, User[username]=stationmgr2 without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .post('/addflagstn')
@@ -20,7 +20,7 @@ describe('StationController', () => {
   });
 
   // UpdateStation
-  describe(`Policy Check: #updateStation() Station[sName]=TSW-92, Station[numOfSpareBag]=3 and Station[sLocation]=HKL && User[username]=stationmgr2 without login`, () => {
+  describe(`Policy Check: #updateStation() Station[sName]=TSW-92, Station[numOfSpareBag]=3, Station[sLocation]=HKL, User[username]=stationmgr2 without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .get('/updateStation/' + stationID)
@@ -28,8 +28,8 @@ describe('StationController', () => {
     });
   });
 
-   // DeleteStation
-   describe(`Policy Check: #deleteStation() Station[sName]=TSW-S4, Station[numOfSpareBag]=3, Station[sLocation]=HKL, User[username]=stationmgr2 without login`, () => {
+  // DeleteStation
+  describe(`Policy Check: #deleteStation() Station[sName]=TSW-S4, Station[numOfSpareBag]=3, Station[sLocation]=HKL, User[username]=stationmgr2 without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .delete('/station/' + stationID)
@@ -39,7 +39,7 @@ describe('StationController', () => {
 
 
   // createStation
-  describe(`#createStation() Station[sName]=TSW-S3, Station[numOfSpareBag]=6 and Station[sLocation]=HK && User[username]=stationmgr2 with admin1 login`, () => {
+  describe(`#createStation() Station[sName]=TSW-S3, Station[numOfSpareBag]=6 and Station[sLocation]=HK, User[username]=stationmgr2 with admin1 login`, () => {
     step('should return 200 "Successfully created!"', (done) => {
       Async.series([
         function (cb) {
@@ -91,7 +91,7 @@ describe('StationController', () => {
 
 
   // updateStation
-  describe(`#updateStation() Station[sName]=TSW-93, Station[numOfSpareBag]=3 and Station[sLocation]=HKL && User[username]=stationmgr2 with admin1 login`, () => {
+  describe(`#updateStation() Station[sName]=TSW-S4, Station[numOfSpareBag]=3, Station[sLocation]=HKL, User[username]=stationmgr2 with admin1 login`, () => {
     step('should return 200 "Successfully updated!"', (done) => {
       Async.series([
         function (cb) {
@@ -189,8 +189,8 @@ describe('StationController', () => {
     });
   });
 
-   // viewStation
-   describe(`#viewStation() view all the station in this event with admin1 login`, () => {
+  // viewStation
+  describe(`#viewStation() view all the station in this event with admin1 login`, () => {
     step('should return 200 "Successfully viewed!"', (done) => {
       Async.series([
         function (cb) {
