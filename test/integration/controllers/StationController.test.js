@@ -5,10 +5,13 @@ describe('StationController', () => {
 
   let cookie;
   let eventId;
+  let stationID;
+
+  // Policy Check: 
 
   // createStation
   describe(`Policy Check: #createStation() Station[sName]=TSW-S2, Station[numOfSpareBag]=6 and Station[sLocation]=HK && User[username]=stationmgr2 without login`, () => {
-    it('should return 403 Forbidden', (done) => {
+    step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .post('/addflagstn')
         .send('Station[sName]=TSW-S2&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
@@ -16,8 +19,20 @@ describe('StationController', () => {
     });
   });
 
+  // UpdateStation
+  describe(`Policy Check: #updateStation() Station[sName]=TSW-92, Station[numOfSpareBag]=3 and Station[sLocation]=HKL && User[username]=stationmgr2 without login`, () => {
+    step('should return 403 Forbidden', (done) => {
+      supertest(sails.hooks.http.app)
+        .get('/updateStation/' + stationID)
+        // .send('Station[sName]=TSW-92&Station[numOfSpareBag]=3&Station[sLocation]=HKL&User[username]=stationmgr2')
+        .expect(403, done);
+    });
+  });
+
+
+  // createStation
   describe(`#createStation() Station[sName]=TSW-S3, Station[numOfSpareBag]=6 and Station[sLocation]=HK && User[username]=stationmgr2 with admin1 login`, () => {
-    it('should return 200 "Successfully created!"', (done) => {
+    step('should return 200 "Successfully created!"', (done) => {
       Async.series([
         function (cb) {
           supertest(sails.hooks.http.app)
@@ -31,7 +46,7 @@ describe('StationController', () => {
             });
         },
         function (cb) {
-          Web.findOne({where: {eventName: '齊抗武漢肺炎賣旗活動'} }).then(model => {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
             if (model) {
               eventId = model.id;
             }
@@ -40,12 +55,11 @@ describe('StationController', () => {
         },
         function (cb) {
           supertest(sails.hooks.http.app)
-          .get('/viewitem/'+eventId)
-          .set('Cookie', cookie)
-          .expect(200, cb);
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
         },
-        
-        // Have BUGS --- Could not find the req.session.eventid
+
         function (cb) {
           supertest(sails.hooks.http.app)
             .post('/addflagstn/')
@@ -54,8 +68,9 @@ describe('StationController', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .send('Station[sName]=TSW-S3&Station[numOfSpareBag]=6&Station[sLocation]=HK&User[username]=stationmgr2')
             .expect(302).then(() => {
-              Station.findOne( {where: { sName: 'TSW-S3' }}).then(model => {
+              Station.findOne({ where: { sName: 'TSW-S3' } }).then(model => {
                 if (model) {
+                  stationID = model.id;
                   return cb();
                 }
                 return cb(new Error('Can\'t find TSW-S3'));
@@ -65,5 +80,57 @@ describe('StationController', () => {
       ], done);
     });
   });
+
+
+  // updateStation
+  describe(`#updateStation() Station[sName]=TSW-93, Station[numOfSpareBag]=3 and Station[sLocation]=HKL && User[username]=stationmgr2 with admin1 login`, () => {
+    step('should return 200 "Successfully updated!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (!model) {
+              cb(new Error(` { eventName: '齊抗武漢肺炎賣旗活動' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Station.findOne({ where: { sName: 'TSW-S3' } }).then(model => {
+            if (!model) {
+              cb(new Error(` Station { sName: 'TSW-S3' } not found`));
+            }
+            stationID = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .patch('/station/' + stationID)
+            .set('Cookie', cookie)
+            .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .send('Station[sName]=TSW-S4&Station[numOfSpareBag]=3&Station[sLocation]=HKL&User[username]=stationmgr2')
+            .expect(200).then(() => {
+              Station.findOne({ where: { sName: 'TSW-S4' } }).then(model => {
+                if (model) {
+                  stationID = model.id;
+                  cb();
+                } else {
+                  cb(new Error('Can\'t find TSW-S4'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
 
 });

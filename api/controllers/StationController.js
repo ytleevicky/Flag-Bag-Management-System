@@ -65,7 +65,7 @@ module.exports = {
 
   viewSpareBags: async function (req, res) {
 
-    var models = await Station.findOne(req.session.stationid).populate('stationHas', {where: { isSpareBag: true }});
+    var models = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true } });
 
     var station = await Station.findOne(req.session.stationid);
 
@@ -82,8 +82,8 @@ module.exports = {
     console.log("hi");
     console.log(req.params.id);
 
-    var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true} });
- 
+    var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true } });
+
     console.log(station.stationHas);
 
     console.log(station.sName);
@@ -130,7 +130,7 @@ module.exports = {
     } else {
 
       res.status(401);
-      return res.view('alert',{message:'輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag'});
+      return res.view('alert', { message: '輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag' });
     }
 
     return res.redirect('/printReceipt/' + scannedData);
@@ -186,10 +186,10 @@ module.exports = {
       // Alert message (Distribute successfully !!!)
 
     } else {
-      
+
       res.status(401);
-      return res.view('alert',{message:'輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag'});
-      
+      return res.view('alert', { message: '輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag' });
+
     }
 
     return res.redirect('/distributeBag');
@@ -291,12 +291,8 @@ module.exports = {
         await Station.addToCollection(req.params.id, 'stationHas').members(flagbag.id);
       }
 
+      return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
 
-      if (req.wantsJSON) {
-
-        return res.json({ message: '已更新旗站！', url: '/station/' + req.session.eventid });
-
-      }
     }
 
   },
