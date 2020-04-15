@@ -53,7 +53,7 @@ describe('Flagbag (model) initial data', () => {
     });
   });
 
-  describe('Flagbag isSpareBag', () => {
+  describe('Flagbag isNotSpareBag', () => {
     it('should find Flagbag with status isSpareBag is false', (done) => {
       Flagbag.find({ isSpareBag: false })
                 .then((events) => {
