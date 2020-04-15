@@ -8,7 +8,7 @@ describe('Station (model) initial data', () => {
 
                   if (events.length == 0) {
                     return done(new Error(
-                            'Should return 1 event with eventName -- 齊抗武漢肺炎賣旗活動 ' +
+                            'Should return 1 station with sName -- TSW-S1 ' +
                             'But instead, got: no event found'
                     ));
                   }
@@ -24,7 +24,7 @@ describe('Station (model) initial data', () => {
 
         if (events.length == 0) {
           return done(new Error(
-                        'Should return 1 event with eventName -- 賣得旗所 ' +
+                        'Should return 1 station with sName -- KLT-S1 ' +
                         'But instead, got: no event found'
           ));
         }
