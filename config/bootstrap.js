@@ -85,29 +85,29 @@ module.exports.bootstrap = async function () {
     await Flagbag.createEach([
 
       {
-        isSpareBag: true, isDeleted: false, bagNumber: "001234", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: true, isDeleted: false, bagNumber: '001234', bagStatus: '未派發', isCodePrinted: false,
       },
 
       {
-        isSpareBag: true, isDeleted: false, bagNumber: "002345", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: true, isDeleted: false, bagNumber: '002345', bagStatus: '未派發', isCodePrinted: false,
       },
 
       {
-        isSpareBag: true, isDeleted: false, bagNumber: "009999", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: true, isDeleted: false, bagNumber: '009999', bagStatus: '未派發', isCodePrinted: false,
       },
       {
-        isSpareBag: false, isDeleted: false, bagNumber: "-", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: false, isDeleted: false, bagNumber: '-', bagStatus: '未派發', isCodePrinted: false,
       },
       {
-        isSpareBag: false, isDeleted: false, bagNumber: "--", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: false, isDeleted: false, bagNumber: '--', bagStatus: '未派發', isCodePrinted: false,
       },
       {
-        isSpareBag: false, isDeleted: false, bagNumber: "---", bagStatus: "未派發", isCodePrinted: false,
+        isSpareBag: false, isDeleted: false, bagNumber: '---', bagStatus: '未派發', isCodePrinted: false,
       },
-     
 
 
-    ])
+
+    ]);
 
   }
 
@@ -116,24 +116,24 @@ module.exports.bootstrap = async function () {
     await Volunteer.createEach([
 
       {
-        vName: "Nick", vGroupName: "HKBU CS Department", vGroupAddress: "Kowloon Tong Road", vType: "group",
-        vContact: "98728888", isContacter: true
+        vName: 'Nick', vGroupName: 'HKBU CS Department', vGroupAddress: 'Kowloon Tong Road', vType: 'group',
+        vContact: '98728888', isContacter: true
       },
       {
-        vName: "Jonas Wong", vGroupName: "HKUST BBA Department", vGroupAddress: "Sai Kung Road", vType: "group",
-        vContact: "95552733", isContacter: true
+        vName: 'Jonas Wong', vGroupName: 'HKUST BBA Department', vGroupAddress: 'Sai Kung Road', vType: 'group',
+        vContact: '95552733', isContacter: true
       },
       {
-        vName: "Jimmy Chu", vGroupName: "HKBU CS Department", vGroupAddress: "", vType: "group",
-        vContact: "95587644", isContacter: false
+        vName: 'Jimmy Chu', vGroupName: 'HKBU CS Department', vGroupAddress: '', vType: 'group',
+        vContact: '95587644', isContacter: false
       },
       {
-        vName: "Silvia", vGroupName: "HKUST BBA Department", vGroupAddress: "", vType: "group",
-        vContact: "66234688", isContacter: false
+        vName: 'Silvia', vGroupName: 'HKUST BBA Department', vGroupAddress: '', vType: 'group',
+        vContact: '66234688', isContacter: false
       },
       {
-        vName: "Isaac", vGroupName: "", vGroupAddress: "", vType: "individual",
-        vContact: "64302848", isContacter: false
+        vName: 'Isaac', vGroupName: '', vGroupAddress: '', vType: 'individual',
+        vContact: '64302848', isContacter: false
       }
 
 
@@ -157,11 +157,11 @@ module.exports.bootstrap = async function () {
   const f5 = await Flagbag.findOne({ bagNumber: '--' });        // not assigned yet
   const f6 = await Flagbag.findOne({ bagNumber: '---' });       // not assigned yet
 
-  const vg1 = await Volunteer.findOne({ vName: "Nick" });       // group 
-  const vg2 = await Volunteer.findOne({ vName: "Jonas Wong" }); // group
-  const vi1 = await Volunteer.findOne({ vName: "Jimmy Chu" });  // vol
-  const vi2 = await Volunteer.findOne({ vName: "Silvia" });     // vol
-  const vi3 = await Volunteer.findOne({ vName: "Isaac" });      // vol
+  const vg1 = await Volunteer.findOne({ vName: 'Nick' });       // group
+  const vg2 = await Volunteer.findOne({ vName: 'Jonas Wong' }); // group
+  const vi1 = await Volunteer.findOne({ vName: 'Jimmy Chu' });  // vol
+  const vi2 = await Volunteer.findOne({ vName: 'Silvia' });     // vol
+  const vi3 = await Volunteer.findOne({ vName: 'Isaac' });      // vol
 
   await Web.addToCollection(e.id, 'superviseBy').members(user.id);
   await Web.addToCollection(e.id, 'superviseBy').members(user2.id);
