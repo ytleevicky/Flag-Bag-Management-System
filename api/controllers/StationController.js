@@ -37,6 +37,10 @@ module.exports = {
 
     }
 
+    var spareBag = await Station.findOne(req.session.stationid).populate('stationHas', { where: { bagStatus: '已收' }});
+
+
+
     var notReceivedBag = 0;   // number of flag not yet received
 
     for (i = 0; i < bag.length; i++) {
@@ -47,7 +51,7 @@ module.exports = {
 
     }
 
-    return res.view('station/stationmanagement', { totalBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id, totalReceived: receivedBag, totalNotReceived: notReceivedBag });
+    return res.view('station/stationmanagement', { totalVBag: bag.length, spareBag: station.include[0].numOfSpareBag, date: web.edit[0].dateOfEvent, stationName: station.include[0].sName, stationid: station.include[0].id, VolTotalReceived: receivedBag, SpareTotalReceived: spareBag.stationHas.length, totalNotReceived: notReceivedBag, totalVol: volunteers.has.length });
   },
 
   viewAllBags: async function (req, res) {

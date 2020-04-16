@@ -11,29 +11,26 @@
     <h3>旗站統計</h3>
     <tbody>
       <tr>
-        <th scope="row"><a href="/viewAllBags/<%= stationid %>">旗袋總數</a></th>
-        <td><%= totalBag %></td>
+        <th scope="row">旗袋總數</th>
+        <td><%= (totalVBag) + (spareBag) %></td>
       </tr>
       <tr>
-        <th scope="row">已收</th>
-        <td><%= totalReceived %> / <%= totalBag %> </td>
-      </tr>
-      <tr>
-        <th scope="row">未收</th>
-        <td><%= totalNotReceived %></td>
+        <th scope="row"><a href="/viewAllBags/<%= stationid %>">義工總數</a></th>
+        <td><%= totalVol %></td>
       </tr>
       <tr>
         <th scope="row"><a href="/viewSpareBags">後備</a></th>
         <td><%= spareBag %></td>
       </tr>
-      <!-- <tr>
-        <th scope="row">多收</th>
-        <td> </td>
+      <tr>
+        <th scope="row">已收</th>
+        <td><%= VolTotalReceived + SpareTotalReceived %> / <%= (totalVBag + spareBag) %> </td>
       </tr>
       <tr>
-        <th scope="row">少收</th>
-        <td> </td>
-      </tr> -->
+        <th scope="row">未收</th>
+        <td><%= (totalVBag + spareBag) - (VolTotalReceived + SpareTotalReceived)  %></td>
+      </tr>
+  
     </tbody>
   </table>
 </body>
