@@ -388,7 +388,7 @@ describe('VolunteerController', () => {
             .set('Cookie', cookie)
             .set('Accept', 'text/html,application/xhtml+xml,application/xml')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send('Volunteer[vName]=Nick Hui&Volunteer[vGroupName]=HKUST BBA Department&Station[sLocation]=HKL&User[username]=stationmgr2')
+            .send('Volunteer[vName]=Nick Hui&Volunteer[vGroupName]=HKUST BBA Department&Station[sLocation]=HKL')
             .expect(200).then(() => {
               Volunteer.findOne({ where: { vName: 'Nick Hui', vGroupName: 'HKUST BBA Department' } }).then(model => {
                 if (model) {
@@ -396,6 +396,56 @@ describe('VolunteerController', () => {
                   return cb();
                 } else {
                   return cb(new Error('Can\'t find Nick Hui with HKUST BBA Department'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
+  //UpdateIndividual
+  describe(`#updateIndividual() with admin1 login`, () => {
+    step('should return 200 "Successfully updated!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (!model) {
+              cb(new Error(` { eventName: '齊抗武漢肺炎賣旗活動' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Volunteer.findOne({ where: { vName: 'Isaac', vType: 'individual' } }).then(model => {
+            if (!model) {
+              cb(new Error(` Volunteer { vName: Isaac, vType: individual } not found`));
+            }
+            volunteerID = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .patch('/volunteer/individual/' + volunteerID)
+            .set('Cookie', cookie)
+            .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .send('Volunteer[vName]=Isaac Lam&Volunteer[vContact]=65433333&Station[sLocation]=HKL')
+            .expect(200).then(() => {
+              Volunteer.findOne({ where: { vName: 'Isaac Lam', vContact: '65433333' } }).then(model => {
+                if (model) {
+                  volunteerID = model.id;
+                  return cb();
+                } else {
+                  return cb(new Error('Can\'t find Isaac Lam with contact 65433333'));
                 }
               });
             });

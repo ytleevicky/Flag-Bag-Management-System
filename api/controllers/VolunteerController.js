@@ -119,7 +119,7 @@ module.exports = {
       if (groupModels.length == 0) { return res.notFound(); }
 
       return res.json({ message: '已更新團體！', url: '/viewGroup/' + req.params.id });
-    
+
     }
   },
 
@@ -298,12 +298,8 @@ module.exports = {
 
       if (updateModels.length == 0) { return res.notFound(); }
 
-      if (req.wantsJSON) {
-        return res.json({ message: '已更新個人義工！', url: '/viewIndividual/' + req.params.id });
-      }
-      else {
-        return res.redirect('/viewIndividual/' + req.params.id);
-      }
+      return res.json({ message: '已更新個人義工！', url: '/viewIndividual/' + req.params.id });
+
     }
 
   },
