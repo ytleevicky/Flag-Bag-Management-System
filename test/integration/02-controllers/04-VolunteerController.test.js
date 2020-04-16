@@ -454,5 +454,53 @@ describe('VolunteerController', () => {
     });
   });
 
+  // deleteIndividual
+  describe(`#deleteIndividual() Volunteer[vName]=Silvia with admin1 login`, () => {
+    step('should return 200 "Successfully deleted!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (!model) {
+              cb(new Error(` { eventName: '齊抗武漢肺炎賣旗活動' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Volunteer.findOne({ where: { vName: 'Silvia' } }).then(model => {
+            if (!model) {
+              cb(new Error(` Volunteer { vName: 'Silvia' } not found`));
+            }
+            volunteerID = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .delete('/volunteer/' + volunteerID)
+            .set('Cookie', cookie)
+            .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200).then(() => {
+              Volunteer.findOne({ where: { vName: 'Silvia' } }).then(model => {
+                if (!model) {
+                  return cb();
+                } else {
+                  cb(new Error('Can\'t delete Silvia'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
 
 });

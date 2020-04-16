@@ -143,22 +143,14 @@ module.exports = {
 
       if (models.length == 0) { return res.notFound(); }
 
-      if (req.wantsJSON) {
-
-        return res.json({ message: '已刪除團體義工！', url: '/group/' + req.session.eventid });    // for ajax request
-
-      }
+      return res.json({ message: '已刪除團體義工！', url: '/group/' + req.session.eventid });    // for ajax request
 
     } else {
       // Remove Individual Volunteer
 
       if (models.length == 0) { return res.notFound(); }
 
-      if (req.wantsJSON) {
-
-        return res.json({ message: '已刪除個人義工！', url: '/individual/' + req.session.eventid });    // for ajax request
-
-      }
+      return res.json({ message: '已刪除個人義工！', url: '/individual/' + req.session.eventid });    // for ajax request
 
     }
 
