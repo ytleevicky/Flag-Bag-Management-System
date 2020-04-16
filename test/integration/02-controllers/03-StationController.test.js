@@ -1,3 +1,4 @@
+/* eslint-disable callback-return */
 const supertest = require('supertest');
 const Async = require('async');
 
@@ -7,7 +8,7 @@ describe('StationController', () => {
   let eventId;
   let stationID;
 
-  // Policy Check: 
+  // Policy Check:
 
   // createStation
   describe(`Policy Check: #createStation() Station[sName]=TSW-S2, Station[numOfSpareBag]=6, Station[sLocation]=HK, User[username]=stationmgr2 without login`, () => {
@@ -20,7 +21,7 @@ describe('StationController', () => {
   });
 
   // UpdateStation
-  describe(`Policy Check: #updateStation() Station[sName]=TSW-92, Station[numOfSpareBag]=3, Station[sLocation]=HKL, User[username]=stationmgr2 without login`, () => {
+  describe(`Policy Check: #updateStation() without login`, () => {
     step('should return 403 Forbidden', (done) => {
       supertest(sails.hooks.http.app)
         .get('/updateStation/' + stationID)
