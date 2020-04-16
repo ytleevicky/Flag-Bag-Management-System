@@ -197,7 +197,7 @@ module.exports = {
     if (!models) { return res.notFound(); }
 
     var web = await Web.findOne(req.session.eventid);
-
+    
     return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
 
   },
@@ -371,9 +371,11 @@ module.exports = {
 
     var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
 
-    //console.log(stationMgr.monitorBy);
+    var bag = await Volunteer.find(volunteer.has.map(v => v.id)).populate('assignTo');
 
-    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy });
+
+
+    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy, volBag: bag.length, totalVol: volunteer.has.length });
 
   },
 

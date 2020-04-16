@@ -56,8 +56,18 @@
                         </tr>
 
                         <tr>
+                            <th scope="row">義工總數</th>
+                            <td><%= totalVol %></td>
+                        </tr>
+
+                        <tr>
                             <th scope="row">後備旗袋數目</th>
                             <td><%= stationInfo.numOfSpareBag %></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">旗袋總數</th>
+                            <td><%= (volBag) + (stationInfo.numOfSpareBag) %></td>
                         </tr>
 
 
