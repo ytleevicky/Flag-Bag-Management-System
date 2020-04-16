@@ -243,15 +243,13 @@ module.exports = {
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        username: model.username,
-        role: model.role,
-        mail: model.mail,
-        // flagstn: model.flagstn,
-        // password: model.password,
-        createdby: model.createdby
+        用戶名稱: model.username,
+        用戶身份: model.role,
+        電郵: model.mail,
+        創建人: model.createdby
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Admin_List');
+    XLSX.utils.book_append_sheet(wb, ws, '活動管理員資料');
 
     res.set('Content-disposition', 'attachment; filename=Admin_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
