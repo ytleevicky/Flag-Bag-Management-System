@@ -380,8 +380,6 @@ module.exports = {
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
 
-    //var models = await Station.find();
-
     var station = await Web.findOne(req.session.eventid).populate('include');
 
     var models = station.include;
@@ -391,14 +389,14 @@ module.exports = {
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        sName: model.sName, //旗站位置
-        sLocation: model.sLocation, //賣旗地區
-        //bagNumber: model.numOfBag, //旗袋總數(need to add function)
-        numOfSpareBag: model.numOfSpareBag, //後備旗袋
-        createdby: model.createdby
+        旗站名稱: model.sName, //旗站位置
+        旗站地區: model.sLocation, //賣旗地區
+        // 旗袋總數: models.length, //旗袋總數
+        後備旗袋: model.numOfSpareBag, //後備旗袋
+        創建人: model.createdby
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'Station_List');
+    XLSX.utils.book_append_sheet(wb, ws, '旗站資料');
 
     res.set('Content-disposition', 'attachment; filename=Station_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
@@ -467,17 +465,17 @@ module.exports = {
     var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
 
       return {
-        vName: model.vName,
-        vContact: model.vContact,
-        sName: model.within[0].sName,
-        bagNumber: model.assignTo[0].bagNumber,
-        bagStatus: model.assignTo[0].bagStatus,
+        姓名: model.vName,
+        聯絡電話: model.vContact,
+        旗站名稱: model.within[0].sName,
+        旗袋編號: model.assignTo[0].bagNumber,
+        旗袋狀態: model.assignTo[0].bagStatus,
       };
 
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'vIndividual_List');
+    XLSX.utils.book_append_sheet(wb, ws, '個人義工資料');
 
-    res.set('Content-disposition', 'attachment; filename=vIndividual_List.xlsx');
+    res.set('Content-disposition', 'attachment; filename=IndividualVolunteer_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
@@ -491,20 +489,19 @@ module.exports = {
 
     var volunteers = await Volunteer.find(models.contain.map(w => w.id)).populate('within');
 
-
     var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
 
       return {
-        vGroupName: model.vGroupName,
-        vGroupAddress: model.vGroupAddress,
-        vName: model.vName,
-        vContact: model.vContact,
-        sName: model.within[0].sName,
+        團體姓名: model.vGroupName,
+        團體地址: model.vGroupAddress,
+        負責人名稱: model.vName,
+        聯絡電話: model.vContact,
+        所屬旗站: model.within[0].sName,
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'vGroup_List');
+    XLSX.utils.book_append_sheet(wb, ws, '團體義工資料');
 
-    res.set('Content-disposition', 'attachment; filename=vGroup_List.xlsx');
+    res.set('Content-disposition', 'attachment; filename=GroupVolunteer_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
