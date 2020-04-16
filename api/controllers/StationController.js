@@ -377,9 +377,7 @@ module.exports = {
 
     var bag = await Volunteer.find(volunteer.has.map(v => v.id)).populate('assignTo');
 
-
-
-    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy, volBag: bag.length, totalVol: volunteer.has.length });
+    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy, volBag: bag.length, totalVol: volunteer.has.length, stationid: req.params.id });
 
   },
 
@@ -405,6 +403,29 @@ module.exports = {
     XLSX.utils.book_append_sheet(wb, ws, '旗站資料');
 
     res.set('Content-disposition', 'attachment; filename=Station_List.xlsx');
+    return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
+  },
+
+  export_thisStation: async function (req, res) {
+
+    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { id: req.params.id }})
+
+    var station = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false }});
+
+    var models = station.has;
+
+    var XLSX = require('xlsx');
+    var wb = XLSX.utils.book_new();
+
+    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+      return {
+        義工姓名: model.vName, 
+        聯絡電話: model.vContact,
+      };
+    }));
+    XLSX.utils.book_append_sheet(wb, ws, '旗站-' + sta.include[0].sName + '義工列表');
+
+    res.set('Content-disposition', 'attachment; filename=VolunteerInThisStation.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 

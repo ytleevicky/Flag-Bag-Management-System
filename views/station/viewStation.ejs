@@ -116,7 +116,15 @@
 
                 <% if (volunteerList.length > 0 ) { %>
 
-                <h2>義工列表</h2>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>義工列表</h2>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <a href="/export_thisStation/<%= stationid %>" style="float: right;" class="btn btn-info">匯出義工列表</a>
+                    </div>
+                </div>
 
                 <table class="table table-bordered">
 

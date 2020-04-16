@@ -82,6 +82,7 @@ module.exports.routes = {
   //USE in StationController
   //export in StationController
   '/export_station': 'StationController.export_station',
+  '/export_thisStation/:id': 'StationController.export_thisStation',
   '/export_statman': 'StationController.export_statman',
   '/export_vIndividual': 'StationController.export_vIndividual',
   '/export_group': 'StationController.export_group',
