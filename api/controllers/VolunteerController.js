@@ -251,7 +251,7 @@ module.exports = {
 
       var findGroup = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
 
-      var findIndividual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false', id: req.params.id } });
+      var findIndividual = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: false, id: req.params.id } });
 
       var stationbag = await Volunteer.findOne(req.params.id).populate('assignTo');
 

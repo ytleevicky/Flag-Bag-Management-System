@@ -388,9 +388,9 @@ describe('VolunteerController', () => {
             .set('Cookie', cookie)
             .set('Accept', 'text/html,application/xhtml+xml,application/xml')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send('Volunteer[vName]=Nick Hui&Volunteer[vGroupName]=HKUST BBA Department&Station[sLocation]=HKL')
+            .send('Volunteer[vName]=Nick Hui&Volunteer[vGroupName]=HKUST BBA Department 123&Station[sLocation]=HKL')
             .expect(200).then(() => {
-              Volunteer.findOne({ where: { vName: 'Nick Hui', vGroupName: 'HKUST BBA Department' } }).then(model => {
+              Volunteer.findOne({ where: { vName: 'Nick Hui', vGroupName: 'HKUST BBA Department 123' } }).then(model => {
                 if (model) {
                   volunteerID = model.id;
                   return cb();
@@ -490,6 +490,54 @@ describe('VolunteerController', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .expect(200).then(() => {
               Volunteer.findOne({ where: { vName: 'Silvia' } }).then(model => {
+                if (!model) {
+                  return cb();
+                } else {
+                  cb(new Error('Can\'t delete Silvia'));
+                }
+              });
+            });
+        }
+      ], done);
+    });
+  });
+
+  // deleteGroup
+  describe(`#deleteGroup() Volunteer[vGroupName]=HKBU CS Department with admin1 login`, () => {
+    step('should return 200 "Successfully deleted!"', (done) => {
+      Async.series([
+        function (cb) {
+          Web.findOne({ where: { eventName: '齊抗武漢肺炎賣旗活動' } }).then(model => {
+            if (!model) {
+              cb(new Error(` { eventName: '齊抗武漢肺炎賣旗活動' } not found`));
+            }
+            eventId = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .get('/viewitem/' + eventId)
+            .set('Cookie', cookie)
+            .expect(200, cb);
+        },
+        function (cb) {
+          Volunteer.findOne({ where: { vGroupName: 'HKUST BBA Department', isContacter: true } }).then(model => {
+            if (!model) {
+              cb(new Error(` Volunteer { vGroupName: 'HKUST BBA Department' } not found`));
+            }
+            volunteerID = model.id;
+            cb();
+          });
+        },
+        function (cb) {
+          supertest(sails.hooks.http.app)
+            .delete('/volunteer/' + volunteerID)
+            .set('Cookie', cookie)
+            .set('Accept', 'text/html,application/xhtml+xml,application/xml')
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200).then(() => {
+              Volunteer.findOne({ where: { vGroupName: 'HKUST BBA Department', isContacter: true } }).then(model => {
                 if (!model) {
                   return cb();
                 } else {
