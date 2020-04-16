@@ -433,8 +433,6 @@ module.exports = {
   //export station manager information(for stationmgrDisplay.ejs)
   export_statman: async function (req, res) {
 
-    // var models = await User.find({ role: 'stationmgr' });
-
     var stationmgr = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
 
     var models = stationmgr.superviseBy;
@@ -444,17 +442,15 @@ module.exports = {
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        username: model.username,
-        role: model.role,
-        mail: model.mail,
-        // flagstn: model.flagstn,
-        // password: model.password,
-        createdby: model.createdby
+        用戶名稱: model.username,
+        用戶身份: model.role,
+        電郵: model.mail,
+        創建人: model.createdby
       };
     }));
-    XLSX.utils.book_append_sheet(wb, ws, 'statman_List');
+    XLSX.utils.book_append_sheet(wb, ws, '旗站管理員資料');
 
-    res.set('Content-disposition', 'attachment; filename=statman_List.xlsx');
+    res.set('Content-disposition', 'attachment; filename=StationManager_List.xlsx');
     return res.end(XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
   },
 
