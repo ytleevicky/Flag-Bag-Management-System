@@ -179,10 +179,21 @@ module.exports = {
   removeEvent: async function (req, res) {
     if (req.method == 'GET') { return res.forbidden(); }
 
+    var users = await Web.findOne(req.params.id).populate('superviseBy');
+    await User.destroy(users.superviseBy.map(u => u.id)).fetch();
+
+    var stations = await Web.findOne(req.params.id).populate('include');
+    await Station.destroy(stations.include.map(s => s.id)).fetch();
+
+    var volunteers = await Web.findOne(req.params.id).populate('contain');
+    await Volunteer.destroy(volunteers.contain.map(v => v.id)).fetch();
+
+    var bags = await Web.findOne(req.params.id).populate('comprise');
+    await Flagbag.destroy(bags.comprise.map(b => b.id)).fetch();
+
     var models = await Web.destroy(req.params.id).fetch();
 
     if (models.length == 0) { return res.notFound(); }
-
 
     return res.json({ message: '已刪除活動！', url: '/management' });    // for ajax request
 
