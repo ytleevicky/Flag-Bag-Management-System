@@ -23,7 +23,7 @@
         <tr>
 
             <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
-            <td><%= model.vName %></td>
+            <td><a href="tel:<%= model.vContact %>"><%= model.vName %></a></td>
             <td><%= model.assignTo[0].bagStatus %></td>
 
             <% }); %>
