@@ -266,6 +266,10 @@ module.exports = {
       // Get all the spareBag within this event
       var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });
 
+      await Flagbag.update(existingSpareBag.comprise.map(e => e.id)).set({
+        isDeleted: true
+      }).fetch();
+
       // Remove association between Event && spareFlagBag
       await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.comprise.map(bag => bag.id));
       // Remove association between Station && spareFlagBag
@@ -384,19 +388,20 @@ module.exports = {
   //export event data into excel file(.xlsx format)(for station.ejs)
   export_station: async function (req, res) {
 
-    var station = await Web.findOne(req.session.eventid).populate('include');
+    var models = await Web.findOne(req.session.eventid).populate('include');
 
-    var models = station.include;
+    var volunteers = await Station.find(models.include.map(w => w.id)).populate('has', { where: { isContacter: false }});
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
-    var ws = XLSX.utils.json_to_sheet(models.map(model => {
+    var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
       return {
-        旗站名稱: model.sName, //旗站位置
-        旗站地區: model.sLocation, //賣旗地區
-        // 旗袋總數: models.length, //旗袋總數
-        後備旗袋: model.numOfSpareBag, //後備旗袋
+        旗站名稱: model.sName, 
+        旗站地區: model.sLocation, 
+        義工總數: model.has.length, 
+        後備旗袋: model.numOfSpareBag, 
+        旗袋總數: (model.has.length + model.numOfSpareBag), 
         創建人: model.createdby
       };
     }));
