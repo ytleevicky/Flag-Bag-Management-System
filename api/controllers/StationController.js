@@ -193,16 +193,15 @@ module.exports = {
         bagStatus: '已派發'
       }).fetch();
 
-      // Alert message (Distribute successfully !!!)
+      res.status(200);
+      return res.view('alert', { message: '成功派發旗袋', url: '/distributeBag' });
 
     } else {
 
       res.status(401);
-      return res.view('alert', { message: '輸入了無效的旗袋號碼！請再次嘗試', url: '/collectBag' });
+      return res.view('alert', { message: '輸入了無效的旗袋號碼！請再次嘗試', url: '/distributeBag' });
 
     }
-
-    return res.redirect('/distributeBag');
 
   },
 
