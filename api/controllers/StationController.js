@@ -37,7 +37,7 @@ module.exports = {
 
     }
 
-    var spareBag = await Station.findOne(req.session.stationid).populate('stationHas', { where: { bagStatus: '已收' }});
+    var spareBag = await Station.findOne(req.session.stationid).populate('stationHas', { where: { bagStatus: '已收' } });
 
 
 
@@ -83,12 +83,24 @@ module.exports = {
 
     const qrcode = require('qrcode-generator');
 
-    console.log("hi");
-    console.log(req.params.id);
+    var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true, isDeleted: false } });
+   
+    for (i = 0; i < station.stationHas.length; i++) {
 
-    var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true } });
+      let code = printf('%06d', station.stationHas[i].id);
 
-    return res.view('station/printSpareQR', { StationSpareBag: station.stationHas, 'qrcode': qrcode, stationName: station.sName });
+      await Flagbag.update(station.stationHas[i].id).set({
+        bagNumber: code,
+        bagStatus: '未派發',
+        isCodePrinted: true,
+        codePrintedTime: station.stationHas[i].updatedAt,
+      }).fetch();
+
+    }
+
+    var updatedStation = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true, isDeleted: false } });
+
+    return res.view('station/printSpareQR', { StationSpareBag: updatedStation.stationHas, 'qrcode': qrcode, stationName: station.sName });
 
   },
 
@@ -201,7 +213,7 @@ module.exports = {
     if (!models) { return res.notFound(); }
 
     var web = await Web.findOne(req.session.eventid);
-    
+
     return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
 
   },
@@ -263,17 +275,17 @@ module.exports = {
         return res.notFound();
       }
 
-      // Get all the spareBag within this event
-      var existingSpareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true } });
+      // Get all the spareBag within this station
+      var existingSpareBag = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true } });
 
-      await Flagbag.update(existingSpareBag.comprise.map(e => e.id)).set({
+      await Flagbag.update(existingSpareBag.stationHas.map(e => e.id)).set({
         isDeleted: true
       }).fetch();
 
       // Remove association between Event && spareFlagBag
-      await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.comprise.map(bag => bag.id));
+      await Web.removeFromCollection(req.session.eventid, 'comprise').members(existingSpareBag.stationHas.map(bag => bag.id));
       // Remove association between Station && spareFlagBag
-      await Station.removeFromCollection(req.params.id, 'stationHas').members(existingSpareBag.comprise.map(bag => bag.id));
+      await Station.removeFromCollection(req.params.id, 'stationHas').members(existingSpareBag.stationHas.map(bag => bag.id));
 
 
       // No. of spare bag this station has (the updated no.)
@@ -390,18 +402,18 @@ module.exports = {
 
     var models = await Web.findOne(req.session.eventid).populate('include');
 
-    var volunteers = await Station.find(models.include.map(w => w.id)).populate('has', { where: { isContacter: false }});
+    var volunteers = await Station.find(models.include.map(w => w.id)).populate('has', { where: { isContacter: false } });
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
 
     var ws = XLSX.utils.json_to_sheet(volunteers.map(model => {
       return {
-        旗站名稱: model.sName, 
-        旗站地區: model.sLocation, 
-        義工總數: model.has.length, 
-        後備旗袋: model.numOfSpareBag, 
-        旗袋總數: (model.has.length + model.numOfSpareBag), 
+        旗站名稱: model.sName,
+        旗站地區: model.sLocation,
+        義工總數: model.has.length,
+        後備旗袋: model.numOfSpareBag,
+        旗袋總數: (model.has.length + model.numOfSpareBag),
         創建人: model.createdby
       };
     }));
@@ -413,9 +425,9 @@ module.exports = {
 
   export_thisStation: async function (req, res) {
 
-    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { id: req.params.id }})
+    var sta = await Web.findOne(req.session.eventid).populate('include', { where: { id: req.params.id } })
 
-    var station = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false }});
+    var station = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
 
     var models = station.has;
 
@@ -424,7 +436,7 @@ module.exports = {
 
     var ws = XLSX.utils.json_to_sheet(models.map(model => {
       return {
-        義工姓名: model.vName, 
+        義工姓名: model.vName,
         聯絡電話: model.vContact,
       };
     }));

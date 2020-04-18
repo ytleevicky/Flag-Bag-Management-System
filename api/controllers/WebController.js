@@ -58,10 +58,12 @@ module.exports = {
     var bag = await Web.findOne(req.session.eventid).populate('comprise');
     var nBag = bag.comprise.length;
 
+    var spareBag = await Web.findOne(req.session.eventid).populate('comprise', { where: { isSpareBag: true, isDeleted: false  }});
+
     var group = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group', isContacter: 'true' } });
     var nGroup = group.contain.length;
 
-    return res.view('web/viewitem', { webs: models, eventid: req.session.eventid, numOfStation: nStation, numOfVol: nVol, numOfStationmgr: nUser, numOfBag: nBag, numOfGroup: nGroup });
+    return res.view('web/viewitem', { webs: models, eventid: req.session.eventid, numOfStation: nStation, numOfVol: nVol, numOfStationmgr: nUser, numOfBag: nBag, numOfGroup: nGroup, numOfSpareBag: spareBag.comprise.length });
 
   },
 
