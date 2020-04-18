@@ -212,9 +212,11 @@ module.exports = {
     var models = await Web.findOne(req.session.eventid).populate('include', { where: { numOfSpareBag: { '!=': 0 } } });
     if (!models) { return res.notFound(); }
 
+    var sta = await Station.find(models.include.map(s => s.id)).populate('has', { where: { isContacter: false }});
+
     var web = await Web.findOne(req.session.eventid);
 
-    return res.view('station/station', { name: web.eventName, go: models.include, eventid: req.session.eventid });
+    return res.view('station/station', { name: web.eventName, go: sta, eventid: req.session.eventid });
 
   },
 
