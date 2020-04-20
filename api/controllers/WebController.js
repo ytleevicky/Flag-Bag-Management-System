@@ -83,7 +83,13 @@ module.exports = {
           where: { role: 'admin' }
         });
 
-        return res.view('web/adduser', { eventid: '', users: adminList });
+        var stationmgrList = await User.find({
+          where: { role: 'stationmgr' }
+        });
+
+        let combine = adminList.concat(stationmgrList);
+
+        return res.view('web/adduser', { eventid: '', users: combine });
 
 
       } else {
@@ -91,9 +97,17 @@ module.exports = {
 
         //var stationmgrList = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
 
-        var stationmgrList = await User.find({ where: { role: 'stationmgr' } });
+        var adminList = await User.find({
+          where: { role: 'admin' }
+        });
 
-        return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models, users: stationmgrList });
+        var stationmgrList = await User.find({
+          where: { role: 'stationmgr' }
+        });
+
+        let combine = adminList.concat(stationmgrList);
+
+        return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models, users: combine });
 
       }
     }
