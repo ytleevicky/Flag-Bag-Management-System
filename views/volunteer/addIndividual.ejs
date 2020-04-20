@@ -48,26 +48,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-sm-2">所屬團體</label>
-            <div class="col-sm-10">
-                <select class="form-control" name="Volunteer[vGroupName]" required>
-                    <option value="">請選擇所屬團體：</option>
-                    <!-- <% stations.forEach( function(model) { %>
-                    <% if(model.vGroupName  != "") { %>
-                        <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
-                    <% } %>
-                    <% }); %> -->
-                    <option value="">個人</option>
-                    <% groups.forEach( function(model) { %>
-
-                    <option value="<%= model.vGroupName %>"><%= model.vGroupName %></option>
-
-                    <% }); %>
-                </select>
-            </div>
-        </div>
-
+        <input type="hidden" id="inputCreatedBy" name="Volunteer[vType]" value="individual">
 
         <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
 

@@ -158,8 +158,8 @@ module.exports.bootstrap = async function () {
   const f5 = await Flagbag.findOne({ bagNumber: '--' });        // not assigned yet
   const f6 = await Flagbag.findOne({ bagNumber: '---' });       // not assigned yet
 
-  const vg1 = await Volunteer.findOne({ vContacter: 'Nick' });       // group
-  const vg2 = await Volunteer.findOne({ vContacter: 'Jonas Wong' }); // group
+  // const vg1 = await Volunteer.findOne({ vContacter: 'Nick' });       // group
+  // const vg2 = await Volunteer.findOne({ vContacter: 'Jonas Wong' }); // group
   const vi1 = await Volunteer.findOne({ vName: 'Jimmy Chu' });  // vol
   const vi2 = await Volunteer.findOne({ vName: 'Silvia' });     // vol
   const vi3 = await Volunteer.findOne({ vName: 'Isaac' });      // vol
@@ -178,13 +178,13 @@ module.exports.bootstrap = async function () {
   await Station.addToCollection(s1.id, 'monitorBy').members(user.id);
   await Station.addToCollection(s1.id, 'monitorBy').members(user2.id);
   await Station.addToCollection(s2.id, 'monitorBy').members(user3.id);
-  await Web.addToCollection(e.id, 'contain').members(vg1.id);
-  await Web.addToCollection(e.id, 'contain').members(vg2.id);
+  // await Web.addToCollection(e.id, 'contain').members(vg1.id);
+  // await Web.addToCollection(e.id, 'contain').members(vg2.id);
   await Web.addToCollection(e.id, 'contain').members(vi1.id);
   await Web.addToCollection(e.id, 'contain').members(vi2.id);
   await Web.addToCollection(e.id, 'contain').members(vi3.id);
-  await Volunteer.addToCollection(vg1.id, 'within').members(s1.id);
-  await Volunteer.addToCollection(vg2.id, 'within').members(s2.id);
+  // await Volunteer.addToCollection(vg1.id, 'within').members(s1.id);
+  // await Volunteer.addToCollection(vg2.id, 'within').members(s2.id);
   await Volunteer.addToCollection(vi1.id, 'within').members(s1.id);
   await Volunteer.addToCollection(vi2.id, 'within').members(s1.id);
   await Volunteer.addToCollection(vi3.id, 'within').members(s2.id);

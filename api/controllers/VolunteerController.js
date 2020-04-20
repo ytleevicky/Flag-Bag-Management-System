@@ -252,16 +252,6 @@ module.exports = {
 
     var individual = await Volunteer.create(req.body.Volunteer).fetch();
 
-    if (req.body.Volunteer.vGroupName == '') {
-
-      await Volunteer.update(individual.id).set({ vType: 'individual' }).fetch();
-
-    } else {
-
-      await Volunteer.update(individual.id).set({ vType: 'group' }).fetch();
-
-    }
-
     var flagbag = await Flagbag.create(req.body.Flagbag).fetch();
 
     await Flagbag.update(flagbag.id).set({
