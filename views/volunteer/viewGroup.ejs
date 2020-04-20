@@ -98,7 +98,8 @@
                                     </div>
                                 </th>
                                 <th scope="col">義工姓名</th>
-                                <th scope="col">聯絡電話</th>
+                                <th scope="col">旗袋編號</th>
+                                <th scope="col">旗袋狀態</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -111,7 +112,8 @@
                                     </div>
                                 </th>
                                 <td><%= model.vName %></td>
-                                <td><%= model.vContact %></td>
+                                <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+                                <td><%= model.assignTo[0].bagStatus %></td>
 
                                 <% }); %>
                             </tr>

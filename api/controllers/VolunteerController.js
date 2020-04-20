@@ -64,6 +64,10 @@ module.exports = {
 
       var bag = await Flagbag.create().fetch();
 
+      await Flagbag.update(bag.id).set({
+        bagStatus: '未派發'
+      }).fetch();
+
       await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
 
     }
@@ -97,9 +101,11 @@ module.exports = {
 
     var stationInfo = await Volunteer.findOne(vol.contain[0].id).populate('within');
 
-    var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.contain[0].vGroupName, isContacter: false } });
+    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.contain[0].vGroupName, isContacter: false } });
 
-    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers.contain, group: vol.contain[0], inGroup: req.params.id });
+    var getVolunteers = await Volunteer.find(model.contain.map(v => v.id)).populate('within').populate('assignTo');
+
+    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers, group: vol.contain[0], inGroup: req.params.id });
 
   },
 
@@ -193,6 +199,10 @@ module.exports = {
         await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
 
         var bag = await Flagbag.create().fetch();
+
+        await Flagbag.update(bag.id).set({
+          bagStatus: '未派發'
+        }).fetch();
 
         await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
 
