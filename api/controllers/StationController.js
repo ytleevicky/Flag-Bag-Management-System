@@ -539,7 +539,8 @@ module.exports = {
       return {
         團體姓名: model.vGroupName,
         團體地址: model.vGroupAddress,
-        負責人名稱: model.vName,
+        團體義工總人數: model.totalGroupNumber,
+        負責人名稱: model.vContacter,
         聯絡電話: model.vContact,
         所屬旗站: model.within[0].sName,
       };
