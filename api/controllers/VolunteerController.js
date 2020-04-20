@@ -115,8 +115,6 @@ module.exports = {
 
     if (req.method == 'GET') {
 
-      // var models = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'group'}});
-
       var models = await Volunteer.findOne(req.params.id).populate('within');
 
       if (!models) { return res.notFound(); }
@@ -139,20 +137,30 @@ module.exports = {
         vGroupName: req.body.Volunteer.vGroupName,
         vGroupAddress: req.body.Volunteer.vGroupAddress,
         vContacter: req.body.Volunteer.vContacter,
-        vContact: req.body.Volunteer.vContact
+        vContact: req.body.Volunteer.vContact,
+        totalGroupNumber: req.body.Volunteer.totalGroupNumber
       }).fetch();
 
       var newStationName = req.body.Station.sName;
 
       var station = await Web.findOne(req.session.eventid).populate('include', { where: { sName: newStationName } });
 
-      console.log(station.include[0].id);
-
       await Volunteer.removeFromCollection(groupLeader[0].id, 'within').members(stationName.within[0].id);
 
       await Volunteer.addToCollection(groupLeader[0].id, 'within').members(station.include[0].id);
 
       var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: groupBefore.contain[0].vGroupName, isContacter: false } });
+
+      var bagsNeedToBeDeleted = await Volunteer.find(getVolunteers.contain.map(v => v.id)).populate('assignTo');
+
+
+      for (i = 0; i < getVolunteers.contain.length; i++) {
+
+        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'assignTo').members(bagsNeedToBeDeleted[i].assignTo[0].id);
+
+        await Flagbag.destroy(bagsNeedToBeDeleted[i].assignTo[0].id).fetch();
+
+      }
 
       for (i = 0; i < getVolunteers.contain.length; i++) {
 
@@ -183,6 +191,10 @@ module.exports = {
 
         await Volunteer.addToCollection(groupV.id, 'in').members(req.session.eventid);
         await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+
+        var bag = await Flagbag.create().fetch();
+
+        await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
 
       }
 
@@ -385,9 +397,9 @@ module.exports = {
 
     var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
 
-    if(req.body.c == undefined){
+    if (req.body.c == undefined) {
       res.status(401);
-      return res.view('alert', { message: '請先選擇列印項目', url: '/individual/'+ req.session.eventid });
+      return res.view('alert', { message: '請先選擇列印項目', url: '/individual/' + req.session.eventid });
     }
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
@@ -418,9 +430,9 @@ module.exports = {
 
     var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
 
-    if(req.body.c == undefined){
+    if (req.body.c == undefined) {
       res.status(401);
-      return res.view('alert', { message: '請先選擇列印項目', url: '/viewGroup/'+ req.params.id });
+      return res.view('alert', { message: '請先選擇列印項目', url: '/viewGroup/' + req.params.id });
     }
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
