@@ -38,6 +38,17 @@ module.exports = {
       type: 'boolean'
     },
 
+    totalGroupNumber: {
+      type: 'number'
+    },
+
+
+    vContacter: {    //use in individual.ejs, group.ejs
+      type: 'string'
+    },
+
+    
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝

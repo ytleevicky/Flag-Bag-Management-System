@@ -59,7 +59,7 @@
                         </tr>
                         <tr>
                             <th scope="row">負責人名稱 </th>
-                            <td><%= group.vName %></td>
+                            <td><%= group.vContacter %></td>
                         </tr>
                         <tr>
                             <th scope="row">聯絡電話</h>
@@ -82,8 +82,6 @@
                         <tr>
                             <th scope="col">義工姓名</th>
                             <th scope="col">聯絡電話</th>
-                            <th scope="col">旗站名稱</th>
-                            <th scope="col">編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,10 +90,7 @@
                         <tr>
                             <td><%= model.vName %></td>
                             <td><%= model.vContact %></td>
-                            <td><%= model.within[0].sName %></td>
-                            <td>
-                                <a href='/updateIndividual/<%= model.id %>' class="btn btn-primary">編輯</a>
-                            </td>
+                            
                             <% }); %>
                         </tr>
 

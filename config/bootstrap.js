@@ -115,20 +115,21 @@ module.exports.bootstrap = async function () {
 
     await Volunteer.createEach([
 
+      // {
+      //   vContacter: 'Nick', vGroupName: 'HKBU CS Department', vGroupAddress: 'Kowloon Tong Road', vType: 'group',
+      //   vContact: '98728888', isContacter: true,
+      //    totalGroupNumber: 5
+      // },
+      // {
+      //   vContacter: 'Jonas Wong', vGroupName: 'HKUST BBA Department', vGroupAddress: 'Sai Kung Road', vType: 'group',
+      //   vContact: '95552733', isContacter: true, totalGroupNumber: 3
+      // },
       {
-        vName: 'Nick', vGroupName: 'HKBU CS Department', vGroupAddress: 'Kowloon Tong Road', vType: 'group',
-        vContact: '98728888', isContacter: true
-      },
-      {
-        vName: 'Jonas Wong', vGroupName: 'HKUST BBA Department', vGroupAddress: 'Sai Kung Road', vType: 'group',
-        vContact: '95552733', isContacter: true
-      },
-      {
-        vName: 'Jimmy Chu', vGroupName: 'HKBU CS Department', vGroupAddress: '', vType: 'group',
+        vName: 'Jimmy Chu', vGroupName: '', vGroupAddress: '', vType: 'individual',
         vContact: '95587644', isContacter: false
       },
       {
-        vName: 'Silvia', vGroupName: 'HKUST BBA Department', vGroupAddress: '', vType: 'group',
+        vName: 'Silvia', vGroupName: '', vGroupAddress: '', vType: 'individual',
         vContact: '66234688', isContacter: false
       },
       {
@@ -157,8 +158,8 @@ module.exports.bootstrap = async function () {
   const f5 = await Flagbag.findOne({ bagNumber: '--' });        // not assigned yet
   const f6 = await Flagbag.findOne({ bagNumber: '---' });       // not assigned yet
 
-  const vg1 = await Volunteer.findOne({ vName: 'Nick' });       // group
-  const vg2 = await Volunteer.findOne({ vName: 'Jonas Wong' }); // group
+  const vg1 = await Volunteer.findOne({ vContacter: 'Nick' });       // group
+  const vg2 = await Volunteer.findOne({ vContacter: 'Jonas Wong' }); // group
   const vi1 = await Volunteer.findOne({ vName: 'Jimmy Chu' });  // vol
   const vi2 = await Volunteer.findOne({ vName: 'Silvia' });     // vol
   const vi3 = await Volunteer.findOne({ vName: 'Isaac' });      // vol

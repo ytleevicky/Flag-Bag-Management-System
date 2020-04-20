@@ -35,17 +35,55 @@ module.exports = {
       return res.view('volunteer/addGroup', { eventid: req.session.eventid, name: web.eventName, stations: stationList.include, groups: groupList.contain });
     }
 
-    var group = await Volunteer.create(req.body.Volunteer).fetch();
+    var station = await Web.findOne(req.session.eventid).populate('include', { where: { sName: req.body.Station.sName } });
 
-    await Volunteer.addToCollection(group.id, 'in').members(req.session.eventid);      // Add a Volunteer to that particular event
+    var groupNum = req.body.Volunteer.totalGroupNumber;
+    var groupName = req.body.Volunteer.vGroupName;
+    var groupAdd = req.body.Volunteer.vGroupAddress;
+    var contacterName = req.body.leaderName;
+    var contactNumber = req.body.leaderContact;
 
-    var station = req.body.Station.sName;
+    for (i = 1; i <= groupNum; i++) {
 
-    var stat = await Station.find({ where: { sName: station } });
-    var json = JSON.parse(JSON.stringify(stat));
-    var stationid = json[0].id;     // To get the stationid
+      var groupV = await Volunteer.create().fetch();
 
-    await Volunteer.addToCollection(group.id, 'within').members(stationid);   // Add volunteer to that particular station
+      await Volunteer.update(groupV.id).set({
+        vName: req.body.Volunteer.vGroupName + ' - 義工' + (i),
+        vGroupName: groupName,
+        vGroupAddress: groupAdd,
+        vContacter: contacterName,
+        vContact: contactNumber,
+        vType: 'group',
+        totalGroupNumber: groupNum,
+        isContacter: false
+      }).fetch();
+
+      await Web.addToCollection(req.session.eventid, 'contain').members(groupV.id);   // Add volunteer to that particular event
+
+      await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+
+      var bag = await Flagbag.create().fetch();
+
+      await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
+
+    }
+
+    var groupLeader = await Volunteer.create(req.body.Volunteer).fetch();
+
+    await Volunteer.update(groupLeader.id).set({
+      vGroupName: groupName,
+      vGroupAddress: groupAdd,
+      vContacter: contacterName,
+      vContact: contactNumber,
+      vType: 'group',
+      totalGroupNumber: groupNum,
+      isContacter: true
+    }).fetch();
+
+    await Volunteer.addToCollection(groupLeader.id, 'in').members(req.session.eventid);
+
+    await Volunteer.addToCollection(groupLeader.id, 'within').members(station.include[0].id);
+
 
     return res.json({ message: '已新增團體！', url: '/group/' + req.session.eventid });
 
@@ -55,13 +93,13 @@ module.exports = {
 
     var web = await Web.findOne(req.session.eventid);
 
-    var groupVolunteer = await Volunteer.findOne(req.params.id);
+    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: req.params.id } });
 
-    var stationInfo = await Volunteer.findOne(req.params.id).populate('within');
+    var stationInfo = await Volunteer.findOne(vol.contain[0].id).populate('within');
 
-    var volunteers = await Volunteer.find({ where: { vGroupName: groupVolunteer.vGroupName, isContacter: false } }).populate('within');
+    var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.contain[0].vGroupName, isContacter: false } });
 
-    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, group: groupVolunteer, station: stationInfo, volunteerList: volunteers });
+    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers.contain, group: vol.contain[0] });
 
   },
 
@@ -69,6 +107,11 @@ module.exports = {
   updateGroup: async function (req, res) {
 
     var stationName = await Volunteer.findOne(req.params.id).populate('within');
+
+    var volBefore = await Web.findOne(req.session.eventid).populate('contain', { where: { id: req.params.id } });
+
+    var groupBefore = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volBefore.contain[0].vGroupName } });
+
 
     if (req.method == 'GET') {
 
@@ -87,36 +130,61 @@ module.exports = {
     }
 
     else {
+
       if (!req.body.Volunteer) { return res.badRequest('Form-data not received.'); }
 
+      var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: req.params.id } });
 
-      var vol = await Volunteer.findOne(req.params.id);
-
-      var store = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.vGroupName } });
-
-      // Update all the GroupName in Individual Volunteer
-      // (change the groupName from old to new)
-      await Volunteer.update(store.contain.map(s => s.id)).set({
-        vGroupName: req.body.Volunteer.vGroupName
-      }).fetch();
-
-      // Update the information of that particular Group Volunteer
-      var groupModels = await Volunteer.update(req.params.id).set({
+      var groupLeader = await Volunteer.update(vol.contain[0].id).set({
         vGroupName: req.body.Volunteer.vGroupName,
         vGroupAddress: req.body.Volunteer.vGroupAddress,
-        vName: req.body.Volunteer.vName,
+        vContacter: req.body.Volunteer.vContacter,
         vContact: req.body.Volunteer.vContact
       }).fetch();
 
-      await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within.map(s => s.id));
-      var stat = await Station.find({ where: { sName: req.body.Station.sName } });
-      var json = JSON.parse(JSON.stringify(stat));
-      var stationid = json[0].id;     // To get the stationid
+      var newStationName = req.body.Station.sName;
 
-      await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
+      var station = await Web.findOne(req.session.eventid).populate('include', { where: { sName: newStationName } });
 
+      console.log(station.include[0].id);
 
-      if (groupModels.length == 0) { return res.notFound(); }
+      await Volunteer.removeFromCollection(groupLeader[0].id, 'within').members(stationName.within[0].id);
+
+      await Volunteer.addToCollection(groupLeader[0].id, 'within').members(station.include[0].id);
+
+      var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: groupBefore.contain[0].vGroupName, isContacter: false } });
+
+      for (i = 0; i < getVolunteers.contain.length; i++) {
+
+        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'in').members(req.session.eventid);
+
+        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'within').members(stationName.within[0].id);
+
+        await Volunteer.destroy(getVolunteers.contain[i].id).fetch();
+
+      }
+
+      var updateNum = req.body.Volunteer.totalGroupNumber;
+
+      for (i = 1; i <= updateNum; i++) {
+
+        var groupV = await Volunteer.create().fetch();
+
+        await Volunteer.update(groupV.id).set({
+          vName: req.body.Volunteer.vGroupName + ' - 義工' + (i),
+          vGroupName: req.body.Volunteer.vGroupName,
+          vGroupAddress: req.body.Volunteer.vGroupAddress,
+          vContacter: req.body.Volunteer.vContacter,
+          vContact: req.body.Volunteer.vContact,
+          vType: 'group',
+          totalGroupNumber: req.body.Volunteer.totalGroupNumber,
+          isContacter: false
+        }).fetch();
+
+        await Volunteer.addToCollection(groupV.id, 'in').members(req.session.eventid);
+        await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+
+      }
 
       return res.json({ message: '已更新團體！', url: '/viewGroup/' + req.params.id });
 
@@ -160,7 +228,7 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { isContacter: 'false' } });  // for eventName
+    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'individual' } });  // for eventName
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within').populate('assignTo');
 
