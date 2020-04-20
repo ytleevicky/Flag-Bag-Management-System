@@ -217,34 +217,31 @@ module.exports = {
   removeVolunteer: async function (req, res) {
     if (req.method == 'GET') { return res.forbidden(); }
 
-    var volunteer = await Volunteer.findOne(req.params.id);
-    var models = await Volunteer.destroy(req.params.id).fetch();
+    var volunteer = await Web.findOne(req.session.eventid).populate('contain', { where: { id: req.params.id } });
 
-    if (volunteer.isContacter == true) {
-      // Remove Group Volunteer
+    if (volunteer.contain[0].isContacter == true) {
 
-      var find = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volunteer.vGroupName } });
+      var find = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: volunteer.contain[0].vGroupName } });
 
-      // Update the volunteers that belongs to this particular Group
-      await Volunteer.update(find.contain.map(s => s.id)).set({
-        vGroupName: '',
-        vType: 'individual'         // Not sure whether it is '' / group / individual
-      }).fetch();
+      // remove all the group volunteer
+      for (i = 0; i < find.contain.length; i++) {
 
-      if (models.length == 0) { return res.notFound(); }
+        await Volunteer.destroy(find.contain[i].id).fetch();
+
+      }
+
+      await Volunteer.destroy(volunteer.contain[0].id);   // remove groupLeader
 
       return res.json({ message: '已刪除團體義工！', url: '/group/' + req.session.eventid });    // for ajax request
 
     } else {
       // Remove Individual Volunteer
 
-      if (models.length == 0) { return res.notFound(); }
+      await Volunteer.destroy(volunteer.contain[0].id);
 
       return res.json({ message: '已刪除個人義工！', url: '/individual/' + req.session.eventid });    // for ajax request
 
     }
-
-
 
   },
 
