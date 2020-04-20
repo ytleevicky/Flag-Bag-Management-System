@@ -50,7 +50,19 @@
       </div>
 
       <br>
+
+
       <h3>團體義工列表</h3> <a href="/addGroup" class="btn btn-primary">新增團體義工</a>
+
+      <% if(stations.length == 0){ %>
+
+      <p>   </p>  
+
+        <div class="alert alert-info" role="alert">
+          請建立團體義工
+        </div>
+
+      <% } else { %>
 
       <br>
       <table class="table table-bordered">
@@ -88,6 +100,8 @@
 
         </tbody>
       </table>
+
+      <% } %>
 
     </div>
 

@@ -58,6 +58,17 @@
         </div>
         <br>
         <h3>旗站管理員列表</h3> <a href="/event/adduser" class="btn btn-primary">新增旗站管理員</a>
+        
+        <% if(go.length == 0){ %>
+
+          <p>   </p>  
+    
+          <div class="alert alert-info" role="alert">
+              請建立旗站管理員
+          </div>
+    
+        <% } else { %>
+        
         <br>
         <table class="table table-bordered">
           <br>
@@ -95,6 +106,9 @@
 
           </tbody>
         </table>
+
+        <% } %>
+
       </div>
     </div>
 

@@ -60,6 +60,17 @@
       <br>
 
       <h3>旗站列表</h3><a href="/addflagstn" class="btn btn-primary">建立旗站</a>
+      
+      <% if(go.length == 0){ %>
+
+        <p>   </p>  
+  
+        <div class="alert alert-info" role="alert">
+            請建立旗站
+        </div>
+  
+      <% } else { %>
+      
       <br>
       <table class="table table-bordered">
         <br>
@@ -99,6 +110,9 @@
 
         </tbody>
       </table>
+
+      <% } %>
+
     </div>
   </div>
 </body>

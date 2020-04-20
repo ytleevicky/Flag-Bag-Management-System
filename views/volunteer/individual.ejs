@@ -56,7 +56,23 @@
       <form action="/printLabels" method="POST" target="_blank">
         <h3>個人義工列表</h3>
         <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
+
+        <% if(stations.length == 0){ %>
+
+        <% } else { %>
         <button type="submit" target="_blank" class="btn btn-success">列印選擇項目</button>
+        <% } %>
+
+        <% if(stations.length == 0){ %>
+
+          <p>   </p>  
+          
+          <div class="alert alert-info" role="alert">
+              請建立個人義工
+          </div>
+    
+        <% } else { %>
+
         <br>
         <table class="table table-bordered">
           <br>
@@ -119,6 +135,9 @@
 
           </tbody>
         </table>
+
+        <% } %>
+
       </form>
     </div>
 
