@@ -68,6 +68,8 @@ module.exports = {
         bagStatus: '未派發'
       }).fetch();
 
+      await Web.addToCollection(req.session.eventid, 'comprise').members(bag.id);
+
       await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
 
     }
@@ -211,6 +213,8 @@ module.exports = {
         await Flagbag.update(bag.id).set({
           bagStatus: '未派發'
         }).fetch();
+
+        await Web.addToCollection(req.session.eventid, 'comprise').members(bag.id);
 
         await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
 

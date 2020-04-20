@@ -84,7 +84,7 @@ module.exports = {
     const qrcode = require('qrcode-generator');
 
     var station = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true, isDeleted: false } });
-   
+
     for (i = 0; i < station.stationHas.length; i++) {
 
       let code = printf('%06d', station.stationHas[i].id);
@@ -211,7 +211,7 @@ module.exports = {
     var models = await Web.findOne(req.session.eventid).populate('include', { where: { numOfSpareBag: { '!=': 0 } } });
     if (!models) { return res.notFound(); }
 
-    var sta = await Station.find(models.include.map(s => s.id)).populate('has', { where: { isContacter: false }});
+    var sta = await Station.find(models.include.map(s => s.id)).populate('has', { where: { isContacter: false } });
 
     var web = await Web.findOne(req.session.eventid);
 
