@@ -99,7 +99,7 @@ module.exports = {
 
     var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.contain[0].vGroupName, isContacter: false } });
 
-    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers.contain, group: vol.contain[0] });
+    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers.contain, group: vol.contain[0], inGroup: req.params.id });
 
   },
 
@@ -385,6 +385,11 @@ module.exports = {
 
     var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
 
+    if(req.body.c == undefined){
+      res.status(401);
+      return res.view('alert', { message: '請先選擇列印項目', url: '/individual/'+ req.session.eventid });
+    }
+
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
     var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
@@ -412,7 +417,11 @@ module.exports = {
     const qrcode = require('qrcode-generator');
 
     var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
-    console.log(data[0]);
+
+    if(req.body.c == undefined){
+      res.status(401);
+      return res.view('alert', { message: '請先選擇列印項目', url: '/viewGroup/'+ req.params.id });
+    }
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 

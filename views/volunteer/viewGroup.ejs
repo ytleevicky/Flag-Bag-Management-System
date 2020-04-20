@@ -52,6 +52,11 @@
                             </th>
                             <td><%= group.vGroupAddress %></td>
                         </tr>
+                        <tr>
+                            <th scope="row">團體義工總人數
+                            </th>
+                            <td><%= group.totalGroupNumber %></td>
+                        </tr>
 
                         <tr>
                             <th scope="row">所屬旗站</th>
@@ -73,7 +78,7 @@
                 <!-- Another Table -->
 
                 <% if (volunteerList.length > 0 ) { %>
-                <form action="/printGroupQR" method="POST" target="_blank">
+                <form action="/printGroupQR/<%= inGroup %>" method="POST" target="_blank">
                     <div class="row">
                         <div class="col-sm-10 col-md-10">
                             <h2>義工列表</h2>

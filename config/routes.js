@@ -114,7 +114,7 @@ module.exports.routes = {
 
   'POST /printLabels': 'VolunteerController.printLabels',
 
-  'POST /printGroupQR': 'VolunteerController.printGroupQR',
+  'POST /printGroupQR/:id': 'VolunteerController.printGroupQR',
 
 
   //For populate
