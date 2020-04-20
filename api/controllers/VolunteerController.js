@@ -150,8 +150,12 @@ module.exports = {
       var newStationName = req.body.Station.sName;
 
       var station = await Web.findOne(req.session.eventid).populate('include', { where: { sName: newStationName } });
+    
+      if(stationName.within[0] == undefined){
 
-      await Volunteer.removeFromCollection(groupLeader[0].id, 'within').members(stationName.within[0].id);
+      } else {
+        await Volunteer.removeFromCollection(groupLeader[0].id, 'within').members(stationName.within[0].id);
+      }
 
       await Volunteer.addToCollection(groupLeader[0].id, 'within').members(station.include[0].id);
 
@@ -172,7 +176,11 @@ module.exports = {
 
         await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'in').members(req.session.eventid);
 
+        if(stationName.within[0] == undefined){
+
+        } else {
         await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'within').members(stationName.within[0].id);
+        }
 
         await Volunteer.destroy(getVolunteers.contain[i].id).fetch();
 
