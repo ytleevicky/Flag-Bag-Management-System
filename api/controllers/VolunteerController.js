@@ -407,6 +407,35 @@ module.exports = {
     return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu });
   },
 
+  printGroupQR: async function (req, res) {
+
+    const qrcode = require('qrcode-generator');
+
+    var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
+    console.log(data[0]);
+
+    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
+
+    var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
+
+    for (i = 0; i < volu.length; i++) {
+      let code = printf('%06d', volu[i].assignTo[0].id);
+      await Flagbag.update(volu[i].assignTo[0].id).set({
+
+        bagStatus: '已派發',
+        bagNumber: code,
+        codePrintedTime: volu[i].assignTo[0].updatedAt,
+        isCodePrinted: true,
+
+      }).fetch();
+
+    }
+
+    var updatedVolu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
+
+    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu });
+  },
+
   //action - populate(for volunteer and station)
   populate_vs: async function (req, res) {
 

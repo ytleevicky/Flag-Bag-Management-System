@@ -114,6 +114,9 @@ module.exports.routes = {
 
   'POST /printLabels': 'VolunteerController.printLabels',
 
+  'POST /printGroupQR': 'VolunteerController.printGroupQR',
+
+
   //For populate
   //user and web
   'GET /user/edit': 'UserController.populate_uw',

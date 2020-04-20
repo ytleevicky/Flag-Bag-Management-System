@@ -22,7 +22,7 @@
 
                 <div class="btn-group-vertical" role="group" aria-label="Basic example">
                     <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
-                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button" >旗站管理員</a>
+                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
                     <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
                     <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
                     <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
@@ -73,34 +73,52 @@
                 <!-- Another Table -->
 
                 <% if (volunteerList.length > 0 ) { %>
+                <form action="/printGroupQR" method="POST" target="_blank">
+                    <div class="row">
+                        <div class="col-sm-10 col-md-10">
+                            <h2>義工列表</h2>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            <button type="submit" target="_blank" class="btn btn-success">列印選擇項目</button>
+                        </div>
+                    </div>
 
-                <h2>義工列表</h2>
+                    <table class="table table-bordered">
 
-                <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <div class="form-check">
+                                        <input type="checkbox" onclick="check_all(this,'c')">
+                                    </div>
+                                </th>
+                                <th scope="col">義工姓名</th>
+                                <th scope="col">聯絡電話</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    <thead>
-                        <tr>
-                            <th scope="col">義工姓名</th>
-                            <th scope="col">聯絡電話</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                            <% volunteerList.forEach( function(model) { %>
+                            <tr>
+                                <th scope="row">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="checks" name="c" value="<%= model.id %>">
+                                    </div>
+                                </th>
+                                <td><%= model.vName %></td>
+                                <td><%= model.vContact %></td>
 
-                        <% volunteerList.forEach( function(model) { %>
-                        <tr>
-                            <td><%= model.vName %></td>
-                            <td><%= model.vContact %></td>
-                            
-                            <% }); %>
-                        </tr>
+                                <% }); %>
+                            </tr>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </form>
 
                 <% } else { %>
 
-                    <h2>義工列表</h2>
-                    <p>---</p>
+                <h2>義工列表</h2>
+                <p>---</p>
 
                 <% } %>
 
@@ -118,3 +136,12 @@
         border-radius: 5px;
     }
 </style>
+
+<script>
+
+    function check_all(obj, cName) {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) { checkboxs[i].checked = obj.checked; }
+        alert('You have selected ' );
+    }
+</script>
