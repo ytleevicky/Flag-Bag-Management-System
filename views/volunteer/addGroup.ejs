@@ -22,46 +22,24 @@
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">團體名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputGroupName" name="Volunteer[vGroupName]">
+                <input type="text" class="form-control" id="inputGroupName" name="Volunteer[vGroupName]" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">團體地址</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputUsername" name="Volunteer[vGroupAddress]">
+                <input type="text" class="form-control" id="inputUsername" name="Volunteer[vGroupAddress]" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputNoOfSpareBag" class="col-sm-2 col-form-label">團體人數</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control" id="inputNoOfSpareBag" name="Volunteer[totalGroupNumber]">
+              <input type="number" class="form-control" id="inputNoOfSpareBag" name="Volunteer[totalGroupNumber]" required>
             </div>
         </div>
 
-        <!-- <div class="form-group row">
-                <label for="inputUsername" class="col-sm-2 col-form-label">義工人數</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputUsername" name="Station[numOfVolunteer]">
-                </div>
-            </div> -->
-
-
-            <!-- It is already selected when creating a station (redundant) -->
-        <!-- <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">賣旗地點</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPassword" name="Station[sLocation]">
-            </div>
-        </div> -->
-
-        <!-- <div class="form-group row">
-            <label for="inputStation" class="col-sm-2 col-form-label">所屬旗站</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputStation" name="Station[sName]">
-            </div>
-        </div> -->
 
         <div class="form-group row">
             <label for="inputLocation" class="col-sm-2 col-form-label">所屬旗站</label>
@@ -83,27 +61,20 @@
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">負責人名稱</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail" name="leaderName">
+                <input type="text" class="form-control" id="inputEmail" name="leaderName" required>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電話</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail" name="leaderContact">
+                <input type="text" class="form-control" id="inputEmail" name="leaderContact" required>
             </div>
         </div>
 
         <input type="hidden" id="inputCreatedBy" name="Volunteer[vType]" value="group">
 
         <input type="hidden" id="inputCreatedBy" name="Volunteer[isContacter]" value="true">
-
-        <!-- <div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">聯絡電郵</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail">
-                </div>
-            </div> -->
 
 
         <br>

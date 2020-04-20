@@ -101,7 +101,7 @@
                 </div>
               </th>
               <td><%= model.vName %></td>
-              <td><%= model.within.length > 0 ? model.within[0].sName :''%></td>
+              <td><%= model.within.length > 0 ? model.within[0].sName : '---'%></td>
               <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
               <td><%= model.assignTo[0].bagStatus %></td>
               
