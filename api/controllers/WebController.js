@@ -89,9 +89,11 @@ module.exports = {
       } else {
         var models = await Web.findOne(req.session.eventid);
 
-        var stationmgrList = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
+        //var stationmgrList = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
 
-        return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models, users: stationmgrList.superviseBy });
+        var stationmgrList = await User.find({ where: { role: 'stationmgr' } });
+
+        return res.view('web/adduser', { name: models.eventName, eventid: req.session.eventid, web: models, users: stationmgrList });
 
       }
     }
