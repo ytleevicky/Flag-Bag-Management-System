@@ -80,6 +80,7 @@
               <th scope="col">用戶名稱</th>
               <th scope="col">電郵</th>
               <th scope="col">用戶身份</th>
+              <th scope="col">所屬旗站</th>
               <th scope="col">更多</th>
             </tr>
           </thead>
@@ -96,6 +97,7 @@
               <td><%= model.username %></td>
               <td><%= model.mail %></td>
               <td><%= model.role %></td>
+              <td><%= model.monitor.length == 0 ? '---' : model.monitor[0].sName %></td>
               <td>
                 <a href='/updateUser/<%= model.id %>' class="btn btn-primary">編輯</a>
                 <button type="submit" class="btn btn-danger" onclick="deleteUser('<%= model.id %>')">刪除</button>

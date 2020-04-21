@@ -221,9 +221,11 @@ module.exports = {
     var models = await Web.findOne(req.session.eventid).populate('superviseBy', { where: { role: 'stationmgr' } });
     if (!models) { return res.notFound(); }
 
+    var display = await User.find(models.superviseBy.map(v => v.id)).populate('monitor');
+
     var web = await Web.findOne(req.session.eventid);
 
-    return res.view('station/stationmgrDisplay', { name: web.eventName, go: models.superviseBy, eventid: req.session.eventid });
+    return res.view('station/stationmgrDisplay', { name: web.eventName, go: display, eventid: req.session.eventid });
 
   },
 
