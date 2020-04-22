@@ -54,7 +54,7 @@ module.exports = {
         vContacter: contacterName,
         vContact: contactNumber,
         vType: 'group',
-        totalGroupNumber: groupNum,
+        // totalGroupNumber: groupNum,
         isContacter: false
       }).fetch();
 
@@ -152,8 +152,8 @@ module.exports = {
       var newStationName = req.body.Station.sName;
 
       var station = await Web.findOne(req.session.eventid).populate('include', { where: { sName: newStationName } });
-    
-      if(stationName.within[0] == undefined){
+
+      if (stationName.within[0] == undefined) {
 
       } else {
         await Volunteer.removeFromCollection(groupLeader[0].id, 'within').members(stationName.within[0].id);
@@ -163,62 +163,180 @@ module.exports = {
 
       var getVolunteers = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: groupBefore.contain[0].vGroupName, isContacter: false } });
 
-      var bagsNeedToBeDeleted = await Volunteer.find(getVolunteers.contain.map(v => v.id)).populate('assignTo');
-
-
-      for (i = 0; i < getVolunteers.contain.length; i++) {
-
-        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'assignTo').members(bagsNeedToBeDeleted[i].assignTo[0].id);
-
-        await Flagbag.destroy(bagsNeedToBeDeleted[i].assignTo[0].id).fetch();
-
-      }
-
-      for (i = 0; i < getVolunteers.contain.length; i++) {
-
-        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'in').members(req.session.eventid);
-
-        if(stationName.within[0] == undefined){
-
-        } else {
-        await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'within').members(stationName.within[0].id);
-        }
-
-        await Volunteer.destroy(getVolunteers.contain[i].id).fetch();
-
-      }
+      var previousNum = getVolunteers.contain.length;
 
       var updateNum = req.body.Volunteer.totalGroupNumber;
 
-      for (i = 1; i <= updateNum; i++) {
+      // Case 1
+      if (updateNum > previousNum) {
 
-        var groupV = await Volunteer.create().fetch();
+        // update the previous volunteer
+        for (i = 0; i < previousNum; i++) {
 
-        await Volunteer.update(groupV.id).set({
-          vName: req.body.Volunteer.vGroupName + ' - 義工' + (i),
-          vGroupName: req.body.Volunteer.vGroupName,
-          vGroupAddress: req.body.Volunteer.vGroupAddress,
-          vContacter: req.body.Volunteer.vContacter,
-          vContact: req.body.Volunteer.vContact,
-          vType: 'group',
-          totalGroupNumber: req.body.Volunteer.totalGroupNumber,
-          isContacter: false
-        }).fetch();
+          var updateV = await Volunteer.update(getVolunteers.contain[i].id).set({
+            vGroupName: req.body.Volunteer.vGroupName,
+            vGroupAddress: req.body.Volunteer.vGroupAddress,
+            vContacter: req.body.Volunteer.vContacter,
+            vContact: req.body.Volunteer.vContact,
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+          }).fetch();
 
-        await Volunteer.addToCollection(groupV.id, 'in').members(req.session.eventid);
-        await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+          // Remove association betweeen volunteer & station 
+          await Volunteer.removeFromCollection(updateV[0].id, 'within').members(stationName.within[0].id);
 
-        var bag = await Flagbag.create().fetch();
+          // Add assocation between volunteer & station
+          await Volunteer.addToCollection(updateV[0].id, 'within').members(station.include[0].id);
 
-        await Flagbag.update(bag.id).set({
-          bagStatus: '未派發'
-        }).fetch();
+        }
 
-        await Web.addToCollection(req.session.eventid, 'comprise').members(bag.id);
+        // Create additional volunteer 
+        var createNum = updateNum - previousNum;
 
-        await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
+        for(i = 1; i <= createNum; i++){
+          
+          var groupV = await Volunteer.create().fetch();
+
+          await Volunteer.update(groupV.id).set({
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + (previousNum + i),
+            vGroupName: req.body.Volunteer.vGroupName,
+            vGroupAddress: req.body.Volunteer.vGroupAddress,
+            vContacter: req.body.Volunteer.vContacter,
+            vContact: req.body.Volunteer.vContact,
+            vType: 'group',
+            isContacter: false
+          }).fetch();
+    
+          await Web.addToCollection(req.session.eventid, 'contain').members(groupV.id);   // Add volunteer to that particular event
+    
+          await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+    
+          var bag = await Flagbag.create().fetch();
+    
+          await Flagbag.update(bag.id).set({
+            bagStatus: '未派發'
+          }).fetch();
+    
+          await Web.addToCollection(req.session.eventid, 'comprise').members(bag.id);
+    
+          await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
+
+        }
+
+      } else if(updateNum == previousNum){ // case 2
+
+        for (i = 0; i < previousNum; i++) {
+
+          var updateV = await Volunteer.update(getVolunteers.contain[i].id).set({
+            vGroupName: req.body.Volunteer.vGroupName,
+            vGroupAddress: req.body.Volunteer.vGroupAddress,
+            vContacter: req.body.Volunteer.vContacter,
+            vContact: req.body.Volunteer.vContact,
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+          }).fetch();
+
+          // Remove association betweeen volunteer & station 
+          await Volunteer.removeFromCollection(updateV[0].id, 'within').members(stationName.within[0].id);
+
+          // Add assocation between volunteer & station
+          await Volunteer.addToCollection(updateV[0].id, 'within').members(station.include[0].id);
+
+        }
+
+      } else if(updateNum < previousNum){  // case 3
+
+        // Update the Volunteer record 
+        for (i = 0; i < updateNum; i++) {
+
+          var updateV = await Volunteer.update(getVolunteers.contain[i].id).set({
+            vGroupName: req.body.Volunteer.vGroupName,
+            vGroupAddress: req.body.Volunteer.vGroupAddress,
+            vContacter: req.body.Volunteer.vContacter,
+            vContact: req.body.Volunteer.vContact,
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+          }).fetch();
+
+          // Remove association betweeen volunteer & station 
+          await Volunteer.removeFromCollection(updateV[0].id, 'within').members(stationName.within[0].id);
+
+          // Add assocation between volunteer & station
+          await Volunteer.addToCollection(updateV[0].id, 'within').members(station.include[0].id);
+
+        }
+
+        // Remove the redundant volunteer 
+        var deleteNum = previousNum - updateNum;
+
+        var a = parseInt(updateNum);
+
+        for(i= 0; i < deleteNum; i++){
+
+          var now = (a+i);
+
+          await Volunteer.destroy(getVolunteers.contain[now].id).fetch();
+
+        }
 
       }
+
+      
+
+
+      // var bagsNeedToBeDeleted = await Volunteer.find(getVolunteers.contain.map(v => v.id)).populate('assignTo');
+
+
+      // for (i = 0; i < getVolunteers.contain.length; i++) {
+
+      //   await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'assignTo').members(bagsNeedToBeDeleted[i].assignTo[0].id);
+
+      //   await Flagbag.destroy(bagsNeedToBeDeleted[i].assignTo[0].id).fetch();
+
+      // }
+
+      // for (i = 0; i < getVolunteers.contain.length; i++) {
+
+      //   await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'in').members(req.session.eventid);
+
+      //   if (stationName.within[0] == undefined) {
+
+      //   } else {
+      //     await Volunteer.removeFromCollection(getVolunteers.contain[i].id, 'within').members(stationName.within[0].id);
+      //   }
+
+      //   await Volunteer.destroy(getVolunteers.contain[i].id).fetch();
+
+      // }
+
+      // //var updateNum = req.body.Volunteer.totalGroupNumber;
+
+      // for (i = 1; i <= updateNum; i++) {
+
+      //   var groupV = await Volunteer.create().fetch();
+
+      //   await Volunteer.update(groupV.id).set({
+      //     vName: req.body.Volunteer.vGroupName + ' - 義工' + (i),
+      //     vGroupName: req.body.Volunteer.vGroupName,
+      //     vGroupAddress: req.body.Volunteer.vGroupAddress,
+      //     vContacter: req.body.Volunteer.vContacter,
+      //     vContact: req.body.Volunteer.vContact,
+      //     vType: 'group',
+      //     totalGroupNumber: req.body.Volunteer.totalGroupNumber,
+      //     isContacter: false
+      //   }).fetch();
+
+      //   await Volunteer.addToCollection(groupV.id, 'in').members(req.session.eventid);
+      //   await Volunteer.addToCollection(groupV.id, 'within').members(station.include[0].id);
+
+      //   var bag = await Flagbag.create().fetch();
+
+      //   await Flagbag.update(bag.id).set({
+      //     bagStatus: '未派發'
+      //   }).fetch();
+
+      //   await Web.addToCollection(req.session.eventid, 'comprise').members(bag.id);
+
+      //   await Volunteer.addToCollection(groupV.id, 'assignTo').members(bag.id);
+
+      // }
 
       return res.json({ message: '已更新團體！', url: '/viewGroup/' + req.params.id });
 
