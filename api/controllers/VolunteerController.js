@@ -402,21 +402,33 @@ module.exports = {
 
       var stationbag = await Volunteer.findOne(req.params.id).populate('assignTo');
 
-      return res.view('volunteer/updateGroupVolunteer', { individuals: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, grouplist: findGroup, individualList: findIndividual, bag: stationbag, staid: req.params.id  });
+      var volid = parseInt(req.params.id);
+
+      var thisVol = await Volunteer.findOne({where: {id: volid} });
+
+      var contacter = await Volunteer.findOne({ where: { vGroupName: thisVol.vGroupName, isContacter: true}});
+
+      return res.view('volunteer/updateGroupVolunteer', { individuals: models, eventid: req.session.eventid, name: web.eventName, stations: stationList.include, grouplist: findGroup, individualList: findIndividual, bag: stationbag, staid: contacter.id  });
 
     }
 
     else {
 
-      await Volunteer.removeFromCollection(req.params.id, 'within').members(stationName.within[0].id);
-      
+      var volid = parseInt(req.params.id);
+
+      var thisVol = await Volunteer.findOne({where: {id: volid} });
+
+      var contacter = await Volunteer.findOne({ where: { vGroupName: thisVol.vGroupName, isContacter: true}});
+
+      await Volunteer.removeFromCollection(volid, 'within').members(stationName.within[0].id);
+    
       var stat = await Station.find({ where: { sName: req.body.Station.sName } });
       var json = JSON.parse(JSON.stringify(stat));
       var stationid = json[0].id;     // To get the stationid
 
-      await Volunteer.addToCollection(req.params.id, 'within').members(stationid);
+      await Volunteer.addToCollection(volid, 'within').members(stationid);
 
-      return res.json({ message: '已更新團體義工！', url: '/viewGroup/' + req.params.id });
+      return res.json({ message: '已更新團體義工！', url: '/viewGroup/' + contacter.id });
 
     }
 
