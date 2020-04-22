@@ -420,7 +420,13 @@ module.exports = {
 
       var contacter = await Volunteer.findOne({ where: { vGroupName: thisVol.vGroupName, isContacter: true}});
 
-      await Volunteer.removeFromCollection(volid, 'within').members(stationName.within[0].id);
+      
+      if (stationName.within[0] == undefined){
+
+      } else {
+        await Volunteer.removeFromCollection(volid, 'within').members(stationName.within[0].id);
+      }
+      
     
       var stat = await Station.find({ where: { sName: req.body.Station.sName } });
       var json = JSON.parse(JSON.stringify(stat));

@@ -58,10 +58,10 @@
                             <td><%= group.totalGroupNumber %></td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <th scope="row">所屬旗站</th>
                             <td><%= station.within.length == "" ? '---' : station.within[0].sName %></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th scope="row">負責人名稱 </th>
                             <td><%= group.vContacter %></td>
@@ -98,6 +98,7 @@
                                     </div>
                                 </th>
                                 <th scope="col">義工姓名</th>
+                                <th scope="row">所屬旗站</th>
                                 <th scope="col">旗袋編號</th>
                                 <th scope="col">旗袋狀態</th>
                                 <th scope="col">更多</th>
@@ -113,6 +114,7 @@
                                     </div>
                                 </th>
                                 <td><%= model.vName %></td>
+                                <td><%= model.within.length > 0 ? model.within[0].sName : '---'  %></td>
                                 <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
                                 <td><%= model.assignTo[0].bagStatus %></td>
                                 <td>

@@ -71,7 +71,6 @@
           <tr>
             <th scope="col">團體姓名</th>
             <th scope="col">團體義工總人數</th>
-            <th scope="col">旗站名稱</th>
             <th scope="col">更多</th>
           </tr>
         </thead>
@@ -87,7 +86,7 @@
             </th> -->
             <td><%= model.vGroupName %></td>
             <td><%= model.totalGroupNumber %></td>
-            <td><%= model.within.length > 0 ? model.within[0].sName : '---'%></td>
+            <!-- <td><%= model.within.length > 0 ? model.within[0].sName : '---'%></td> -->
             <!-- <td><%= model.sLocation %></td> -->
             <!-- <td><%= model.vGroupNumber %></td> -->
             <td>
