@@ -1,0 +1,155 @@
+<body>
+
+  <div class="bordered2">
+      <h1>個人義工</h1>
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/management">活動管理</a></li>
+              <li class="breadcrumb-item"><a href="/viewitem/<%= eventid %>"><%= name %></a></li>
+              <li class="breadcrumb-item"><a href="/group/<%= eventid %>">團體義工</a></li>
+              <li class="breadcrumb-item"><a href="/viewGroup/<%= staid %>">團體義工詳細資料</a></li>
+              <li class="breadcrumb-item active" aria-current="page">更新義工詳細資料</li>
+          </ol>
+      </nav>
+  </div>
+
+  <br>
+
+  <div class="row">
+
+      <div class="col col-sm-2 col-md-2">
+
+          <div class="btn-group-vertical" role="group" aria-label="Basic example">
+              <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
+              <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
+              <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
+              <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
+              <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
+              <!-- <a href="/eventreport" class="btn btn-info" role="button">活動報告</a> -->
+              <a href="/qrCode" class="btn btn-info" role="button">QR Code</a>
+          </div>
+
+      </div>
+
+      <div class="col col-sm-10 col-md-10">
+
+          <form action="/volunteer/updateGroupVolunteer/<%= individuals.id %>" method="POST"
+              onsubmit="createForm(this);return false">
+              <table class="table table-bordered">
+
+                  <h2>更新團體義工資料</h2>
+
+                  <tbody>
+                      <tr>
+                          <th scope="row">姓名</th>
+                          <td>
+                            <%= individuals.vName %>
+                          </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">聯絡電話</th>
+                          <td>
+                              <%= individuals.vContact %>
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <th scope="row">所屬團體</th>
+                          <td>
+                              <%= individuals.vGroupName %>
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <th scope="row">旗站名稱</th>
+                          <td>
+                              <select class="form-control" name="Station[sName]" required>
+                                  <% if(individuals.within.length > 0) { %>
+                                  <option><%= individuals.within[0].sName %></option>
+                                  <% } else { %>
+                                  <option value="">請選擇所屬旗站：</option>
+                                  <% } %>
+
+                                  <% stations.forEach( function(model) { %>
+
+                                  <% if(model.sName == (individuals.within.length > 0 ? individuals.within[0].sName : "")){ %>
+
+                                  <% } else { %>
+                                  <option value="<%= model.sName %>"> <%= model.sName %> </option>
+                                  <% }%>
+
+                                  <% }); %>
+                              </select>
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <th scope="row">旗袋編號</th>
+                          <td> <%= bag.assignTo[0].bagNumber == "" ? '---' : bag.assignTo[0].bagNumber %> </td>
+                      </tr>
+                      <tr>
+                          <th scope="row">旗袋狀態</th>
+                          <td> <%= bag.assignTo[0].bagStatus %> </td>
+                      </tr>
+
+                  </tbody>
+              </table>
+
+              <br>
+
+              <button type="submit" class="btn btn-success" style="float:right;">儲存</button>
+
+              <a href='/viewGroup/<%= staid %> ' class="btn btn-danger" style="float:right;">取消</a>
+
+          </form>
+
+      </div>
+
+
+</body>
+
+<style>
+  .bordered {
+      width: 800;
+      height: 800;
+      border: 1px solid black;
+      border-radius: 5px;
+      border-color: powderblue;
+  }
+
+  .bordered2 {
+      padding: 15px;
+      padding-bottom: 1px;
+      border: 1px solid gainsboro;
+      border-radius: 5px;
+  }
+</style>
+
+<script>
+
+  async function createForm(oFormElement) {
+
+      var response = await fetch("/volunteer/updateGroupVolunteer/<%= individuals.id %>", {
+          method: "PATCH",
+          credentials: 'same-origin',
+          headers: { 'content-type': 'application/x-www-form-urlencoded' }, //enctype code of form
+          //put into array            //map into input and encode                                                         //join it
+          body: Array.from(oFormElement).map(input => encodeURIComponent(input.name) + '=' + encodeURIComponent(input.value)).join('&'),
+      });
+
+
+      if (response.ok) {
+          // validatePwd()
+          var data = await response.json();   // for res.ok() or res.json()
+          alert(data.message);
+          window.location = data.url;
+          //location.reload(true);
+      } else if (response.status == 401) {
+          var data = await response.text();   // for res.send()
+          alert(data);
+      } else {
+          alert(response.statusText);
+      }
+
+  };
+</script>

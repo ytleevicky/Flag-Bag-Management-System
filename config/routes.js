@@ -111,6 +111,9 @@ module.exports.routes = {
   'GET /updateIndividual/:id': 'VolunteerController.updateIndividual',
   'PATCH /volunteer/individual/:id': 'VolunteerController.updateIndividual',
 
+  'GET /updateGroupVolunteer/:id': 'VolunteerController.updateGroupVolunteer',
+  'PATCH /volunteer/updateGroupVolunteer/:id': 'VolunteerController.updateGroupVolunteer',
+
   '/printQRcode/:id': 'VolunteerController.print',
 
   'POST /printLabels': 'VolunteerController.printLabels',
