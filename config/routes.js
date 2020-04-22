@@ -72,6 +72,7 @@ module.exports.routes = {
   '/stationmanagement': 'StationController.stationmanagement',
   '/viewAllBags/:id': 'StationController.viewAllBags',
   '/viewSpareBags': 'StationController.viewSpareBags',
+  '/viewNotReceived/:id': 'StationController.viewNotReceived',
 
   '/printSpareQR/:id': 'StationController.printSpareQR',
 

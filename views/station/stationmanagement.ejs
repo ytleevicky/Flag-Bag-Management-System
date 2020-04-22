@@ -27,7 +27,7 @@
         <td><%= VolTotalReceived + SpareTotalReceived %> / <%= (totalVBag + spareBag) %> </td>
       </tr>
       <tr>
-        <th scope="row">未收</th>
+        <th scope="row"><a href="/viewNotReceived/<%= stationid %>">未收</a></th>
         <td><%= (totalVBag + spareBag) - (VolTotalReceived + SpareTotalReceived)  %></td>
       </tr>
   

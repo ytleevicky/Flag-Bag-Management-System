@@ -1,0 +1,96 @@
+<title>旗袋</title>
+<div class="bordered2">
+    <h5>賣旗日：<%= date %></h5>
+    <h5>旗站名稱：<%= stationName %></h5>
+</div>
+
+<br>
+
+<% if(stations.length > 0){ %>
+
+<h3>旗袋列表 (未收)</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="table-info">
+            <th scope="col">旗袋編號</th>
+            <th scope="col">義工名稱</th>
+            <th scope="col">旗袋狀態</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <% stations.forEach( function(model) { %>
+        <tr>
+
+            <% if(model.assignTo != ""){ %>
+
+            <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+            <td><a href="tel:<%= model.vContact %>"><%= model.vName %></a></td>
+            <td><%= model.assignTo[0].bagStatus %></td>
+
+            <% } %>
+
+            <% }); %>
+        </tr>
+
+    </tbody>
+</table>
+
+<% } else { %>
+
+    <h3>旗袋列表 (未收)</h3>
+
+    <div class="alert alert-info" role="alert">
+        已收回所有義工旗袋
+    </div>
+
+<% } %>
+
+<br>
+
+<% if(spareBag.length > 0){ %>
+
+<h3>後備旗袋列表 (未收)</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="table-info">
+            <th scope="col">旗袋編號</th>
+            <th scope="col">旗袋狀態</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% spareBag.forEach( function(model) { %>
+        <tr>
+
+            <td><%= model.bagNumber == "" ? '---' : model.bagNumber %></td>
+            <td><%= model.bagStatus %></td>
+
+            <% }); %>
+        </tr>
+
+    </tbody>
+</table>
+
+<% } else { %>
+
+    <h3>後備旗袋列表 (未收)</h3>
+
+    <div class="alert alert-info" role="alert">
+        已收回所有後備旗袋
+    </div>
+
+<% } %>
+
+
+<style>
+    .bordered2 {
+        padding: 15px;
+        padding-bottom: 1px;
+        border: 1px solid gainsboro;
+        border-radius: 5px;
+    }
+</style>

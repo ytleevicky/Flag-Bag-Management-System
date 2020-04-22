@@ -79,6 +79,21 @@ module.exports = {
 
   },
 
+  viewNotReceived: async function (req, res) {
+
+    var volunteers = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
+
+    var models = await Volunteer.find(volunteers.has.map(v => v.id)).populate('within', { where: { }}).populate('assignTo', { where: { bagStatus:  { '!=': '已收' } }});
+
+    var sBag = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true, bagStatus:  { '!=': '已收' } } });
+
+    var station = await Station.findOne(req.params.id);
+
+    var event = await Station.findOne(req.params.id).populate('inside');
+
+    return res.view('station/viewNotReceived', { stations: models, date: event.inside[0].dateOfEvent, stationName: station.sName, spareBag: sBag.stationHas });
+  },
+
   printSpareQR: async function (req, res) {
 
     const qrcode = require('qrcode-generator');
