@@ -390,11 +390,13 @@ module.exports = {
 
     var volunteer = await Station.findOne(sta.include[0].id).populate('has', { where: { isContacter: false } });
 
+    var volunteerInStation = await Volunteer.find(volunteer.has.map(v => v.id)).populate('assignTo');
+
     var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
 
     var bag = await Volunteer.find(volunteer.has.map(v => v.id)).populate('assignTo');
 
-    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteer.has, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy, volBag: bag.length, totalVol: volunteer.has.length, stationid: req.params.id });
+    return res.view('station/viewStation', { stationInfo: station, volunteerList: volunteerInStation, name: web.eventName, eventid: req.session.eventid, stationmgrList: stationMgr.monitorBy, volBag: bag.length, totalVol: volunteer.has.length, stationid: req.params.id });
 
   },
 
