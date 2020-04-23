@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<title>Print QR Code</title>
 	<style>
-	html, body {
-        margin: 0 auto;     /* put it at the center */ 
-		width: 248mm;     /* Define the page size (try different value !!)   */  
-	}
+		html,
+		body {
+			margin: 0 auto;
+			/* put it at the center */
+			width: 248mm;
+			/* Define the page size (try different value !!)   */
+		}
 	</style>
 </head>
 
 <body>
-
+	<div class="row">
 		<div style="margin-bottom:1em">
-            <h5>姓名: <%= volunteer.vName %></h5>
-			<h5>旗站: <%= station.within.length > 0 ? station.within[0].sName : "" %></h5>
 			<% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${f.assignTo[0].bagNumber}`); qrsrc.make();%>
 			<img src="<%- qrsrc.createDataURL() %>" />
 		</div>
+		<div style="margin-bottom:1em">
+			旗袋
+			<p>姓名: <%= volunteer.vName %></p>
+			<h5>旗站: <%= station.within.length > 0 ? station.within[0].sName : "" %></h5>
+		</div>	
+		
+	</div>
 
 	<script>
 		self.opener.location.reload();
@@ -26,4 +35,5 @@
 		window.onfocus = () => window.close();
 	</script>
 </body>
+
 </html>

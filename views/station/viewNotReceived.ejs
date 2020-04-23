@@ -1,4 +1,4 @@
-<title>旗袋</title>
+<title><%= stationName %> 未收旗袋</title>
 <div class="bordered2">
     <h5>賣旗日：<%= date %></h5>
     <h5>旗站名稱：<%= stationName %></h5>
@@ -10,11 +10,11 @@
 
 <h3>旗袋列表 (未收)</h3>
 
-<table class="table table-bordered table-striped">
+<table id="myTable" class="table table-bordered table-striped">
     <thead>
         <tr class="table-info">
-            <th scope="col">旗袋編號</th>
-            <th scope="col">義工名稱</th>
+            <th scope="col" onclick="sortTable(0)">旗袋編號</th>
+            <th scope="col" onclick="sortTable(1)">義工名稱</th>
             <th scope="col">旗袋狀態</th>
         </tr>
     </thead>
@@ -40,11 +40,11 @@
 
 <% } else { %>
 
-    <h3>旗袋列表 (未收)</h3>
+<h3>旗袋列表 (未收)</h3>
 
-    <div class="alert alert-info" role="alert">
-        已收回所有義工旗袋
-    </div>
+<div class="alert alert-info" role="alert">
+    已收回所有義工旗袋
+</div>
 
 <% } %>
 
@@ -77,11 +77,11 @@
 
 <% } else { %>
 
-    <h3>後備旗袋列表 (未收)</h3>
+<h3>後備旗袋列表 (未收)</h3>
 
-    <div class="alert alert-info" role="alert">
-        已收回所有後備旗袋
-    </div>
+<div class="alert alert-info" role="alert">
+    已收回所有後備旗袋
+</div>
 
 <% } %>
 
@@ -94,3 +94,62 @@
         border-radius: 5px;
     }
 </style>
+
+<script>
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        tableLength = document.getElementById("myTable").rows.length;
+        console.log(tableLength);
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc";
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = tableLength;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /*check if the two rows should switch place,
+                based on the direction, asc or desc:*/
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                //Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /*If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again.*/
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
