@@ -48,7 +48,7 @@ module.exports = {
       var groupV = await Volunteer.create().fetch();
 
       await Volunteer.update(groupV.id).set({
-        vName: req.body.Volunteer.vGroupName + ' - 義工' + (i),
+        vName: req.body.Volunteer.vGroupName + ' - 義工' + printf('%03d',i),
         vGroupName: groupName,
         vGroupAddress: groupAdd,
         vContacter: contacterName,
@@ -105,7 +105,10 @@ module.exports = {
 
     var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vGroupName: vol.contain[0].vGroupName, isContacter: false } });
 
-    var getVolunteers = await Volunteer.find(model.contain.map(v => v.id)).populate('within').populate('assignTo');
+    var getVolunteers = await Volunteer.find({
+      where:{id:model.contain.map(v => v.id)},
+      sort:'vName'
+    }).populate('within').populate('assignTo');
 
     return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers, group: vol.contain[0], inGroup: req.params.id });
 
@@ -178,7 +181,7 @@ module.exports = {
             vGroupAddress: req.body.Volunteer.vGroupAddress,
             vContacter: req.body.Volunteer.vContacter,
             vContact: req.body.Volunteer.vContact,
-            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + printf('%03d',i+1),
           }).fetch();
 
           // Remove association betweeen volunteer & station 
@@ -197,7 +200,7 @@ module.exports = {
           var groupV = await Volunteer.create().fetch();
 
           await Volunteer.update(groupV.id).set({
-            vName: req.body.Volunteer.vGroupName + ' - 義工' + (previousNum + i),
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + printf('%03d', previousNum + i),
             vGroupName: req.body.Volunteer.vGroupName,
             vGroupAddress: req.body.Volunteer.vGroupAddress,
             vContacter: req.body.Volunteer.vContacter,
@@ -231,7 +234,7 @@ module.exports = {
             vGroupAddress: req.body.Volunteer.vGroupAddress,
             vContacter: req.body.Volunteer.vContacter,
             vContact: req.body.Volunteer.vContact,
-            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + printf('%03d', i + 1),
           }).fetch();
 
           // Remove association betweeen volunteer & station 
@@ -252,7 +255,7 @@ module.exports = {
             vGroupAddress: req.body.Volunteer.vGroupAddress,
             vContacter: req.body.Volunteer.vContacter,
             vContact: req.body.Volunteer.vContact,
-            vName: req.body.Volunteer.vGroupName + ' - 義工' + (i + 1),
+            vName: req.body.Volunteer.vGroupName + ' - 義工' + printf('%03d', i + 1),
           }).fetch();
 
           // Remove association betweeen volunteer & station 
@@ -556,7 +559,7 @@ module.exports = {
 
     var updatedVolu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 
-    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu });
+    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu, layout:false });
   },
 
   printGroupQR: async function (req, res) {
@@ -589,7 +592,7 @@ module.exports = {
 
     var updatedVolu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 
-    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu });
+    return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu, layout:false });
   },
 
   //action - populate(for volunteer and station)

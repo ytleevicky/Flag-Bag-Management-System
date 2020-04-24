@@ -83,7 +83,10 @@ module.exports = {
 
     var volunteers = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
 
-    var models = await Volunteer.find(volunteers.has.map(v => v.id)).populate('within', { where: { }}).populate('assignTo', { where: { bagStatus:  { '!=': '已收' } }});
+    var models = await Volunteer.find({
+      where:{
+      id: volunteers.has.map(v => v.id)},
+      sort:'vName'}).populate('within', { where: { }}).populate('assignTo', { where: { bagStatus:  { '!=': '已收' } }});
 
     var sBag = await Station.findOne(req.session.stationid).populate('stationHas', { where: { isSpareBag: true, bagStatus:  { '!=': '已收' } } });
 
