@@ -1,30 +1,55 @@
 <!DOTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Print QR Code</title>
-	<style>
-	html, body {
-        margin: 0 auto;     /* put it at the center */ 
-		width: 248mm;     /* Define the page size (try different value !!)   */  
-	}
-	</style>
-</head>
+	<html lang="en">
 
-<body>
-        <% station.forEach(function(model) { %>
-		<div style="margin-bottom:1em">
-            <h5>姓名: <%= model.vName %></h5>
-			<h5>旗站: <%= model.within.length > 0 ? model.within[0].sName : "" %></h5>
-            <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.assignTo[0].bagNumber}`); qrsrc.make();%>           
-			<img src="<%- qrsrc.createDataURL() %>" />
-        </div>
-        <% }); %>
+	<head>
+		<meta charset="utf-8">
+		<title>Print QR Code</title>
+		<style>
+			html,
+			body {
+				margin: 0 auto;
+				/* put it at the center */
+				width: 248mm;
+				/* Define the page size (try different value !!)   */
+			}
+		</style>
+	</head>
 
-	<script>
-		self.opener.location.reload();
-		window.print();
-		window.onfocus = () => window.close();
-	</script>
-</body>
-</html>
+	<body>
+		<div class="row">
+
+			<% station.forEach(function(model) { %>
+			<!-- <div style="margin-bottom:1em"> -->
+
+			<div class="col-4" style="padding: 39px 20px; margin:10px 0px;">
+
+				<div class="row">
+					<div class="col-4" style="margin: 0px;">
+						<% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.assignTo[0].bagNumber}`); qrsrc.make();%>
+						<img src="<%- qrsrc.createDataURL() %>" />
+
+					</div>
+					<div class="col-8">
+						<p style="margin: 0px; font-size: 10px;">旗袋篇號： <%= model.assignTo[0].bagNumber %></p>
+						<p style="margin: 0px; font-size: 10px;">緊急電話： <%= model.vContact %></p>
+						<p style="margin: 0px; font-size: 10px;">姓名: <%= model.vName %></p>
+					</div>
+				</div>
+				<p style="margin: 0px; font-size: 8px;">旗站: <%= model.within.length > 0 ? model.within[0].sName : "" %>
+				</p>
+				<p style="margin: 0px; font-size: 8px;">地址:
+					<%= model.within.length > 0 ? model.within[0].sLocation : "" %></p>
+			</div>
+
+			<!-- </div> -->
+			<% }); %>
+		</div>
+
+		<script>
+			self.opener.location.reload();
+			window.print();
+			window.onfocus = () => window.close();
+		</script>
+	</body>
+
+	</html>
