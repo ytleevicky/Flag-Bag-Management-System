@@ -1,31 +1,77 @@
-<!DOCTYPE html>
+<!DOTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Print QR Code</title>
+    <title>列印後備旗袋</title>
     <style>
-        html,
-        body {
-            margin: 0 auto;
-            /* put it at the center */
-            width: 248mm;
-            /* Define the page size (try different value !!)   */
-        }
+         html,
+                    body {
+                            margin: 0 auto;
+                            /* put it at the center */
+                            width: 210mm;
+                            /* Define the page size (try different value !!)   */
+                    }
+
+                    .root, .top {
+                            display: flex;
+                            flex-wrap: wrap;
+                            /* justify-content: space-around; */
+                    }
+
+                    .root>div {
+                            width: 69.85mm;
+
+                    }
+                    .top>.col-4 {
+                            width: 33.333333333%;
+                    }
+                    .top>.col-8 {
+                            width: 66.666666666%;
+                    }
+                    .padding {
+                            padding:2mm 3mm;
+                            height: 38.1mm;
+                    }
     </style>
 </head>
 
 <body>
-    <% StationSpareBag.forEach(function(model) { %>
-    <div style="margin-bottom:1em">
-        <h5>後備旗袋號碼: <%= model.bagNumber %></h5>
-        <h5>旗站: <%= stationName %></h5>
 
+    <% outter: for (var i=0; i < Math.ceil(StationSpareBag.length / 3); i++) { %>
+    <div class="row root" <% if ((i+1)%7==0) {%>style="page-break-after: always;"<% }%>>
 
-        <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.bagNumber}`); qrsrc.make();%>
-        <img src="<%- qrsrc.createDataURL() %>" />
+        <% for(var j=0; j < 3; j++) { %>
+            <% var model = StationSpareBag[(i*3)+j]; if (!model) { break outter } %>
+
+        <div class="col-4">
+            <div class="padding">
+                <div class="top">
+                    <div class="col-4">
+                        <% var qrsrc = qrcode(4, 'H'); qrsrc.addData(`${model.bagNumber}`); qrsrc.make();%>
+                        <img src="<%- qrsrc.createDataURL() %>" style="width:100%" />
+
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <p class="col-6" style="margin: 0px; font-size: 10px;">後備旗袋:
+                                <%= model.bagNumber %></p>
+                            <!-- <p class="col-6" style="margin: 0px; font-size: 10px;">電話: <%= model.vContact %></p> -->
+                        </div>
+                        <p style="margin: 0px; font-size: 8px;">旗站:
+                            <%= stationName %></p>
+                        <p style="margin: 0px; font-size: 8px;">地址:
+                            <%= stationLocation %></p>
+             
+                    </div>
+                </div>
+                <p style="margin: 0px; font-size: 10px;"><%= model.vName %></p>
+            </div>
+        </div>
+
+        <% } %>
     </div>
-    <% }); %>
+    <% } %>
 
     <script>
         self.opener.location.reload();

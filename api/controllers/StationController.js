@@ -118,7 +118,7 @@ module.exports = {
 
     var updatedStation = await Station.findOne(req.params.id).populate('stationHas', { where: { isSpareBag: true, isDeleted: false } });
 
-    return res.view('station/printSpareQR', { StationSpareBag: updatedStation.stationHas, 'qrcode': qrcode, stationName: station.sName });
+    return res.view('station/printSpareQR', { StationSpareBag: updatedStation.stationHas, 'qrcode': qrcode, stationName: station.sName, stationLocation: station.sLocation, layout:false });
 
   },
 
