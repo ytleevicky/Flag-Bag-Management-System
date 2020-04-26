@@ -22,7 +22,7 @@
 
                 <div class="btn-group-vertical" role="group" aria-label="Basic example">
                     <a href="/viewitem/<%= eventid %>" class="btn btn-info" role="button">活動摘要</a>
-                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button" >旗站管理員</a>
+                    <a href="/stationmgrDisplay/<%= eventid %>" class="btn btn-info" role="button">旗站管理員</a>
                     <a href="/station/<%= eventid %>" class="btn btn-info" role="button">旗站</a>
                     <a href="/individual/<%= eventid %>" class="btn btn-info" role="button">個人義工</a>
                     <a href="/group/<%= eventid %>" class="btn btn-info" role="button">團體義工</a>
@@ -122,7 +122,8 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <a href="/export_thisStation/<%= stationid %>" style="float: right;" class="btn btn-info">匯出義工列表</a>
+                        <a href="/export_thisStation/<%= stationid %>" style="float: right;"
+                            class="btn btn-info">匯出義工列表</a>
                     </div>
                 </div>
 
@@ -132,6 +133,7 @@
                         <tr>
                             <th scope="col">義工姓名</th>
                             <th scope="col">旗袋編號</th>
+                            <th scope="col">旗袋狀態</th>
                             <th scope="col">聯絡電話</th>
                         </tr>
                     </thead>
@@ -141,6 +143,7 @@
                         <tr>
                             <td><%= model.vName %></td>
                             <td><%= model.assignTo[0].bagNumber == "" ? '---' : model.assignTo[0].bagNumber %></td>
+                            <td><%= model.assignTo[0].bagStatus %></td>
                             <td><%= model.vContact %></td>
                             <% }); %>
                         </tr>
@@ -151,7 +154,11 @@
                 <% } else { %>
 
                 <h2>義工列表</h2>
-                <p>---</p>
+                <p> </p>
+
+                <div class="alert alert-info" role="alert">
+                    旗站尚未有義工加入
+                </div>
 
                 <% } %>
 

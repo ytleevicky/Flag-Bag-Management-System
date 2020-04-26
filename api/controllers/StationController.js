@@ -408,7 +408,10 @@ module.exports = {
 
     var volunteer = await Station.findOne(sta.include[0].id).populate('has', { where: { isContacter: false } });
 
-    var volunteerInStation = await Volunteer.find(volunteer.has.map(v => v.id)).populate('assignTo');
+    var volunteerInStation = await Volunteer.find({ 
+      where: { id: volunteer.has.map(v => v.id)},
+      sort: 'vName'
+    }).populate('assignTo');
 
     var stationMgr = await Station.findOne(sta.include[0].id).populate('monitorBy', { where: { role: 'stationmgr' } });
 
