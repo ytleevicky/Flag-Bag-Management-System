@@ -80,8 +80,8 @@
               選擇旗站
             </th> -->
             <th scope="col">旗站名稱</th>
-            <th scope="col">旗站地區</th>
             <th scope="col">義工總數</th>
+            <th scope="col">後備旗袋總數</th>
             <th scope="col">旗袋總數</th>
             <th scope="col">更多</th>
           </tr>
@@ -98,9 +98,10 @@
               </div>
             </th> -->
             <td><%= model.sName %></td>
-            <td><%= model.sLocation %></td>
             <td><%= model.has.length %></td>
+            <td><%= model.numOfSpareBag %></td>
             <td><%= (model.has.length + model.numOfSpareBag) %></td>
+    
             <td>
               <a href='/viewStation/<%= model.id %>' class="btn btn-info">詳細</a>              
               <button type="submit" class="btn btn-danger" onclick="deleteUser('<%= model.id %>')">刪除</button>
