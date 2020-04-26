@@ -58,7 +58,10 @@ module.exports = {
 
     var volunteers = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
 
-    var models = await Volunteer.find(volunteers.has.map(v => v.id)).populate('within').populate('assignTo');
+    var models = await Volunteer.find({
+      where: { id: volunteers.has.map(v => v.id)},
+      sort: 'vName'
+    }).populate('within').populate('assignTo');
 
     var station = await Station.findOne(req.params.id);
 
