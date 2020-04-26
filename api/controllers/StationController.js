@@ -453,7 +453,12 @@ module.exports = {
 
     var station = await Station.findOne(req.params.id).populate('has', { where: { isContacter: false } });
 
-    var models = station.has;
+    //var models = station.has;
+
+    var models = await Volunteer.find({
+      where:{ id: station.has.map(s => s.id) },
+      sort:'vName'
+    }).populate('assignTo');
 
     var XLSX = require('xlsx');
     var wb = XLSX.utils.book_new();
@@ -462,6 +467,7 @@ module.exports = {
       return {
         義工姓名: model.vName,
         聯絡電話: model.vContact,
+        旗袋編號: model.assignTo[0].bagNumber
       };
     }));
     XLSX.utils.book_append_sheet(wb, ws, '旗站-' + sta.include[0].sName + '義工列表');
