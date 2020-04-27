@@ -109,7 +109,6 @@
               <td>
                 <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
                 <button type="button" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
-                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success" id="printButton">列印</a>
               </td>
               <% } %>
 
@@ -124,7 +123,6 @@
                 <td>
                 <a href='/viewIndividual/<%= model.id %>' class="btn btn-info">詳細</a>
                 <button type="button" class="btn btn-danger" onclick="deleteVolunteer('<%= model.id %>')">刪除</button>
-                <a href='/printQRcode/<%= model.id %>' target="_blank" class="btn btn-success" id="printButton">再次列印</a>
               </td>
               <% }%>
 
