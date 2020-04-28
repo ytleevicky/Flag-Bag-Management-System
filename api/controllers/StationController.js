@@ -112,7 +112,7 @@ module.exports = {
 
       await Flagbag.update(station.stationHas[i].id).set({
         bagNumber: code,
-        bagStatus: '未派發',
+        bagStatus: '已派發',
         isCodePrinted: true,
         codePrintedTime: station.stationHas[i].updatedAt,
       }).fetch();

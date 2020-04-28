@@ -54,9 +54,9 @@
 						</div>
 						<div class="col-8">
 							<div class="row">
-								<p class="col-6" style="margin: 0px; font-size: 10px;">旗袋:
+								<p class="col-6" style="margin: 0px; font-size: 10px;">旗袋編號:
 									<%= model.assignTo[0].bagNumber %></p>
-								<p class="col-6" style="margin: 0px; font-size: 10px;">電話: <%= model.vContact %></p>
+								<p class="col-6" style="margin: 0px; font-size: 10px;">緊急電話: <%= model.vContact %></p>
 							</div>
 							<p style="margin: 0px; font-size: 8px;">旗站:
 								<%= model.within.length > 0 ? model.within[0].sName : "" %></p>
@@ -65,7 +65,7 @@
 
 						</div>
 					</div>
-					<p style="margin: 0px; font-size: 10px;"><%= model.vName %></p>
+					<p style="margin: 0px; font-size: 10px;"><%= model.vGroupName %></p>
 				</div>
 			</div>
 

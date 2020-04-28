@@ -542,7 +542,10 @@ module.exports = {
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
-    var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
+    var volu = await Volunteer.find({ 
+      where: { id: vol.contain.map(v => v.id)},
+      sort: 'bagNumber'
+    }).populate('within').populate('assignTo');
 
     for (i = 0; i < volu.length; i++) {
       let code = printf('%06d', volu[i].assignTo[0].id);
@@ -557,7 +560,10 @@ module.exports = {
 
     }
 
-    var updatedVolu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
+    var updatedVolu = await Volunteer.find({ 
+      where: { id: vol.contain.map(v => v.id)},
+      sort: 'bagNumber'
+    }).populate('within').populate('assignTo');
 
     return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu, layout:false });
   },
