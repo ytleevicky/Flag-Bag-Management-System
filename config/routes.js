@@ -116,7 +116,7 @@ module.exports.routes = {
 
   '/printQRcode/:id': 'VolunteerController.print',
 
-  'POST /printLabels': 'VolunteerController.printLabels',
+  'POST /printLabels/:id': 'VolunteerController.printLabels',
 
   'POST /printGroupQR/:id': 'VolunteerController.printGroupQR',
 

@@ -78,7 +78,7 @@
                 <!-- Another Table -->
 
                 <% if (volunteerList.length > 0 ) { %>
-                <form action="/printGroupQR/<%= inGroup %>" method="POST" target="_blank">
+                <form action="/printGroupQR/<%= eventid %>" method="POST" target="_blank" onsubmit="return checkAnyChecked();">
                     <div class="row">
                         <div class="col-sm-10 col-md-10">
                             <h2>義工列表</h2>
@@ -151,6 +151,14 @@
 </style>
 
 <script>
+
+    function checkAnyChecked() {
+        if (Array.from(document.querySelectorAll('input[type="checkbox"]')).filter(e => e.checked).length > 0) {
+            return true;
+        }
+        alert('請先選擇列印項目');
+        return false;
+    }
 
     function check_all(obj, cName) {
         var checkboxs = document.getElementsByName(cName);

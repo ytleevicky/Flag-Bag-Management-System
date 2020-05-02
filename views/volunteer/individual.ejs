@@ -53,7 +53,7 @@
       </div>
 
       <br>
-      <form action="/printLabels" method="POST" target="_blank">
+      <form action="/printLabels/<%=req.params.id%>" method="POST" target="_blank" onsubmit="return checkAnyChecked();">
         <h3>個人義工列表</h3>
         <a href="/addIndividual" class="btn btn-primary">新增個人義工</a>
 
@@ -142,6 +142,7 @@
 </body>
 
 <style>
+  
   .bordered {
     width: 800;
     height: 800;
@@ -159,6 +160,14 @@
 </style>
 
 <script>
+
+function checkAnyChecked() {
+        if (Array.from(document.querySelectorAll('input[type="checkbox"]')).filter(e => e.checked).length > 0) {
+            return true;
+        }
+        alert('請先選擇列印項目');
+        return false;
+    }
 
   function check_all(obj, cName) {
     var checkboxs = document.getElementsByName(cName);

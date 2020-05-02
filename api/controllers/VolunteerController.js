@@ -97,7 +97,7 @@ module.exports = {
 
   viewGroup: async function (req, res) {
 
-    var web = await Web.findOne(req.session.eventid);
+    // var web = await Web.findOne(req.session.eventid);
 
     var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: req.params.id } });
 
@@ -110,7 +110,7 @@ module.exports = {
       sort:'vName'
     }).populate('within').populate('assignTo');
 
-    return res.view('volunteer/viewGroup', { eventid: req.session.eventid, name: web.eventName, station: stationInfo, volunteerList: getVolunteers, group: vol.contain[0], inGroup: req.params.id });
+    return res.view('volunteer/viewGroup', { eventid: model.id, name: model.eventName, station: stationInfo, volunteerList: getVolunteers, group: vol.contain[0], inGroup: req.params.id });
 
   },
 
@@ -320,7 +320,10 @@ module.exports = {
 
   individual: async function (req, res) {
 
-    var model = await Web.findOne(req.session.eventid).populate('contain', { where: { vType: 'individual' } });  // for eventName
+    var model = await Web.findOne(req.params.id).populate('contain', { where: { vType: 'individual' } });  // for eventName
+    if (!model) {
+      return res.notFound();
+    }
 
     var models = await Volunteer.find(model.contain.map(v => v.id)).populate('within').populate('assignTo');
 
@@ -532,19 +535,20 @@ module.exports = {
   printLabels: async function (req, res) {
 
     const qrcode = require('qrcode-generator');
-
-    var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
-
     if (req.body.c == undefined) {
       res.status(401);
       return res.view('alert', { message: '請先選擇列印項目', url: '/individual/' + req.session.eventid });
     }
 
-    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
+    var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
+
+   
+
+    var vol = await Web.findOne(req.params.id).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
     var volu = await Volunteer.find({ 
       where: { id: vol.contain.map(v => v.id)},
-      sort: 'bagNumber'
+      // sort: 'bagNumber'
     }).populate('within').populate('assignTo');
 
     for (i = 0; i < volu.length; i++) {
@@ -562,7 +566,7 @@ module.exports = {
 
     var updatedVolu = await Volunteer.find({ 
       where: { id: vol.contain.map(v => v.id)},
-      sort: 'bagNumber'
+      // sort: 'bagNumber'
     }).populate('within').populate('assignTo');
 
     return res.view('volunteer/printLabels', { volunteer: vol, 'qrcode': qrcode, station: updatedVolu, layout:false });
@@ -575,11 +579,12 @@ module.exports = {
     var data = typeof req.body.c === 'string' ? [req.body.c] : req.body.c;
 
     if (req.body.c == undefined) {
-      res.status(401);
-      return res.view('alert', { message: '請先選擇列印項目', url: '/viewGroup/' + req.params.id });
+      return res.badRequest();
+      // res.status(401);
+      // return res.view('alert', { message: '請先選擇列印項目', url: '/viewGroup/' + req.params.id });
     }
 
-    var vol = await Web.findOne(req.session.eventid).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
+    var vol = await Web.findOne(req.params.id).populate('contain', { where: { id: data.map(v => parseInt(v)) } });
 
     var volu = await Volunteer.find(vol.contain.map(v => v.id)).populate('within').populate('assignTo');
 

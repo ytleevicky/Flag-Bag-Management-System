@@ -65,7 +65,13 @@
 
 						</div>
 					</div>
+					<% if (model.vGroupName != '') { %>
 					<p style="margin: 0px; font-size: 10px;"><%= model.vGroupName %></p>
+					<% } %>
+
+					<% if (model.vGroupName == '') { %>
+						<p style="margin: 0px; font-size: 10px;"><%= model.vName %></p>
+						<% } %>
 				</div>
 			</div>
 
