@@ -55,7 +55,7 @@
                             </td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <th scope="row">所屬團體</th>
                             <td>
                                 <select class="form-control" name="Volunteer[vGroupName]" required>
@@ -65,7 +65,7 @@
                                     <% if(individuals.vGroupName == "") { %>
                                     <option value="---">個人</option>
                                     <% } else { %>
-                                    <!-- Only display the group option that you've selected  -->
+                                    
                                     <option value="<%= individuals.vGroupName %>"><%= individuals.vGroupName %></option>
                                     <% } %>
 
@@ -77,18 +77,18 @@
 
 
                                     <% if (individuals.vGroupName == "") {%>
-                                    <!-- if it is a individual volunteer, show nothing -->
+                                   
                                     <% } else { %>
-                                    <!-- if it is a group volunteer, display the individual option for the user to choose -->
+                                    
                                     <option value="---">個人</option>
                                     <% } %>
 
 
-                                    <!-- show all the group item options -->
+                                    
                                     <% grouplist.contain.forEach( function(model) { %>
 
                                     <% if(model.vGroupName == individuals.vGroupName){ %>
-                                    <!-- filter out -->
+                                    
                                     <% } else { %>
                                     <option value="<%= model.vGroupName %>"> <%= model.vGroupName %> </option>
                                     <% }%>
@@ -97,7 +97,8 @@
 
                                 </select>
                             </td>
-                        </tr>
+                        </tr> -->
+                    
 
                         <tr>
                             <th scope="row">旗站名稱</th>
