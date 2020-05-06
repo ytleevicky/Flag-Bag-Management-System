@@ -473,22 +473,22 @@ module.exports = {
     else {
       if (!req.body.Volunteer) { return res.badRequest('Form-data not received.'); }
 
-      var groupName = req.body.Volunteer.vGroupName;
+      // var groupName = req.body.Volunteer.vGroupName;
 
-      if (groupName == '---') {
-        type = 'individual';
-        groupname = '';
-      } else {
-        type = 'group';
-        groupname = req.body.Volunteer.vGroupName;
-      }
+      // if (groupName == '---') {
+      //   type = 'individual';
+      //   groupname = '';
+      // } else {
+      //   type = 'group';
+      //   groupname = req.body.Volunteer.vGroupName;
+      // }
 
       var updateModels = await Volunteer.update(req.params.id).set({
 
         vName: req.body.Volunteer.vName,
         vContact: req.body.Volunteer.vContact,
-        vGroupName: groupname,
-        vType: type,
+        // vGroupName: groupname,
+        vType: 'individual',
 
       }).fetch();
 
