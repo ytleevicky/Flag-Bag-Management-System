@@ -255,6 +255,10 @@ module.exports = {
     //   'https://staging.example.com',
     // ],
 
+    onlyAllowOrigins: [
+      'https://murmuring-temple-09000.herokuapp.com'
+    ],
+
 
     /***************************************************************************
     *                                                                          *
