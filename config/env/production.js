@@ -256,7 +256,7 @@ module.exports = {
     // ],
 
     onlyAllowOrigins: [
-      'https://murmuring-temple-09000.herokuapp.com'
+      'https://fast-mesa-38713.herokuapp.com/'
     ],
 
 
