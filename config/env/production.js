@@ -256,7 +256,7 @@ module.exports = {
     // ],
 
     onlyAllowOrigins: [
-      'https://fast-mesa-38713.herokuapp.com/'
+      'https://fyp-2021.herokuapp.com/'
     ],
 
 
