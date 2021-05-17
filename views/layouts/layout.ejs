@@ -14,12 +14,11 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-  <%/* If you want to discourage search engines from indexing this site,
-    uncomment the following line: */%> <%/*
-    <meta name="robots" content="noindex" />
+  <% /* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+    <% /* <meta name="robots" content="noindex" />
     */%>
 
-  <!--
+    <!--
         Stylesheets and Preprocessors
         ==============================
 
@@ -40,84 +39,88 @@
             + Use a different or additional preprocessor, like SASS, SCSS or Stylus
     -->
 
-  <!--STYLES-->
-  <link rel="stylesheet" href="/styles/importer.css">
-  <!--STYLES END-->
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
 </head>
 
 <body>
   <div class="container">
 
-    <% if (req.path!="/") {%>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info">
+    <% if (req.path!="/" ) {%>
+      <nav class="navbar navbar-expand-sm navbar-dark bg-info">
 
-      <%if (req.session.role == "admin") {%>
+        <%if (req.session.role=="admin" ) {%>
 
-      <a class="navbar-brand" href="/management">
-        <img src="/images/logo123.jpeg" width="40" height="50" class="d-inline-block align-top" alt="">
-      </a>
-
-      <% }%>
-
-      <%if (req.session.role == "stationmgr") {%>
-
-      <a class="navbar-brand" href="/stationmanagement">
-        <img src="/images/logo123.jpeg" width="40" height="50" class="d-inline-block align-top" alt="">
-      </a>
-
-      <% }%>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-
-        <ul class="navbar-nav mr-auto">
-          <%if (req.session.role == "admin") {%>
-
-          <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/management" ? "active" : "" %>"
-              href="/management">活動管理</a></li>
-
-          <li class="nav-item"><a class="nav-link nav-link <%= req.path == "/adminDisplay" ? "active" : "" %>"
-              href="/adminDisplay">活動管理員</a></li>
+          <a class="navbar-brand" href="/management">
+            <img src="/images/logo123.png" width="50" height="50" class="d-inline-block align-top" alt="">
+          </a>
 
           <% }%>
 
-          <%if (req.session.role == "stationmgr") {%>
+            <%if (req.session.role=="stationmgr" ) {%>
 
-          <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/stationmanagement" ? "active" : "" %>"
-              href="/stationmanagement">旗站統計</a></li>
-          <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/collectBag" ? "active" : "" %>"
-              href="/collectBag">收旗袋</a></li>
-          <!-- <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/distributeBag" ? "active" : "" %>"
+              <a class="navbar-brand" href="/stationmanagement">
+                <img src="/images/logo123.png" width="50" height="50" class="d-inline-block align-top" alt="">
+              </a>
+
+              <% }%>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                  <ul class="navbar-nav mr-auto">
+                    <%if (req.session.role=="admin" ) {%>
+
+                      <li class="nav-item"><a class="nav-item nav-link <%= req.path == " /management" ? "active" : ""
+                          %>"
+                          href="/management">活動管理</a></li>
+
+                      <li class="nav-item"><a class="nav-link nav-link <%= req.path == " /adminDisplay" ? "active" : ""
+                          %>"
+                          href="/adminDisplay">活動管理員</a></li>
+
+                      <% }%>
+
+                        <%if (req.session.role=="stationmgr" ) {%>
+
+                          <li class="nav-item"><a class="nav-item nav-link <%= req.path == " /stationmanagement"
+                              ? "active" : "" %>"
+                              href="/stationmanagement">旗站統計</a></li>
+                          <li class="nav-item"><a class="nav-item nav-link <%= req.path == " /collectBag" ? "active"
+                              : "" %>"
+                              href="/collectBag">收旗袋</a></li>
+                          <!-- <li class="nav-item"><a class="nav-item nav-link <%= req.path == "/distributeBag" ? "active" : "" %>"
               href="/distributeBag">發旗袋</a></li> -->
 
-          <% }%>
+                          <% }%>
 
-        </ul>
+                  </ul>
 
 
-        <ul class="navbar-nav">
+                  <ul class="navbar-nav">
 
-          <%if (req.session.username) {%>
-          <li class="navbar-text">
-            <a class="nav-link" href="/user/logout">你好, <%= req.session.username %> (登出) </a>
-          </li>
-          <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/">登入</a>
-          </li>
-          <% } %>
-        </ul>
+                    <%if (req.session.username) {%>
+                      <li class="navbar-text">
+                        <a class="nav-link" href="/user/logout">你好, <%= req.session.username %> (登出) </a>
+                      </li>
+                      <% } else { %>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/">登入</a>
+                        </li>
+                        <% } %>
+                  </ul>
 
-      </div>
+                </div>
 
-    </nav>
-    <% } %>
+      </nav>
+      <% } %>
 
-    <%- body %>
+        <%- body %>
 
   </div>
 
