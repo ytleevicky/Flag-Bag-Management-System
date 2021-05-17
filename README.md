@@ -1,33 +1,45 @@
-# COMP4117 CUBC1 Project @ 2019-2020 Semester 2
+# Flag Bag Management System (Group Project)
 
-a [Sails v1](https://sailsjs.com) application
+- Flag Bag Management System is designed to assist non-profit organisation to manage and monitor flag bags in a more effective way. This allows NGO to concentrate their resources in order to improve their fundraising target.
+
+- This web-based system is developed in HTML, CSS, JavaScript, Node.js, Bootstrap
+- Reference Information:
+  * [User Manual](https://drive.google.com/drive/folders/1QqGMyVg-oBDVfBeU5yZFnc1YYHTRYkes?usp=sharing)
 
 
-### Links
+## 5 Main Functions of the Flag Bag Management System:
 
-+ [Sails framework documentation](https://sailsjs.com/get-started)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
+#### 1. Volunteer information management
+  * Simple input form for data entry
+  * Enable export of Volunteers data to excel format
 
+#### 2. Flag bag management
+  * Generate QR code Label for each flag bag
+  * Support to print the QR code Label
+  * Real time flag bag status update
+
+#### 3. Station management
+  * Support multiple station managers to use the system at the same time
+  * Monitor the immediate progress of each station in real time
+  * Have an overview on the number of flag bag collected in each station
+ 
+#### 4. Station manager and volunteer administration
+  * Support to contact the volunteer directly
+  * Monitor the volunteer.
+
+#### 5. Generate Report
+  * Generate report to keep a record for each flag selling event in excel format
+
+
+
+
+# 
 
 ### Version info
 
 This app was originally generated on Thu Feb 13 2020 16:01:55 GMT+0800 (Hong Kong Standard Time) using Sails v1.2.3.
 
-### Group Members
 
-+ Chan Chun Lam (19201400)
-+ Chiu Cheuk Fung (19200560)
-+ Kan Ka Hei (19217668)
-+ Lam Tak Lung (19214561) 
-+ Lee Yui Tung (17228336)
-+ Wong Tsz Hei Ernest (18202160)
-
-## Readme
-
-Please contact in group if any modification has done under this project.
 
 <!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
 
